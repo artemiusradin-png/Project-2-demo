@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>deviewai × AgroPlatforma — Agro Agent · Costing & Pricing</title>
+<style>
+  :root{
+    --ink:#10131a; --mut:#5b6472; --line:#e3e6ec; --accent:#3b5bfd;
+    --client:#f7f9ff; --internal:#fff5f5; --internal-line:#e7b3b3; --internal-ink:#a11;
+    --good:#0a7c45;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#eceef2;color:var(--ink);
+    font:13px/1.42 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .page{width:210mm;min-height:297mm;margin:14px auto;background:#fff;
+    padding:15mm 15mm 12mm;box-shadow:0 4px 24px rgba(20,25,40,.12)}
+  header{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid var(--accent);padding-bottom:9px;margin-bottom:11px}
+  .brand{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .brand b{color:var(--accent)}
+  .brand .sub{display:block;font-size:11px;font-weight:600;color:var(--mut);margin-top:2px;letter-spacing:.2px}
+  .meta{text-align:right;font-size:10.5px;color:var(--mut);line-height:1.6}
+  .meta .conf{display:inline-block;margin-top:3px;padding:1px 7px;border:1px solid var(--line);
+    border-radius:99px;font-weight:700;color:var(--ink);letter-spacing:.4px}
+  .scope{background:var(--client);border:1px solid var(--line);border-radius:8px;
+    padding:9px 12px;margin-bottom:13px;font-size:12px}
+  .scope b{color:var(--accent)}
+  h2{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);
+    margin:0 0 7px;font-weight:800}
+  .zone-client h2{color:var(--accent)}
+  table{width:100%;border-collapse:collapse;margin-bottom:11px}
+  th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .tier-star{color:var(--accent);font-weight:800}
+  tr.rec td{background:var(--client)}
+  .quote{display:flex;gap:14px;align-items:center;background:var(--accent);color:#fff;
+    border-radius:9px;padding:11px 15px;margin:4px 0 12px}
+  .quote .big{font-size:23px;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+  .quote .q-txt{font-size:11.5px;line-height:1.5;opacity:.96}
+  .quote .q-txt b{font-weight:800}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:6px}
+  .note{font-size:10.5px;color:var(--mut);line-height:1.55}
+  .note li{margin:0 0 3px 15px}
+  .anchor{font-size:11px;color:var(--good);font-weight:700;margin:-4px 0 11px}
+  .divider{display:flex;align-items:center;gap:9px;margin:15px 0 11px}
+  .divider .ln{flex:1;height:1px;background:var(--internal-line)}
+  .divider .lbl{font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--internal-ink);
+    border:1px solid var(--internal-line);background:var(--internal);padding:3px 10px;border-radius:99px}
+  .zone-int{background:var(--internal);border:1px solid var(--internal-line);
+    border-radius:9px;padding:12px 14px}
+  .zone-int h2{color:var(--internal-ink)}
+  .zone-int table{margin-bottom:8px}
+  .zone-int th,.zone-int td{border-bottom-color:#eccccc}
+  .zone-int tr.total td{font-weight:800;border-top:2px solid var(--internal-line);border-bottom:none}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:9px 0 4px}
+  .kpi{background:#fff;border:1px solid var(--internal-line);border-radius:7px;padding:8px 10px}
+  .kpi .k{font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--internal-ink);font-weight:700}
+  .kpi .v{font-size:17px;font-weight:800;margin-top:2px}
+  .kpi .v small{font-size:10px;font-weight:600;color:var(--mut)}
+  .floor{font-size:10.5px;color:var(--internal-ink);font-weight:700;margin-top:7px}
+  .lever{font-size:10.5px;color:var(--ink);margin-top:4px}
+  footer{margin-top:13px;border-top:1px solid var(--line);padding-top:7px;
+    font-size:9.5px;color:var(--mut);display:flex;justify-content:space-between}
+  @media print{
+    html,body{background:#fff}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:11mm}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="brand">
+      <b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — AI Integration · Costing &amp; Pricing</span>
+    </div>
+    <div class="meta">
+      Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;18 · Rev A<br>
+      <span class="conf">CONFIDENTIAL</span>
+    </div>
+  </header>
+
+  <div class="scope">
+    <b>Scope.</b> An AI feature layer integrated into the <b>existing</b> Flutter app &amp; Salesforce
+    backend — not a rebuild. <b>v1 = AI foundation + flagship "Agro-Vision"</b>
+    (photo → crop/pest/disease diagnosis → product "prescription" from the catalog),
+    delivered as a fixed-scope, metric-based pilot. Foundation is built once; later AI
+    features attach to it at a fraction of the cost.
+  </div>
+
+  <section class="zone-client">
+    <h2>Client-Facing Proposal</h2>
+    <table>
+      <thead>
+        <tr><th>Tier</th><th>What's included</th><th class="num">Investment</th><th class="num">Timeline</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Lean v1</b></td>
+          <td>AI foundation + Agro-Vision (multimodal-LLM vision + catalog retrieval)</td>
+          <td class="num">$75k – $85k</td><td class="num">~10–12 wks</td>
+        </tr>
+        <tr class="rec">
+          <td><span class="tier-star">★ Standard v1</span><br><span class="note">Recommended</span></td>
+          <td>Lean + conversational agronomist advisor + production hardening &amp; eval set</td>
+          <td class="num">$95k – $115k</td><td class="num">~12 wks</td>
+        </tr>
+        <tr>
+          <td><b>v1 Plus</b></td>
+          <td>Standard + smart natural-language catalog search</td>
+          <td class="num">$135k – $155k</td><td class="num">~16 wks</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="quote">
+      <div class="big">$105,000</div>
+      <div class="q-txt">
+        <b>Recommended quote — Standard v1, fixed price, ~12 weeks.</b><br>
+        Tied to an agreed success metric (e.g. prescription accuracy ≥ threshold on a
+        held-out test set). Payment: <b>30%</b> on signature · <b>40%</b> at mid-milestone · <b>30%</b> on delivery.
+      </div>
+    </div>
+    <div class="anchor">▸ ≈ 42% of the $250k already invested in the app — the headline AI capability for under half the original build cost.</div>
+
+    <h2>Assumptions &amp; Exclusions</h2>
+    <ul class="note">
+      <li>Assumes Salesforce exposes catalog / stock / farmland / soil data via usable REST APIs. If not, data-access work is <b>+$15k – $30k</b> (separate line).</li>
+      <li>Production LLM / vision API usage is <b>billed to the client</b> (usage-based; vision is token-heavy at 40k-user scale). Estimates indicative only.</li>
+      <li>Post-v1 maintenance &amp; model-ops retainer: <b>15–25% of build / year</b> — optional, separate SOW. Additional AI features quoted incrementally.</li>
+    </ul>
+  </section>
+
+  <div class="divider">
+    <span class="ln"></span>
+    <span class="lbl">▼ INTERNAL — DO NOT SHARE / DO NOT SCREEN-SHARE ▼</span>
+    <span class="ln"></span>
+  </div>
+
+  <section class="zone-int">
+    <h2>Internal Cost Model — Standard v1 (3 months)</h2>
+    <table>
+      <thead>
+        <tr><th>Cost line</th><th>Basis (Ukraine payouts, USD)</th><th class="num">Cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Salesforce developer (UA, mid-senior, contract)</td><td>~$5,000/mo × 2.5 mo</td><td class="num">$12,500</td></tr>
+        <tr><td>ML / CV specialist (UA, senior)</td><td>Part-time advisory (LLM-vision, not custom model)</td><td class="num">$6,000</td></tr>
+        <tr><td>LLM / vision API — dev &amp; testing</td><td>3 months</td><td class="num">$2,000</td></tr>
+        <tr><td>Infra / hosting (orchestrator, vector DB, staging)</td><td>~$400/mo × 3</td><td class="num">$1,200</td></tr>
+        <tr><td>Tooling / subscriptions (Claude, monitoring, SF sandbox)</td><td>~$600/mo × 3</td><td class="num">$1,800</td></tr>
+        <tr><td>Contingency</td><td>15%</td><td class="num">~$3,500</td></tr>
+        <tr class="total"><td>Total cash out-of-pocket</td><td>2 Flutter founders not costed → margin</td><td class="num">≈ $27k–$32k</td></tr>
+      </tbody>
+    </table>
+
+    <div class="kpis">
+      <div class="kpi"><div class="k">Gross margin @ $105k</div><div class="v">≈ $73k <small>/ 3 mo</small></div></div>
+      <div class="kpi"><div class="k">Per founder</div><div class="v">≈ $12k <small>/ mo + profit</small></div></div>
+      <div class="kpi"><div class="k">Negotiation floor</div><div class="v">$70k <small>(margin → ~$40k)</small></div></div>
+    </div>
+
+    <div class="floor">▸ Hold ≥ $95k. Below $70k the deal stops being worth the founder time + delivery risk.</div>
+    <div class="lever">▸ Cost lever: keep ML <b>part-time</b> via multimodal-LLM vision (not a custom-trained CV model) — saves ≈ $12k internally, ships faster, easier to demo. Escalate to custom CV only if test-set accuracy falls short.</div>
+    <div class="lever">▸ Cash-flow: the 30% signature payment must land before the Salesforce contractor's first payout — don't float it personally.</div>
+  </section>
+
+  <footer>
+    <span>deviewai — AI integration, Claude-augmented delivery</span>
+    <span>Internal working document · not a binding offer</span>
+  </footer>
+
+</div>
+</body>
+</html>

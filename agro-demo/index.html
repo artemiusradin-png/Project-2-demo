@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>AgroPlatforma — UI Demo + Agro-Vision AI</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: { colors: {
+      brand: '#3D5BFE', brandDark:'#2E45D8', cream:'#FBEFD9', mint:'#E6F5EF',
+      ink:'#16161F', muted:'#9AA0AC', lav:'#BCC3F3', tabq:'#97A6C9',
+      bg:'#F2F3F6', cardLine:'#ECEEF2'
+    },
+    fontFamily:{ sf:['-apple-system','BlinkMacSystemFont','SF Pro Text','Inter','Segoe UI','Roboto','sans-serif'] } } }
+  }
+</script>
+<style>
+  html,body{margin:0;height:100%;background:#dfe2ea;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',Inter,'Segoe UI',Roboto,sans-serif}
+  ::-webkit-scrollbar{width:0;height:0}
+  .noscroll{-ms-overflow-style:none;scrollbar-width:none}
+  .sheet-in{animation:sheetIn .26s cubic-bezier(.22,1,.36,1)}
+  @keyframes sheetIn{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .fade-in{animation:fade .22s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .pop{animation:pop .18s ease}
+  @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+  .spin{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+  .bar{animation:bar 1.4s ease-in-out infinite}@keyframes bar{0%{width:8%}50%{width:78%}100%{width:97%}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const {useState,useEffect,useRef} = React;
+
+/* ───────────────────────── Icons (inline SVG, matched to screenshots) ───────────────────────── */
+const I = {
+  bell:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  search:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8"/><path d="m20 20-3-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+  chevR:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  back:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="m15 6-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  x:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
+  home:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>,
+  book:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M4 5a2 2 0 0 1 2-2h5v17H6a2 2 0 0 0-2 2zM20 5a2 2 0 0 0-2-2h-5v17h5a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>,
+  cart:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M4 5h2l2.4 11.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.5L21 8H7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="18" cy="20" r="1.4" fill="currentColor"/></svg>,
+  user:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><circle cx="12" cy="8.5" r="3.8" stroke="currentColor" strokeWidth="1.8"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+  seed:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M5 19c0-6 5-11 11-11 0 6-5 11-11 11Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M5 19c2-3 4-5 7-6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+  shield:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  flask:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M10 3h4M10.5 3v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L13.5 9V3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  fuel:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 3c4 4.5 6 7.5 6 10.5A6 6 0 0 1 6 13.5C6 10.5 8 7.5 12 3Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>,
+  cam:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M4 8a2 2 0 0 1 2-2h2l1.5-2h5L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><circle cx="12" cy="12.5" r="3.4" stroke="currentColor" strokeWidth="1.8"/></svg>,
+  spark:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+  leaf:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M20 4C9 4 4 11 4 20c9 0 16-5 16-16Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M4 20C8 14 12 11 18 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+  check:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="m5 12 4 4 10-10" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  upload:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 16V5m0 0L8 9m4-4 4 4M5 19h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  alert:(p)=> <svg viewBox="0 0 24 24" fill="none" {...p}><path d="M12 3 2 20h20zM12 9v5M12 17h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+};
+
+/* ───────────────────────── iOS shell ───────────────────────── */
+function StatusBar({dark}){
+  const c = dark ? 'text-ink' : 'text-white';
+  return (
+    <div className={`relative h-[44px] flex items-end justify-between px-7 pb-1.5 ${c} select-none`}>
+      <div className="text-[15px] font-semibold tracking-tight w-16">6:07</div>
+      <div className="absolute left-1/2 -translate-x-1/2 top-2 w-[92px] h-[30px] bg-black rounded-full flex items-center justify-center">
+        <div className="w-3 h-3 rounded-full bg-[#0c2a1c] ring-1 ring-[#1c3] mr-1"/>
+      </div>
+      <div className="flex items-center gap-1.5 w-16 justify-end">
+        <svg viewBox="0 0 18 12" className="w-[17px] h-3" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1" opacity=".4"/><rect x="15" y="1" width="3" height="11" rx="1" opacity=".4"/></svg>
+        <span className="text-[12px] font-semibold">5G</span>
+        <svg viewBox="0 0 26 13" className="w-[25px] h-[13px]"><rect x="1" y="2" width="21" height="9" rx="2.5" stroke="currentColor" strokeWidth="1" fill="none" opacity=".5"/><rect x="23" y="5" width="2" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="3" y="4" width="11" height="5" rx="1.2" fill="#F5C84B"/></svg>
+      </div>
+    </div>
+  );
+}
+function TabBar({tab,setTab}){
+  const items=[['home','Головна',I.home],['catalog','Каталог',I.book],['cart','Кошик',I.cart],['profile','Профіль',I.user]];
+  return (
+    <div className="absolute bottom-0 inset-x-0 h-[84px] bg-white border-t border-cardLine pt-2.5 px-3 flex justify-around">
+      {items.map(([k,label,Ic])=>{
+        const a = tab===k;
+        return (
+          <button key={k} onClick={()=>setTab(k)} className="flex flex-col items-center gap-1.5 w-16">
+            <Ic className={`w-[26px] h-[26px] ${a?'text-brand':'text-tabq'}`}/>
+            <span className={`text-[11px] ${a?'text-brand font-semibold':'text-tabq'}`}>{label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+const SearchBar = ({on})=> (
+  <div className={`flex items-center gap-2 bg-white rounded-2xl h-[46px] px-4 ${on?'shadow-sm':''}`}>
+    <I.search className="w-[18px] h-[18px] text-muted"/>
+    <span className="text-[15px] text-muted">Пошук від 3-х символів</span>
+  </div>
+);
+
+/* ───────────────────────── Data ───────────────────────── */
+const CATS=[['Насіння',I.seed,'seeds'],['Засоби захисту рослин',I.shield],['Добрива та МКД',I.flask],['Паливо',I.fuel]];
+const FILTERS=[['Виробники','manufacturers'],['Культура','culture'],['Група стиглості','maturity'],['Технології вирощування','tech']];
+const LISTS={
+  manufacturers:{title:'Виробники',items:['ALTA SEEDS','Arena Seeds','BASF','Best Seeds','Betaseed','Brevant','DEKALB','Farmsaat','KWS','LABOULET'],i:false},
+  culture:{title:'Культура',items:['Боби кінські','Буряк цукровий','Гірчиця біла','Горох посівний (зерновий)','Горох посівний (озимий)','Гречка їстівна','Жито посівне (озиме)','Кукурудза звичайна','Льон звичайний, довгунець','Льон низький (олійний, кудряш)'],i:true},
+  maturity:{title:'Група стиглості',items:['скоростиглий','середньостиглий','середньоранній','середньопізній','ранньостиглий','ранній','пізньостиглий','середній','ультраранній','пізній'],i:false},
+  tech:{title:'Технології вирощування',items:['A.I.R.','Classic','Clearfield Plus','Express','Clearfield'],i:false},
+};
+
+/* Mock catalog used by the Agro-Vision "prescription" (stands in for 20k+ Salesforce SKU) */
+const SCENARIOS = {
+  corn:{ emoji:'🌽', crop:'Кукурудза звичайна (Zea mays)', cropConf:97,
+    problem:'Іржа кукурудзи', problemLat:'Puccinia sorghi', kind:'Хвороба', conf:91,
+    signs:'Овальні іржасто-коричневі пустули на верхньому й нижньому боці листка; за сильного ураження — передчасне всихання листя.',
+    notes:'Економічний поріг — ураження >5% листкової поверхні у фазі 6–8 листків. Рекомендована обробка фунгіцидом + повторний моніторинг через 10–14 днів. Врахувати сівозміну: уникати повернення кукурудзи на поле раніше ніж через 2 роки.',
+    rx:[
+      {n:'Capt Pro 325 SC',t:'Фунгіцид (азоксистробін + ципроконазол)',d:'0,8–1,0 л/га',v:'BASF',stock:'В наявності — Київський склад'},
+      {n:'Mancozeb 800 WP',t:'Фунгіцид контактний',d:'2,0–2,5 кг/га',v:'Arena Seeds',stock:'В наявності — Львівський склад'},
+      {n:'Аденін Mn+Zn',t:'Мікродобриво (лист.)',d:'1,5 л/га',v:'KWS',stock:'Під замовлення (3–5 днів)'},
+    ]},
+  sun:{ emoji:'🌻', crop:'Соняшник однорічний (Helianthus annuus)', cropConf:95,
+    problem:'Попелиця на соняшнику', problemLat:'Aphis fabae', kind:'Шкідник', conf:88,
+    signs:'Колонії попелиці на нижньому боці листя та на кошику; деформація й скручування верхніх листків, медвяна роса.',
+    notes:'Поріг шкодочинності — 20% заселених рослин. Бажано вечірнє внесення для збереження запилювачів. Перевірити сумісність із бороною; повторний облік за 7 днів.',
+    rx:[
+      {n:'Karate Zeon 050 CS',t:'Інсектицид (лямбда-цигалотрин)',d:'0,15–0,2 л/га',v:'Brevant',stock:'В наявності — Київський склад'},
+      {n:'Bi-58 New',t:'Інсектицид системний',d:'0,5–1,0 л/га',v:'BASF',stock:'В наявності — Дніпровський склад'},
+      {n:'ПАР Liposam',t:'Прилипач',d:'0,3 л/га',v:'Best Seeds',stock:'В наявності'},
+    ]},
+  wheat:{ emoji:'🌾', crop:'Пшениця озима (Triticum aestivum)', cropConf:96,
+    problem:'Лобода біла (бур’ян у посіві)', problemLat:'Chenopodium album', kind:'Бур’ян', conf:90,
+    signs:'Сходи широколистого бур’яну у міжряддях, конкуренція за вологу й живлення у фазі кущіння пшениці.',
+    notes:'Оптимальне вікно — 2–4 листки бур’яну, фаза кущіння культури. Врахувати технологію: для Clearfield-полів обрати імідазоліноновий гербіцид. Контроль через 12–15 днів.',
+    rx:[
+      {n:'Granstar Pro 75',t:'Гербіцид (трибенурон-метил)',d:'20–25 г/га',v:'DEKALB',stock:'В наявності — Київський склад'},
+      {n:'Lancelot 450 WG',t:'Гербіцид (аміно-піралід + флорасулам)',d:'30–33 г/га',v:'Farmsaat',stock:'Під замовлення (2–4 днів)'},
+      {n:'ПАР Trend 90',t:'Поверхнево-активна речовина',d:'0,1%',v:'LABOULET',stock:'В наявності'},
+    ]},
+};
+
+/* ───────────────────────── Screens ───────────────────────── */
+function Home({setTab,openAI,role,setRole}){
+  const roles=[['Фермер','#F6CF6B'],['Консультант','#7F94F6'],['А я так','#AEB7D6']];
+  return (
+    <div className="absolute inset-0 bg-bg overflow-y-auto noscroll pb-[96px]">
+      <div className="bg-brand pb-7 rounded-b-[26px]">
+        <StatusBar/>
+        <div className="flex items-center justify-between px-5 mt-1.5">
+          <div className="text-white text-[13px] font-medium tracking-tight">1 USD = 44.0735 UAH • 1 EUR = 51.4999 UAH</div>
+          <I.bell className="w-[22px] h-[22px] text-white shrink-0"/>
+        </div>
+        <div className="px-4 mt-4"><SearchBar/></div>
+      </div>
+
+      <div className="px-4 mt-4 space-y-3.5">
+        <button onClick={()=>setTab('catalog')} className="w-full text-left bg-cream rounded-2xl p-4 pr-2 flex items-center justify-between overflow-hidden">
+          <div>
+            <div className="text-[19px] font-bold text-[#C98A3A]">Каталог</div>
+            <div className="text-[13px] text-[#C9A877] mt-1">Насіння, агрохімія та паливо</div>
+          </div>
+          <div className="text-5xl pr-2">🌻</div>
+        </button>
+
+        <div className="bg-mint rounded-2xl p-4 flex items-center justify-between h-[84px]">
+          <div className="text-[18px] font-bold text-[#3FA98B]">Акції</div>
+          <div className="text-4xl">🏷️</div>
+        </div>
+
+        {/* Agro-Vision AI — the demo's flagship Block А feature */}
+        <button onClick={openAI} className="w-full text-left rounded-2xl p-4 bg-gradient-to-br from-brand to-[#6B7CFF] text-white flex items-center justify-between shadow-md pop">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center"><I.cam className="w-6 h-6 text-white"/></div>
+            <div>
+              <div className="text-[17px] font-bold flex items-center gap-1.5">Agro-Vision AI <I.spark className="w-4 h-4"/></div>
+              <div className="text-[12px] text-white/85 mt-0.5">Сфотографуйте рослину — діагноз за 5 сек</div>
+            </div>
+          </div>
+          <I.chevR className="w-5 h-5 text-white/80"/>
+        </button>
+
+        <div className="bg-[#E9EBF0] rounded-2xl px-4 py-5 mt-1">
+          <div className="text-center text-[19px] font-extrabold text-ink">Вітаємо!</div>
+          <div className="text-center text-[13px] text-muted mt-0.5 mb-4">Оберіть, хто Ви:</div>
+          <div className="flex justify-around">
+            {roles.map(([n,c])=>(
+              <button key={n} onClick={()=>setRole(n)} className="flex flex-col items-center gap-2">
+                <div className="w-[68px] h-[68px] rounded-full flex items-center justify-center text-3xl transition-transform"
+                  style={{background:c, outline: role===n?'3px solid #3D5BFE':'none', outlineOffset:'3px'}}>
+                  {n==='Фермер'?'👨‍🌾':n==='Консультант'?'💁':'🙂'}
+                </div>
+                <span className="text-[13px] text-brand font-medium">{n}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Catalog({openSeeds}){
+  return (
+    <div className="absolute inset-0 bg-bg overflow-y-auto noscroll pb-[96px]">
+      <StatusBar dark/>
+      <div className="text-center text-[17px] font-semibold text-ink pb-3">Каталог</div>
+      <div className="px-4"><div className="bg-white rounded-2xl h-[46px] flex items-center gap-2 px-4"><I.search className="w-[18px] h-[18px] text-muted"/><span className="text-[15px] text-muted">Пошук від 3-х символів</span></div></div>
+      <div className="px-4 mt-4 bg-white rounded-2xl mx-4 divide-y divide-cardLine">
+        {CATS.map(([label,Ic,go])=>(
+          <button key={label} onClick={()=> go==='seeds' && openSeeds()} className="w-full flex items-center gap-3.5 px-4 h-[58px]">
+            <Ic className="w-[22px] h-[22px] text-brand"/>
+            <span className="flex-1 text-left text-[15px] text-ink">{label}</span>
+            <I.chevR className="w-[18px] h-[18px] text-muted"/>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Cart(){
+  return (
+    <div className="absolute inset-0 bg-bg overflow-y-auto noscroll pb-[96px]">
+      <StatusBar dark/>
+      <div className="text-center text-[17px] font-semibold text-ink pb-3">Кошик</div>
+      <div className="flex flex-col items-center justify-center px-7" style={{height:'calc(100% - 150px)'}}>
+        <div className="w-[120px] h-[120px] rounded-full border-[3px] border-brand/30 flex items-center justify-center mb-7">
+          <div className="w-[92px] h-[92px] rounded-full bg-brand/10 flex items-center justify-center"><I.user className="w-12 h-12 text-brand"/></div>
+        </div>
+        <div className="text-[21px] font-extrabold text-ink">Ви увійшли як гість</div>
+        <div className="text-[14px] text-muted text-center mt-2 mb-8">Бажаєте увійти в акаунт або зареєструватись?</div>
+        <button className="w-full h-[52px] rounded-2xl bg-brand text-white text-[16px] font-semibold mb-3">Увійти</button>
+        <button className="w-full h-[52px] rounded-2xl bg-white text-brand text-[16px] font-semibold shadow-sm">Зареєструватись</button>
+      </div>
+    </div>
+  );
+}
+
+function Profile(){
+  return (
+    <div className="absolute inset-0 bg-bg">
+      <StatusBar dark/>
+      <div className="text-center text-[17px] font-semibold text-ink pb-3">Профіль</div>
+      <div className="flex flex-col items-center justify-center h-[55%] text-muted px-8 text-center">
+        <I.user className="w-14 h-14 mb-3 opacity-40"/>
+        <div className="text-[14px]">Демо-екран. У продакшені — налаштування акаунта, господарства («Угіддя») та історія замовлень.</div>
+      </div>
+    </div>
+  );
+}
+
+function SeedsFilter({back,openModal,selected}){
+  return (
+    <div className="absolute inset-0 bg-bg overflow-y-auto noscroll pb-[96px]">
+      <StatusBar dark/>
+      <div className="relative flex items-center justify-center pb-3">
+        <button onClick={back} className="absolute left-4 text-ink"><I.back className="w-6 h-6"/></button>
+        <div className="text-[17px] font-semibold text-ink">Насіння</div>
+      </div>
+      <div className="px-4"><div className="bg-white rounded-2xl h-[46px] flex items-center gap-2 px-4"><I.search className="w-[18px] h-[18px] text-muted"/><span className="text-[15px] text-muted">Пошук від 3-х символів</span></div></div>
+      <div className="flex items-center justify-between px-5 mt-5 mb-2">
+        <span className="text-[13px] text-muted">862 товари</span>
+        <span className="text-[13px] text-lav font-medium">Очистити</span>
+      </div>
+      <div className="bg-white mx-4 rounded-2xl divide-y divide-cardLine">
+        {FILTERS.map(([label,key])=>(
+          <button key={key} onClick={()=>openModal(key)} className="w-full flex items-center px-4 h-[64px]">
+            <div className="flex-1 text-left">
+              <div className="text-[15px] text-ink">{label}</div>
+              <div className="text-[12px] text-muted mt-0.5">{selected[key]?.length? selected[key].join(', ') : 'Не вибрано'}</div>
+            </div>
+            <I.chevR className="w-[18px] h-[18px] text-muted"/>
+          </button>
+        ))}
+      </div>
+      <div className="px-4 mt-7">
+        <button onClick={back} className="w-full h-[52px] rounded-2xl bg-brand text-white text-[16px] font-semibold">Переглянути (862)</button>
+      </div>
+    </div>
+  );
+}
+
+function FilterModal({k,close,selected,setSelected}){
+  const L=LISTS[k]; const cur=selected[k]||[];
+  const [pick,setPick]=useState(cur);
+  const toggle=(it)=> setPick(p=> p.includes(it)? p.filter(x=>x!==it):[...p,it]);
+  return (
+    <div className="absolute inset-0 z-30 flex flex-col justify-end">
+      <div className="absolute inset-0 bg-black/35" onClick={close}/>
+      <div className="relative bg-white rounded-t-[22px] h-[88%] flex flex-col sheet-in">
+        <div className="relative flex items-center justify-center pt-4 pb-3 border-b border-cardLine">
+          <button onClick={close} className="absolute left-5 text-ink"><I.x className="w-[22px] h-[22px]"/></button>
+          <div className="text-[16px] font-semibold text-ink px-10 text-center truncate">{L.title}</div>
+          <button onClick={()=>setPick([])} className="absolute right-5 text-[14px] text-lav font-medium">Очистити</button>
+        </div>
+        <div className="px-4 pt-3"><div className="bg-bg rounded-xl h-[44px] flex items-center gap-2 px-4"><I.search className="w-[17px] h-[17px] text-muted"/><span className="text-[14px] text-muted">Пошук від 3-х символів</span></div></div>
+        <div className="flex-1 overflow-y-auto noscroll px-5 mt-1">
+          {L.items.map(it=>{
+            const on=pick.includes(it);
+            return (
+              <button key={it} onClick={()=>toggle(it)} className="w-full flex items-center justify-between py-[14px] border-b border-cardLine text-left">
+                <span className={`text-[15px] text-ink ${L.i?'italic':''}`}>{it}</span>
+                {on && <div className="w-[22px] h-[22px] rounded-md bg-brand flex items-center justify-center"><I.check className="w-[14px] h-[14px] text-white"/></div>}
+              </button>
+            );
+          })}
+          <div className="h-24"/>
+        </div>
+        <div className="p-4 border-t border-cardLine">
+          <button disabled={!pick.length} onClick={()=>{setSelected(s=>({...s,[k]:pick}));close();}}
+            className={`w-full h-[52px] rounded-2xl text-[16px] font-semibold text-white ${pick.length?'bg-brand':'bg-lav'}`}>
+            Підтвердити вибір{pick.length?` (${pick.length})`:''}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ───────── Agro-Vision AI (Block А): photo → diagnosis → SKU prescription ───────── */
+function AgroVision({close,role}){
+  const [stage,setStage]=useState('intro'); // intro | loading | result
+  const [scn,setScn]=useState(null);
+  const [img,setImg]=useState(null);
+  const fileRef=useRef();
+  const run=(key,dataUrl)=>{ setScn(key); setImg(dataUrl||null); setStage('loading');
+    setTimeout(()=>setStage('result'), 2200); };
+  const onFile=e=>{ const f=e.target.files?.[0]; if(!f) return;
+    const r=new FileReader(); r.onload=()=>run('corn',r.result); r.readAsDataURL(f); };
+  const S = scn? SCENARIOS[scn] : null;
+
+  return (
+    <div className="absolute inset-0 z-40 bg-white flex flex-col fade-in">
+      <div className="bg-gradient-to-br from-brand to-[#6B7CFF] text-white">
+        <StatusBar/>
+        <div className="relative flex items-center justify-center pb-3">
+          <button onClick={close} className="absolute left-4 text-white"><I.back className="w-6 h-6"/></button>
+          <div className="text-[16px] font-bold flex items-center gap-1.5">Agro-Vision AI <I.spark className="w-4 h-4"/></div>
+          <span className="absolute right-4 text-[10px] bg-white/20 px-2 py-1 rounded-full font-semibold">DEMO · MOCK AI</span>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto noscroll">
+        {stage==='intro' && (
+          <div className="p-5 fade-in">
+            <div className="rounded-2xl border-2 border-dashed border-brand/30 bg-brand/5 p-7 flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full bg-brand/10 flex items-center justify-center mb-3"><I.cam className="w-8 h-8 text-brand"/></div>
+              <div className="text-[17px] font-bold text-ink">Сфотографуйте рослину</div>
+              <div className="text-[13px] text-muted mt-1.5 mb-5">AI визначить культуру, шкідника, бур’ян чи хворобу та видасть «рецепт» із каталогу (20k+ SKU, дозволених в Україні), з урахуванням наявності на складах.</div>
+              <button onClick={()=>fileRef.current.click()} className="w-full h-[50px] rounded-2xl bg-brand text-white text-[15px] font-semibold flex items-center justify-center gap-2 mb-2">
+                <I.upload className="w-5 h-5"/> Завантажити фото
+              </button>
+              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFile}/>
+              <div className="text-[12px] text-muted">або оберіть демо-сценарій:</div>
+            </div>
+            <div className="grid grid-cols-3 gap-2.5 mt-4">
+              {[['corn','🌽','Кукурудза'],['sun','🌻','Соняшник'],['wheat','🌾','Пшениця']].map(([k,e,n])=>(
+                <button key={k} onClick={()=>run(k)} className="rounded-xl border border-cardLine bg-white py-4 flex flex-col items-center gap-1.5 active:bg-bg">
+                  <span className="text-3xl">{e}</span><span className="text-[12px] text-ink font-medium">{n}</span>
+                </button>
+              ))}
+            </div>
+            <div className="mt-5 rounded-xl bg-bg p-3.5 text-[11.5px] text-muted leading-relaxed">
+              <b className="text-ink">Як це працює:</b> фото → мультимодальна LLM (Claude) визначає об’єкт → запит у каталог (RAG) → структурований «рецепт» рівня Senior-агронома. Деталі архітектури — у <b>HOWITWORKS.md</b>.
+            </div>
+          </div>
+        )}
+
+        {stage==='loading' && (
+          <div className="p-5 flex flex-col items-center justify-center h-full text-center fade-in">
+            {img && <img src={img} className="w-40 h-40 object-cover rounded-2xl mb-5 ring-1 ring-cardLine"/>}
+            <svg viewBox="0 0 24 24" className="w-9 h-9 text-brand spin mb-4" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.4" opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg>
+            <div className="text-[16px] font-bold text-ink">AI аналізує зображення…</div>
+            <div className="text-[12.5px] text-muted mt-1.5 space-y-0.5">
+              <div>● Розпізнавання культури</div><div>● Діагностика шкідника / хвороби</div><div>● Підбір препаратів із каталогу</div>
+            </div>
+            <div className="w-44 h-1.5 bg-bg rounded-full mt-5 overflow-hidden"><div className="h-full bg-brand rounded-full bar"/></div>
+          </div>
+        )}
+
+        {stage==='result' && S && (
+          <div className="p-4 pb-8 space-y-3.5 fade-in">
+            {img && <img src={img} className="w-full h-40 object-cover rounded-2xl ring-1 ring-cardLine"/>}
+            <div className="rounded-2xl bg-mint p-4">
+              <div className="text-[11px] font-semibold text-[#3FA98B] uppercase tracking-wide">Культуру визначено</div>
+              <div className="text-[17px] font-bold text-ink mt-1 flex items-center gap-2"><span className="text-2xl">{S.emoji}</span>{S.crop}</div>
+              <div className="text-[12px] text-[#3FA98B] mt-1">Впевненість: {S.cropConf}%</div>
+            </div>
+
+            <div className="rounded-2xl border border-[#F0C9C0] bg-[#FDF1ED] p-4">
+              <div className="flex items-center gap-2 text-[#C2502F]"><I.alert className="w-[18px] h-[18px]"/><span className="text-[11px] font-bold uppercase tracking-wide">{S.kind} · впевненість {S.conf}%</span></div>
+              <div className="text-[17px] font-bold text-ink mt-1.5">{S.problem}</div>
+              <div className="text-[12px] italic text-muted">{S.problemLat}</div>
+              <div className="text-[13px] text-ink/80 mt-2 leading-relaxed">{S.signs}</div>
+            </div>
+
+            <div>
+              <div className="text-[14px] font-bold text-ink mb-2 flex items-center gap-1.5"><I.leaf className="w-[18px] h-[18px] text-brand"/>«Рецепт» — рекомендовані препарати</div>
+              <div className="space-y-2.5">
+                {S.rx.map((r,i)=>(
+                  <div key={i} className="rounded-xl border border-cardLine bg-white p-3.5">
+                    <div className="flex justify-between items-start">
+                      <div className="text-[15px] font-bold text-ink">{r.n}</div>
+                      <div className="text-[11px] bg-brand/10 text-brand font-semibold px-2 py-1 rounded-full whitespace-nowrap ml-2">{r.v}</div>
+                    </div>
+                    <div className="text-[12.5px] text-muted mt-0.5">{r.t}</div>
+                    <div className="flex items-center justify-between mt-2.5 text-[12.5px]">
+                      <span className="text-ink"><b>Норма:</b> {r.d}</span>
+                      <span className={`flex items-center gap-1 ${r.stock.startsWith('В наявності')?'text-[#0A7C45]':'text-[#C98A3A]'}`}>
+                        <span className="w-1.5 h-1.5 rounded-full" style={{background:'currentColor'}}/>{r.stock}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-bg p-4">
+              <div className="text-[12px] font-bold text-ink mb-1">Агрономічний коментар{role?` · для ролі «${role}»`:''}</div>
+              <div className="text-[12.5px] text-ink/75 leading-relaxed">{S.notes}</div>
+            </div>
+
+            <div className="flex gap-2.5">
+              <button onClick={()=>setStage('intro')} className="flex-1 h-[50px] rounded-2xl border border-brand text-brand text-[15px] font-semibold">Інше фото</button>
+              <button className="flex-1 h-[50px] rounded-2xl bg-brand text-white text-[15px] font-semibold">Додати в кошик</button>
+            </div>
+            <div className="text-[11px] text-muted text-center">Демо-дані. У продакшені «рецепт» формується з реального каталогу Salesforce + залишків складів.</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────────── App ───────────────────────── */
+function App(){
+  const [tab,setTab]=useState('home');
+  const [screen,setScreen]=useState(null);    // null | 'seeds'
+  const [modal,setModal]=useState(null);      // null | filter key
+  const [ai,setAI]=useState(false);
+  const [role,setRole]=useState(null);
+  const [selected,setSelected]=useState({});
+
+  let body;
+  if(screen==='seeds') body=<SeedsFilter back={()=>setScreen(null)} openModal={setModal} selected={selected}/>;
+  else if(tab==='home') body=<Home setTab={setTab} openAI={()=>setAI(true)} role={role} setRole={setRole}/>;
+  else if(tab==='catalog') body=<Catalog openSeeds={()=>setScreen('seeds')}/>;
+  else if(tab==='cart') body=<Cart/>;
+  else body=<Profile/>;
+
+  return (
+    <div className="min-h-screen w-full flex flex-col items-center justify-center py-6 px-4">
+      <div className="text-center mb-4">
+        <div className="text-[15px] font-bold text-ink">AgroPlatforma — iOS UI Demo <span className="text-brand">+ Agro-Vision AI</span></div>
+        <div className="text-[12px] text-slate-500 mt-0.5">deviewai · клікабельний прототип для дзвінка · натисніть синю картку «Agro-Vision AI»</div>
+      </div>
+      {/* iPhone frame */}
+      <div className="relative" style={{width:'390px',height:'844px'}}>
+        <div className="absolute -inset-[12px] rounded-[64px] bg-[#1d1f26] shadow-2xl"/>
+        <div className="absolute -inset-[2px] rounded-[54px] bg-black"/>
+        <div className="relative w-full h-full rounded-[52px] overflow-hidden bg-bg">
+          {body}
+          {!ai && !screen && <TabBar tab={tab} setTab={(t)=>{setTab(t);setScreen(null);}}/>}
+          {screen==='seeds' && !modal && !ai && <TabBar tab={'catalog'} setTab={(t)=>{setTab(t);setScreen(null);}}/>}
+          {modal && <FilterModal k={modal} close={()=>setModal(null)} selected={selected} setSelected={setSelected}/>}
+          {ai && <AgroVision close={()=>setAI(false)} role={role}/>}
+          <div className="absolute bottom-2 inset-x-0 flex justify-center pointer-events-none z-50"><div className="w-[134px] h-[5px] rounded-full bg-black/30"/></div>
+        </div>
+      </div>
+      <div className="text-[11px] text-slate-400 mt-4 text-center max-w-[390px]">8 екранів зі скріншотів відтворено 1:1 · Блок А (Agro-Vision) — робочий мок · реальне підключення Claude API описано в HOWITWORKS.md</div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

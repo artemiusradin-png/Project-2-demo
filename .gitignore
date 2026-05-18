@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Word temp files
+~$*
+
+# BMAD personal config (each teammate generates their own)
+_bmad/config.user.toml
+_bmad/custom/config.user.toml
+
+# Node
+node_modules/
+
+# Environment
+.env
+.env.local
