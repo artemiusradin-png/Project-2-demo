@@ -224,16 +224,22 @@ body {
 .thinking-label { font-size: 13px; color: #8e8e93; }
 
 /* ── BLOCK A ── */
-.camera-area { margin: 14px 16px; background: #1a1a1a; border-radius: 20px; overflow: hidden; position: relative; height: 200px; display: flex; align-items: center; justify-content: center; }
-.camera-overlay { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.4) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: white; cursor: pointer; }
+.camera-area { margin: 14px 16px; background: #1a1a1a; border-radius: 20px; overflow: hidden; position: relative; height: 220px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.camera-area img.crop-photo { width: 100%; height: 100%; object-fit: cover; display: none; }
+.camera-area img.crop-photo.visible { display: block; }
+.camera-overlay { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.5) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: white; }
+.camera-overlay.hidden { display: none; }
 .camera-corners::before,.camera-corners::after { content: ''; position: absolute; width: 24px; height: 24px; border-color: white; border-style: solid; }
-.camera-corners::before { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
-.camera-corners::after { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+.camera-corners::before { top: 16px; left: 16px; border-width: 2px 0 0 2px; }
+.camera-corners::after { top: 16px; right: 16px; border-width: 2px 2px 0 0; }
 .camera-icon { font-size: 40px; }
 .camera-label { font-size: 14px; font-weight: 600; }
 .camera-sublabel { font-size: 11px; opacity: 0.7; }
-.vision-sample { flex-shrink: 0; width: 70px; height: 70px; border-radius: 12px; background: #e8f5e9; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
-.vision-sample.selected { border-color: #2B5CE6; background: #e3f2fd; }
+.photo-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.75)); padding: 20px 14px 10px; color: white; font-size: 12px; font-weight: 700; display: none; }
+.photo-caption.visible { display: block; }
+.vision-sample { flex-shrink: 0; width: 70px; height: 70px; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; background: #e8f5e9; }
+.vision-sample img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vision-sample.selected { border-color: #2B5CE6; box-shadow: 0 0 0 2px rgba(43,92,230,0.3); }
 .vision-result { margin: 0 16px 20px; display: none; }
 .vision-result.visible { display: block; animation: slideUp 0.4s ease; }
 .diagnosis-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 10px; }
@@ -509,33 +515,35 @@ body {
               <div class="header-sub">AI-діагностика · 20k SKU · Рецепт за 5 сек</div>
             </div>
             <div class="camera-area" id="camera-box" onclick="startScan()">
+              <img class="crop-photo" id="crop-photo" src="" alt=""/>
               <div class="camera-overlay" id="camera-overlay">
                 <div class="camera-corners"></div>
                 <div class="camera-icon">📷</div>
                 <div class="camera-label">Зробити фото</div>
                 <div class="camera-sublabel">або оберіть приклад нижче</div>
               </div>
-              <div id="scanning-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;flex-direction:column;gap:10px;color:white;">
+              <div id="scanning-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;flex-direction:column;gap:10px;color:white;">
                 <div class="scanning-ring"></div>
                 <div style="font-size:13px;font-weight:600;margin-top:60px;">🤖 Аналізую зображення...</div>
               </div>
+              <div class="photo-caption" id="photo-caption"></div>
             </div>
             <div style="padding:0 16px 6px;font-size:12px;font-weight:600;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">Приклади полів</div>
             <div style="display:flex;gap:8px;padding:0 16px 14px;overflow-x:auto;">
               <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-                <div class="vision-sample" id="s1" onclick="selectSample('s1')">🌽</div>
+                <div class="vision-sample" id="s1" onclick="selectSample('s1')"><img src="images/s1-corn.jpg" alt="Кукурудза"/></div>
                 <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Кукурудза</span>
               </div>
               <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-                <div class="vision-sample" id="s2" onclick="selectSample('s2')">🌻</div>
+                <div class="vision-sample" id="s2" onclick="selectSample('s2')"><img src="images/s2-sunflower.jpg" alt="Соняшник"/></div>
                 <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Соняшник</span>
               </div>
               <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-                <div class="vision-sample" id="s3" onclick="selectSample('s3')">🌾</div>
+                <div class="vision-sample" id="s3" onclick="selectSample('s3')"><img src="images/s3-wheat.jpg" alt="Пшениця"/></div>
                 <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Пшениця</span>
               </div>
               <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-                <div class="vision-sample" id="s4" onclick="selectSample('s4')">🌿</div>
+                <div class="vision-sample" id="s4" onclick="selectSample('s4')"><img src="images/s4-rapeseed.jpg" alt="Ріпак"/></div>
                 <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Ріпак</span>
               </div>
             </div>
@@ -760,15 +768,36 @@ const sampleData = {
   s4: { icon:'🌿', title:'Склеротиніоз ріпаку', latin:'Sclerotinia sclerotiorum', conf:88, detail:'Білий ватоподібний наліт на стеблах, склероції. Ризик втрати 30-40% врожаю. Обробка обов\'язкова до закінчення цвітіння.', sku1n:'Коронет 300 SC', sku1d:'Фунгіцид · 1.5 л/га · Nufarm', sku1p:'₴1,980/л', sku2n:'Іпродіон 500 SC', sku2d:'Аналог · -20% ціна · На складі', sku2p:'₴1,420/л' },
 };
 
+const sampleImages = {
+  s1: 'images/s1-corn.jpg',
+  s2: 'images/s2-sunflower.jpg',
+  s3: 'images/s3-wheat.jpg',
+  s4: 'images/s4-rapeseed.jpg',
+};
+
 function selectSample(id) {
   document.querySelectorAll('.vision-sample').forEach(s => s.classList.remove('selected'));
   document.getElementById(id).classList.add('selected');
   const d = sampleData[id];
+
+  // Show the photo immediately in camera area
+  const photo = document.getElementById('crop-photo');
+  photo.src = sampleImages[id];
+  photo.classList.add('visible');
+  document.getElementById('camera-overlay').classList.add('hidden');
+  document.getElementById('photo-caption').textContent = '';
+  document.getElementById('photo-caption').classList.remove('visible');
+
   document.getElementById('vision-result').classList.remove('visible');
   const ov = document.getElementById('scanning-overlay');
   ov.style.display = 'flex';
+
   setTimeout(() => {
     ov.style.display = 'none';
+    // Show caption on photo
+    document.getElementById('photo-caption').textContent = d.title;
+    document.getElementById('photo-caption').classList.add('visible');
+
     document.getElementById('diag-icon').textContent = d.icon;
     document.getElementById('diag-title').textContent = d.title;
     document.getElementById('diag-latin').textContent = d.latin;
@@ -791,8 +820,9 @@ function selectSample(id) {
 
 function startScan() {
   const sel = document.querySelector('.vision-sample.selected');
-  selectSample(sel ? sel.id : 's1');
-  if (!sel) document.getElementById('s1').classList.add('selected');
+  if (sel) { selectSample(sel.id); return; }
+  document.getElementById('s1').classList.add('selected');
+  selectSample('s1');
 }
 
 // Block E
