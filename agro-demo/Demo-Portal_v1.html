@@ -297,6 +297,57 @@ body {
 .vendor-thinking { display: none; padding: 16px; flex-direction: column; align-items: center; gap: 10px; }
 .vendor-thinking.visible { display: flex; }
 
+/* ── CART ── */
+.cart-icon-wrap { position: relative; display: inline-block; }
+.cart-badge {
+  position: absolute; top: -4px; right: -6px;
+  background: #E53935; color: white; font-size: 9px; font-weight: 800;
+  min-width: 16px; height: 16px; border-radius: 8px;
+  display: none; align-items: center; justify-content: center;
+  padding: 0 3px; line-height: 1;
+}
+.cart-badge.visible { display: flex; }
+.cart-empty { padding: 60px 24px; text-align: center; color: #8e8e93; }
+.cart-empty-icon { font-size: 60px; margin-bottom: 12px; }
+.cart-empty-title { font-size: 17px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
+.cart-empty-sub { font-size: 13px; line-height: 1.5; }
+.cart-item {
+  background: white; margin: 0 16px 8px; border-radius: 14px;
+  padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.06);
+}
+.cart-item-icon { font-size: 30px; flex-shrink: 0; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+.cart-item-desc { font-size: 11px; color: #8e8e93; }
+.cart-item-price { font-size: 13px; font-weight: 800; color: #1B5E20; margin-top: 4px; }
+.cart-qty-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.qty-btn {
+  width: 28px; height: 28px; border-radius: 8px; border: 1.5px solid #e0e0e0;
+  background: white; font-size: 16px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; font-family: inherit; color: #1a1a1a;
+  transition: all 0.15s;
+}
+.qty-btn:active { background: #f0f0f0; }
+.qty-num { font-size: 14px; font-weight: 700; color: #1a1a1a; min-width: 20px; text-align: center; }
+.cart-remove { margin-left: auto; font-size: 18px; cursor: pointer; color: #c7c7cc; padding: 4px; }
+.cart-summary {
+  margin: 8px 16px 0; background: white; border-radius: 14px;
+  padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+.cart-summary-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: #444; }
+.cart-summary-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: 800; color: #1a1a1a; padding-top: 10px; margin-top: 6px; border-top: 1.5px solid #f0f0f0; }
+.btn-checkout {
+  width: calc(100% - 32px); margin: 14px 16px 20px; padding: 16px;
+  background: linear-gradient(135deg, #43A047, #1B5E20);
+  color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700;
+  cursor: pointer; font-family: inherit; box-shadow: 0 4px 14px rgba(27,94,32,0.3);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-checkout:active { opacity: 0.85; }
+.order-success { margin: 16px; background: #E8F5E9; border-radius: 14px; padding: 20px; text-align: center; display: none; }
+.order-success.visible { display: block; animation: slideUp 0.4s ease; }
+
 /* ── Misc ── */
 .up { color: #2E7D32; }
 .down { color: #C62828; }
@@ -401,7 +452,7 @@ body {
           <div class="bottom-nav">
             <button class="nav-item active" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
             <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
-            <button class="nav-item" onclick="showToast('🛒','Кошик','Кошик порожній')"><span class="nav-icon">🛒</span><span>Кошик</span></button>
+            <button class="nav-item" onclick="navTo('screen-cart')"><span class="nav-icon cart-icon-wrap">🛒<span class="cart-badge" id="cart-badge"></span></span><span>Кошик</span></button>
             <button class="nav-item" onclick="showToast('👤','Профіль','Консультант · Степан')"><span class="nav-icon">👤</span><span>Профіль</span></button>
             <div class="home-indicator"></div>
           </div>
@@ -560,15 +611,15 @@ body {
                 <div class="diagnosis-body">
                   <div class="diag-detail" id="diag-detail">Виявлено ознаки фузаріозу стебла. Рекомендовано термінове обприскування.</div>
                   <div class="rec-title">🧪 Рекомендації з каталогу (20k SKU)</div>
-                  <div class="sku-card" onclick="showToast('🛒','Додано','Амістар Екстра · 1 л')">
+                  <div class="sku-card" onclick="addSkuToCart(1)">
                     <div class="sku-icon">🧪</div>
                     <div class="sku-info"><div class="sku-name" id="sku1-name">Амістар Екстра 280 SC</div><div class="sku-desc" id="sku1-desc">Фунгіцид · 0.75 л/га · Syngenta</div></div>
-                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><div class="sku-price" id="sku1-price">₴2,840/л</div><button class="btn-add-cart">+ Кошик</button></div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><div class="sku-price" id="sku1-price">₴2,840/л</div><button class="btn-add-cart" onclick="event.stopPropagation();addSkuToCart(1)">+ Кошик</button></div>
                   </div>
-                  <div class="sku-card" onclick="showToast('🛒','Додано','Пропіконазол · 1 л')">
+                  <div class="sku-card" onclick="addSkuToCart(2)">
                     <div class="sku-icon">💊</div>
                     <div class="sku-info"><div class="sku-name" id="sku2-name">Пропіконазол 25% EC</div><div class="sku-desc" id="sku2-desc">Аналог · -22% ціна · На складі</div></div>
-                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><div class="sku-price" id="sku2-price">₴1,980/л</div><button class="btn-add-cart">+ Кошик</button></div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><div class="sku-price" id="sku2-price">₴1,980/л</div><button class="btn-add-cart" onclick="event.stopPropagation();addSkuToCart(2)">+ Кошик</button></div>
                   </div>
                 </div>
               </div>
@@ -665,6 +716,58 @@ body {
           </div>
         </div>
 
+        <!-- ══════════ CART ══════════ -->
+        <div class="screen" id="screen-cart">
+          <div class="status-bar" style="background:#1B5E20">
+            <span class="status-left">17:23</span>
+            <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
+          </div>
+          <div class="screen-scroll">
+            <div class="app-header green">
+              <div class="header-top">
+                <button class="header-back" onclick="navBack()">‹ Назад</button>
+                <span class="header-title">Кошик</span>
+                <button onclick="clearCart()" style="font-size:12px;color:rgba(255,255,255,0.7);background:none;border:none;cursor:pointer;font-family:inherit;">Очистити</button>
+              </div>
+              <div class="header-sub" id="cart-header-sub">0 товарів</div>
+            </div>
+
+            <div id="cart-empty" class="cart-empty">
+              <div class="cart-empty-icon">🛒</div>
+              <div class="cart-empty-title">Кошик порожній</div>
+              <div class="cart-empty-sub">Додайте товари з каталогу або через AI-діагностику</div>
+            </div>
+
+            <div id="cart-items-wrap" style="padding-top:10px;display:none;">
+              <div id="cart-items-list"></div>
+
+              <div class="cart-summary" id="cart-summary">
+                <div class="cart-summary-row"><span>Товари</span><span id="cart-subtotal">₴0</span></div>
+                <div class="cart-summary-row"><span>Доставка</span><span style="color:#2E7D32">Безкоштовно</span></div>
+                <div class="cart-summary-row"><span>ПДВ 20%</span><span id="cart-vat">₴0</span></div>
+                <div class="cart-summary-total"><span>До сплати</span><span id="cart-total">₴0</span></div>
+              </div>
+
+              <div class="order-success" id="order-success">
+                <div style="font-size:48px;margin-bottom:10px;">✅</div>
+                <div style="font-size:17px;font-weight:800;color:#1B5E20;margin-bottom:6px;">Замовлення оформлено!</div>
+                <div style="font-size:13px;color:#2E7D32;">Збережено в Salesforce як Opportunity.<br/>Менеджер зв'яжеться протягом 2 годин.</div>
+              </div>
+
+              <button class="btn-checkout" id="checkout-btn" onclick="checkout()">
+                🛒 Оформити замовлення в Salesforce
+              </button>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
+            <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
+            <button class="nav-item active"><span class="nav-icon">🛒</span><span>Кошик</span></button>
+            <button class="nav-item" onclick="showToast('👤','Профіль','Консультант · Степан')"><span class="nav-icon">👤</span><span>Профіль</span></button>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+
       </div><!-- app-container -->
     </div><!-- iphone-screen -->
   </div><!-- iphone-shell -->
@@ -677,7 +780,7 @@ body {
 </div>
 
 <script>
-const screens = ['screen-home','screen-catalog','screen-c','screen-a','screen-e'];
+const screens = ['screen-home','screen-catalog','screen-c','screen-a','screen-e','screen-cart'];
 let history = ['screen-home'];
 
 function navTo(id) {
@@ -869,6 +972,98 @@ function generateVendorReport() {
       showToast('📊','PDF звіт готовий','Надіслано вендору та менеджеру');
     }
   }, 700);
+}
+
+// ── Cart ────────────────────────────────────────────
+let cart = []; // [{id, name, desc, price, qty, icon}]
+
+function addSkuToCart(n) {
+  const name = document.getElementById('sku'+n+'-name')?.innerText || 'Товар';
+  const desc = document.getElementById('sku'+n+'-desc')?.innerText || '';
+  const priceStr = document.getElementById('sku'+n+'-price')?.innerText || '0';
+  const icon = n === 1 ? '🧪' : '💊';
+  addToCart(name, desc, priceStr, icon);
+}
+
+function addToCart(name, desc, priceStr, icon) {
+  const price = parseInt(priceStr.replace(/[₴,K]/g,'').trim()) || 0;
+  const existing = cart.find(i => i.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id: Date.now(), name, desc, price, qty: 1, icon: icon || '🧪' });
+  }
+  renderCart();
+  showToast('🛒', 'Додано до кошика', name);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  renderCart();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { removeFromCart(id); return; }
+  renderCart();
+}
+
+function clearCart() {
+  if (cart.length === 0) return;
+  cart = [];
+  renderCart();
+  document.getElementById('order-success').classList.remove('visible');
+  document.getElementById('checkout-btn').style.display = 'flex';
+}
+
+function checkout() {
+  document.getElementById('checkout-btn').style.display = 'none';
+  document.getElementById('order-success').classList.add('visible');
+  showToast('✅', 'Замовлення в Salesforce', 'Opportunity створено · Менеджер сповіщений');
+}
+
+function renderCart() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+
+  // Badge
+  const badge = document.getElementById('cart-badge');
+  if (count > 0) { badge.textContent = count > 9 ? '9+' : count; badge.classList.add('visible'); }
+  else { badge.classList.remove('visible'); }
+
+  // Header sub
+  document.getElementById('cart-header-sub').textContent = count === 0 ? '0 товарів' : `${count} товар${count === 1 ? '' : count < 5 ? 'и' : 'ів'} · ₴${total.toLocaleString('uk')}`;
+
+  // Empty / filled
+  document.getElementById('cart-empty').style.display = cart.length === 0 ? 'block' : 'none';
+  document.getElementById('cart-items-wrap').style.display = cart.length === 0 ? 'none' : 'block';
+
+  if (cart.length === 0) return;
+
+  // Items list
+  document.getElementById('cart-items-list').innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-icon">${item.icon}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-desc">${item.desc}</div>
+        <div class="cart-item-price">₴${(item.price * item.qty).toLocaleString('uk')}</div>
+        <div class="cart-qty-row">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          <span style="font-size:11px;color:#8e8e93;margin-left:4px;">× ₴${item.price.toLocaleString('uk')}/л</span>
+          <span class="cart-remove" onclick="removeFromCart(${item.id})">🗑</span>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const vat = Math.round(total * 0.2);
+  document.getElementById('cart-subtotal').textContent = `₴${total.toLocaleString('uk')}`;
+  document.getElementById('cart-vat').textContent = `₴${vat.toLocaleString('uk')}`;
+  document.getElementById('cart-total').textContent = `₴${(total + vat).toLocaleString('uk')}`;
 }
 
 // Live clock
