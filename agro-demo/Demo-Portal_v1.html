@@ -124,18 +124,6 @@ body {
 .home-indicator { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 130px; height: 5px; background: #1a1a1a; border-radius: 3px; opacity: 0.2; }
 
 /* Toast */
-.toast {
-  position: absolute; top: 60px; left: 16px; right: 16px;
-  background: rgba(30,30,30,0.92); backdrop-filter: blur(20px);
-  color: white; border-radius: 14px; padding: 12px 14px;
-  display: flex; align-items: center; gap: 10px; z-index: 400;
-  transform: translateY(-80px); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-.toast.visible { transform: translateY(0); }
-.toast-icon { font-size: 20px; flex-shrink: 0; }
-.toast-text strong { font-size: 13px; font-weight: 700; display: block; }
-.toast-text span { font-size: 11px; opacity: 0.7; }
 
 /* ── HOME SCREEN ── */
 .currency-bar { background: #2B5CE6; padding: 8px 16px 14px; color: white; font-size: 12px; display: flex; align-items: center; gap: 8px; }
@@ -383,14 +371,7 @@ body {
     <div class="iphone-screen">
       <div class="dynamic-island"><div class="di-cam"></div><div class="di-dot"></div></div>
 
-      <!-- Toast -->
-      <div class="toast" id="toast">
-        <div class="toast-icon" id="toast-icon">✅</div>
-        <div class="toast-text">
-          <strong id="toast-title">Збережено</strong>
-          <span id="toast-body">Успішно</span>
-        </div>
-      </div>
+
 
       <div class="app-container">
 
@@ -804,15 +785,7 @@ function navBack() {
   document.getElementById(prev).classList.add('active');
 }
 
-let toastTimer;
-function showToast(icon, title, body) {
-  clearTimeout(toastTimer);
-  document.getElementById('toast-icon').textContent = icon;
-  document.getElementById('toast-title').textContent = title;
-  document.getElementById('toast-body').textContent = body;
-  document.getElementById('toast').classList.add('visible');
-  toastTimer = setTimeout(() => document.getElementById('toast').classList.remove('visible'), 3000);
-}
+function showToast() {} // removed
 
 function selectRole(el) {
   document.querySelectorAll('.role-card').forEach(r => r.classList.remove('selected'));
