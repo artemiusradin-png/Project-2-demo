@@ -359,7 +359,7 @@ body {
 .cat-search-box input { flex: 1; border: none; background: transparent; font-size: 14px; color: #1a1a1a; outline: none; }
 .cat-search-box input::placeholder { color: #8e8e93; }
 .cat-scan-btn { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg,#2B5CE6,#1a3fbf); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(43,92,230,0.35); }
-.scan-sheet-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 300; display: none; align-items: flex-end; }
+.scan-sheet-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; display: none; align-items: flex-end; border-radius: inherit; }
 .scan-sheet-overlay.open { display: flex; }
 .scan-sheet { width: 100%; background: white; border-radius: 20px 20px 0 0; padding: 0 0 30px; animation: slideUp 0.3s ease; }
 .scan-sheet-handle { width: 36px; height: 4px; background: #d1d1d6; border-radius: 2px; margin: 10px auto 0; }
@@ -419,7 +419,7 @@ body {
             <div class="cat-search-row">
               <div class="cat-search-box">
                 <span style="font-size:14px;color:#8e8e93">🔍</span>
-                <input placeholder="Пошук від 3-х символів" readonly/>
+                <input placeholder="Пошук від 3-х символів" readonly onclick="openSearch()"/>
               </div>
               <button class="cat-scan-btn" onclick="openCatalogScan()" title="AI Сканування">📷</button>
             </div>
@@ -490,60 +490,9 @@ body {
             <div class="cat-search-row">
               <div class="cat-search-box">
                 <span style="font-size:14px;color:#8e8e93">🔍</span>
-                <input placeholder="Пошук від 3-х символів" readonly/>
+                <input placeholder="Пошук від 3-х символів" readonly onclick="openSearch()"/>
               </div>
               <button class="cat-scan-btn" onclick="openCatalogScan()" title="AI Сканування">📷</button>
-            </div>
-
-            <!-- Scan bottom sheet -->
-            <div class="scan-sheet-overlay" id="scan-sheet-overlay" onclick="if(event.target===this)closeCatalogScan()">
-              <div class="scan-sheet">
-                <div class="scan-sheet-handle"></div>
-                <div class="scan-sheet-title">📷 AI Сканування культури</div>
-                <div class="scan-sheet-subtitle">Оберіть фото — отримайте продукти з каталогу миттєво</div>
-                <div class="scan-sheet-samples">
-                  <div class="scan-sheet-sample" id="cs1" onclick="selectCatalogSample('s1','cs1')">
-                    <img src="images/s1-corn.jpg" alt="Кукурудза"/>
-                    <div class="scan-sheet-sample-label">Кукурудза</div>
-                  </div>
-                  <div class="scan-sheet-sample" id="cs2" onclick="selectCatalogSample('s2','cs2')">
-                    <img src="images/s2-sunflower.jpg" alt="Соняшник"/>
-                    <div class="scan-sheet-sample-label">Соняшник</div>
-                  </div>
-                  <div class="scan-sheet-sample" id="cs3" onclick="selectCatalogSample('s3','cs3')">
-                    <img src="images/s3-wheat.jpg" alt="Пшениця"/>
-                    <div class="scan-sheet-sample-label">Пшениця</div>
-                  </div>
-                  <div class="scan-sheet-sample" id="cs4" onclick="selectCatalogSample('s4','cs4')">
-                    <img src="images/s4-rapeseed.jpg" alt="Ріпак"/>
-                    <div class="scan-sheet-sample-label">Ріпак</div>
-                  </div>
-                </div>
-                <div class="scan-sheet-progress" id="cs-progress">
-                  <div class="scan-progress-label" id="cs-progress-label">Аналізую фото...</div>
-                  <div class="scan-progress-bar-bg"><div class="scan-progress-bar" id="cs-progress-bar"></div></div>
-                </div>
-                <div class="scan-results" id="cs-results">
-                  <div class="scan-result-header">
-                    <span id="cs-result-icon" style="font-size:20px">🌽</span>
-                    <div>
-                      <div class="scan-result-title" id="cs-result-title">Фузаріоз стебла кукурудзи</div>
-                      <div class="scan-result-conf">Впевненість: <span id="cs-result-conf">94%</span> · <span class="scan-result-badge">✅ Знайдено в каталозі</span></div>
-                    </div>
-                  </div>
-                  <div class="sku-card" onclick="addCsSku(1)" style="margin-bottom:8px">
-                    <div class="sku-icon">🧪</div>
-                    <div class="sku-info"><div class="sku-name" id="cs-sku1-name">—</div><div class="sku-desc" id="cs-sku1-desc">—</div></div>
-                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="sku-price" id="cs-sku1-price">—</div><button class="btn-add-cart" onclick="event.stopPropagation();addCsSku(1)">+ Кошик</button></div>
-                  </div>
-                  <div class="sku-card" onclick="addCsSku(2)">
-                    <div class="sku-icon">💊</div>
-                    <div class="sku-info"><div class="sku-name" id="cs-sku2-name">—</div><div class="sku-desc" id="cs-sku2-desc">—</div></div>
-                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="sku-price" id="cs-sku2-price">—</div><button class="btn-add-cart" onclick="event.stopPropagation();addCsSku(2)">+ Кошик</button></div>
-                  </div>
-                </div>
-                <button class="scan-close-btn" onclick="closeCatalogScan()">Закрити</button>
-              </div>
             </div>
 
             <div class="catalog-list">
@@ -839,6 +788,72 @@ body {
           </div>
         </div>
 
+      <!-- ══ Global Scan Sheet ══ -->
+      <div class="scan-sheet-overlay" id="scan-sheet-overlay" onclick="if(event.target===this)closeCatalogScan()">
+        <div class="scan-sheet">
+          <div class="scan-sheet-handle"></div>
+          <div class="scan-sheet-title">📷 AI Сканування культури</div>
+          <div class="scan-sheet-subtitle">Оберіть фото — отримайте продукти з каталогу миттєво</div>
+          <div class="scan-sheet-samples">
+            <div class="scan-sheet-sample" id="cs1" onclick="selectCatalogSample('s1','cs1')">
+              <img src="images/s1-corn.jpg" alt="Кукурудза"/>
+              <div class="scan-sheet-sample-label">Кукурудза</div>
+            </div>
+            <div class="scan-sheet-sample" id="cs2" onclick="selectCatalogSample('s2','cs2')">
+              <img src="images/s2-sunflower.jpg" alt="Соняшник"/>
+              <div class="scan-sheet-sample-label">Соняшник</div>
+            </div>
+            <div class="scan-sheet-sample" id="cs3" onclick="selectCatalogSample('s3','cs3')">
+              <img src="images/s3-wheat.jpg" alt="Пшениця"/>
+              <div class="scan-sheet-sample-label">Пшениця</div>
+            </div>
+            <div class="scan-sheet-sample" id="cs4" onclick="selectCatalogSample('s4','cs4')">
+              <img src="images/s4-rapeseed.jpg" alt="Ріпак"/>
+              <div class="scan-sheet-sample-label">Ріпак</div>
+            </div>
+          </div>
+          <div class="scan-sheet-progress" id="cs-progress">
+            <div class="scan-progress-label" id="cs-progress-label">Аналізую фото...</div>
+            <div class="scan-progress-bar-bg"><div class="scan-progress-bar" id="cs-progress-bar"></div></div>
+          </div>
+          <div class="scan-results" id="cs-results">
+            <div class="scan-result-header">
+              <span id="cs-result-icon" style="font-size:20px">🌽</span>
+              <div>
+                <div class="scan-result-title" id="cs-result-title">—</div>
+                <div class="scan-result-conf">Впевненість: <span id="cs-result-conf">—</span> · <span class="scan-result-badge">✅ Знайдено в каталозі</span></div>
+              </div>
+            </div>
+            <div class="sku-card" onclick="addCsSku(1)" style="margin-bottom:8px">
+              <div class="sku-icon">🧪</div>
+              <div class="sku-info"><div class="sku-name" id="cs-sku1-name">—</div><div class="sku-desc" id="cs-sku1-desc">—</div></div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="sku-price" id="cs-sku1-price">—</div><button class="btn-add-cart" onclick="event.stopPropagation();addCsSku(1)">+ Кошик</button></div>
+            </div>
+            <div class="sku-card" onclick="addCsSku(2)">
+              <div class="sku-icon">💊</div>
+              <div class="sku-info"><div class="sku-name" id="cs-sku2-name">—</div><div class="sku-desc" id="cs-sku2-desc">—</div></div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="sku-price" id="cs-sku2-price">—</div><button class="btn-add-cart" onclick="event.stopPropagation();addCsSku(2)">+ Кошик</button></div>
+            </div>
+          </div>
+          <button class="scan-close-btn" onclick="closeCatalogScan()">Закрити</button>
+        </div>
+      </div>
+
+      <!-- ══ Global Search Overlay ══ -->
+      <div class="scan-sheet-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+        <div class="scan-sheet" style="max-height:80%">
+          <div class="scan-sheet-handle"></div>
+          <div style="padding:10px 16px 0;display:flex;align-items:center;gap:8px;">
+            <div class="cat-search-box" style="flex:1">
+              <span style="font-size:14px;color:#8e8e93">🔍</span>
+              <input id="search-input" placeholder="Пошук товарів..." oninput="runSearch(this.value)" autofocus style="font-size:14px;color:#1a1a1a"/>
+            </div>
+            <button onclick="closeSearch()" style="border:none;background:none;font-size:14px;color:#2B5CE6;font-weight:600;cursor:pointer">Скасувати</button>
+          </div>
+          <div id="search-results" style="padding:10px 16px 0;overflow-y:auto;max-height:55vh"></div>
+        </div>
+      </div>
+
       </div><!-- app-container -->
     </div><!-- iphone-screen -->
   </div><!-- iphone-shell -->
@@ -989,6 +1004,75 @@ function startScan() {
   if (sel) { selectSample(sel.id); return; }
   document.getElementById('s1').classList.add('selected');
   selectSample('s1');
+}
+
+// ── Search ──────────────────────────────────────────────
+const searchDB = [
+  { icon:'🧪', name:'Амістар Екстра 280 SC', desc:'Фунгіцид · Syngenta', price:'₴2,840/л', cat:'Захист рослин' },
+  { icon:'💊', name:'Пропіконазол 25% EC', desc:'Фунгіцид · аналог', price:'₴1,980/л', cat:'Захист рослин' },
+  { icon:'🧪', name:'Карамба Турбо', desc:'Фунгіцид · BASF', price:'₴3,120/л', cat:'Захист рослин' },
+  { icon:'💊', name:'Тілт 250 EC', desc:'Фунгіцид · аналог', price:'₴2,100/л', cat:'Захист рослин' },
+  { icon:'🧪', name:'Фалькон 460 EC', desc:'Фунгіцид · Bayer', price:'₴4,200/л', cat:'Захист рослин' },
+  { icon:'💊', name:'Ретроспект Плюс', desc:'Фунгіцид · аналог', price:'₴2,890/л', cat:'Захист рослин' },
+  { icon:'🧪', name:'Коронет 300 SC', desc:'Фунгіцид · Nufarm', price:'₴1,980/л', cat:'Захист рослин' },
+  { icon:'💊', name:'Іпродіон 500 SC', desc:'Фунгіцид · аналог', price:'₴1,420/л', cat:'Захист рослин' },
+  { icon:'🌱', name:'DEKALB DKC 3623', desc:'Насіння кукурудзи · Clearfield', price:'₴12,400/п.о.', cat:'Насіння' },
+  { icon:'🌱', name:'НК Брио КЛ', desc:'Насіння соняшнику · Syngenta', price:'₴9,800/п.о.', cat:'Насіння' },
+  { icon:'🌱', name:'Кредо', desc:'Насіння пшениці · Limagrain', price:'₴8,200/п.о.', cat:'Насіння' },
+  { icon:'🌱', name:'ДК Ексклузів', desc:'Насіння ріпаку · DEKALB', price:'₴18,400/п.о.', cat:'Насіння' },
+  { icon:'⚗️', name:'YaraBela AXAN', desc:'Добриво азотне · Yara', price:'₴14,500/т', cat:'Добрива' },
+  { icon:'⚗️', name:'YaraMila Complex', desc:'Комплексне добриво · Yara', price:'₴18,200/т', cat:'Добрива' },
+  { icon:'⚗️', name:'NPK 16:16:16', desc:'Комплексне добриво', price:'₴14,500/т', cat:'Добрива' },
+  { icon:'🐛', name:'Євро-Лайтнінг', desc:'Гербіцид · BASF · Clearfield', price:'₴3,600/л', cat:'Захист рослин' },
+  { icon:'🐛', name:'Актара 25 WG', desc:'Інсектицид · Syngenta', price:'₴5,200/кг', cat:'Захист рослин' },
+  { icon:'🐛', name:'Конфідор', desc:'Інсектицид · Bayer', price:'₴4,800/л', cat:'Захист рослин' },
+  { icon:'🐛', name:'Стомп Аква', desc:'Гербіцид · BASF', price:'₴2,100/л', cat:'Захист рослин' },
+  { icon:'🐛', name:'Регент 200', desc:'Інсектицид · BASF', price:'₴3,400/л', cat:'Захист рослин' },
+  { icon:'⛽', name:'Дизельне паливо', desc:'Паливо · Euro 5', price:'₴44/л', cat:'Паливо' },
+  { icon:'⛽', name:'Бензин А-95', desc:'Паливо · Premium', price:'₴48/л', cat:'Паливо' },
+];
+
+function openSearch() {
+  document.getElementById('search-overlay').classList.add('open');
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-results').innerHTML = '<div style="color:#8e8e93;font-size:13px;padding:20px 0;text-align:center">Введіть назву товару для пошуку</div>';
+  setTimeout(() => document.getElementById('search-input').focus(), 100);
+}
+
+function closeSearch() {
+  document.getElementById('search-overlay').classList.remove('open');
+}
+
+function runSearch(q) {
+  const box = document.getElementById('search-results');
+  if (q.length < 2) {
+    box.innerHTML = '<div style="color:#8e8e93;font-size:13px;padding:20px 0;text-align:center">Введіть мінімум 2 символи</div>';
+    return;
+  }
+  const term = q.toLowerCase();
+  const hits = searchDB.filter(p => p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term) || p.cat.toLowerCase().includes(term));
+  if (!hits.length) {
+    box.innerHTML = '<div style="color:#8e8e93;font-size:13px;padding:20px 0;text-align:center">Нічого не знайдено · спробуйте інший запит</div>';
+    return;
+  }
+  box.innerHTML = hits.map((p,i) => `
+    <div class="sku-card" style="margin-bottom:8px" onclick="addSearchItem(${i},'${q}')">
+      <div class="sku-icon">${p.icon}</div>
+      <div class="sku-info"><div class="sku-name">${p.name}</div><div class="sku-desc">${p.desc} · ${p.cat}</div></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <div class="sku-price">${p.price}</div>
+        <button class="btn-add-cart" onclick="event.stopPropagation();addSearchItem(${i},'${q}')">+ Кошик</button>
+      </div>
+    </div>`).join('');
+  // store hits on window for addSearchItem
+  window._searchHits = hits;
+}
+
+function addSearchItem(i, q) {
+  const p = window._searchHits[i];
+  if (!p) return;
+  addToCart(p.name, p.desc, p.price, p.icon);
+  closeSearch();
 }
 
 // ── Catalog scan sheet ──────────────────────────────────
