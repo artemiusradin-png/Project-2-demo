@@ -382,6 +382,23 @@ body {
 .scan-result-title { font-size: 13px; font-weight: 700; color: #1a1a1a; }
 .scan-result-conf { font-size: 11px; color: #8e8e93; }
 .scan-close-btn { width: calc(100% - 32px); margin: 12px 16px 0; background: #f2f2f7; border: none; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 600; color: #1a1a1a; cursor: pointer; }
+
+/* ── Send sheet ── */
+.send-channel { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #f2f2f7; cursor: pointer; }
+.send-channel:last-of-type { border-bottom: none; }
+.send-channel-icon { font-size: 26px; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.send-channel-info { flex: 1; }
+.send-channel-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+.send-channel-sub { font-size: 12px; color: #8e8e93; margin-top: 1px; }
+.send-checkbox { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #d1d1d6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+.send-checkbox.checked { background: #2B5CE6; border-color: #2B5CE6; }
+.send-checkbox.checked::after { content: '✓'; color: white; font-size: 13px; font-weight: 700; }
+.send-btn-main { width: calc(100% - 32px); margin: 4px 16px 16px; background: linear-gradient(135deg,#2B5CE6,#1a3fbf); border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 700; color: white; cursor: pointer; }
+.send-success { display: none; padding: 20px 16px; text-align: center; }
+.send-success.visible { display: block; }
+.send-success-icon { font-size: 44px; margin-bottom: 8px; }
+.send-success-title { font-size: 17px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+.send-success-sub { font-size: 13px; color: #8e8e93; }
 </style>
 </head>
 <body>
@@ -557,7 +574,7 @@ body {
               </div>
               <div class="kp-actions">
                 <button class="btn-sf btn-sf-primary" onclick="showToast('✅','КП збережено в Salesforce','Відкрито як Selling Opportunity')">💾 Зберегти в SF</button>
-                <button class="btn-sf btn-sf-secondary" onclick="showToast('📤','Надіслано','Email + Telegram клієнту')">📤 Надіслати</button>
+                <button class="btn-sf btn-sf-secondary" onclick="openSendSheet()">📤 Надіслати</button>
               </div>
             </div>
           </div>
@@ -839,6 +856,49 @@ body {
         </div>
       </div>
 
+      <!-- ══ Send Sheet ══ -->
+      <div class="scan-sheet-overlay" id="send-sheet-overlay" onclick="if(event.target===this)closeSendSheet()">
+        <div class="scan-sheet">
+          <div class="scan-sheet-handle"></div>
+          <div id="send-form">
+            <div class="scan-sheet-title">📤 Надіслати КП клієнту</div>
+            <div class="scan-sheet-subtitle">Оберіть канали відправки</div>
+            <div class="send-channel" onclick="toggleSendChannel('ch-email')">
+              <div class="send-channel-icon" style="background:#FFF3E0">📧</div>
+              <div class="send-channel-info">
+                <div class="send-channel-name">Email</div>
+                <div class="send-channel-sub">petrenkoivanmykolaevych@gmail.com</div>
+              </div>
+              <div class="send-checkbox checked" id="ch-email"></div>
+            </div>
+            <div class="send-channel" onclick="toggleSendChannel('ch-telegram')">
+              <div class="send-channel-icon" style="background:#E3F2FD">✈️</div>
+              <div class="send-channel-info">
+                <div class="send-channel-name">Telegram</div>
+                <div class="send-channel-sub">@petrenko_farm</div>
+              </div>
+              <div class="send-checkbox checked" id="ch-telegram"></div>
+            </div>
+            <div class="send-channel" onclick="toggleSendChannel('ch-whatsapp')">
+              <div class="send-channel-icon" style="background:#E8F5E9">💬</div>
+              <div class="send-channel-info">
+                <div class="send-channel-name">WhatsApp</div>
+                <div class="send-channel-sub">+38 (067) 123-45-67</div>
+              </div>
+              <div class="send-checkbox" id="ch-whatsapp"></div>
+            </div>
+            <button class="send-btn-main" onclick="confirmSend()">📤 Надіслати</button>
+            <button class="scan-close-btn" style="margin-bottom:4px" onclick="closeSendSheet()">Скасувати</button>
+          </div>
+          <div class="send-success" id="send-success">
+            <div class="send-success-icon">✅</div>
+            <div class="send-success-title">КП надіслано!</div>
+            <div class="send-success-sub" id="send-success-sub">Email · Telegram</div>
+            <button class="send-btn-main" style="margin:16px 0 0" onclick="closeSendSheet()">Готово</button>
+          </div>
+        </div>
+      </div>
+
       <!-- ══ Global Search Overlay ══ -->
       <div class="scan-sheet-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
         <div class="scan-sheet" style="max-height:80%">
@@ -1004,6 +1064,29 @@ function startScan() {
   if (sel) { selectSample(sel.id); return; }
   document.getElementById('s1').classList.add('selected');
   selectSample('s1');
+}
+
+// ── Send sheet ──────────────────────────────────────────
+function openSendSheet() {
+  document.getElementById('send-form').style.display = 'block';
+  document.getElementById('send-success').classList.remove('visible');
+  document.getElementById('send-sheet-overlay').classList.add('open');
+}
+function closeSendSheet() {
+  document.getElementById('send-sheet-overlay').classList.remove('open');
+}
+function toggleSendChannel(id) {
+  document.getElementById(id).classList.toggle('checked');
+}
+function confirmSend() {
+  const channels = [];
+  if (document.getElementById('ch-email').classList.contains('checked')) channels.push('Email');
+  if (document.getElementById('ch-telegram').classList.contains('checked')) channels.push('Telegram');
+  if (document.getElementById('ch-whatsapp').classList.contains('checked')) channels.push('WhatsApp');
+  if (!channels.length) { alert('Оберіть хоча б один канал'); return; }
+  document.getElementById('send-form').style.display = 'none';
+  document.getElementById('send-success-sub').textContent = channels.join(' · ');
+  document.getElementById('send-success').classList.add('visible');
 }
 
 // ── Search ──────────────────────────────────────────────
