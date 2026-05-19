@@ -11,604 +11,170 @@ body {
   font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', sans-serif;
   background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 32px 20px 40px;
-  gap: 24px;
-  overflow-y: auto;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-start;
+  padding: 32px 20px 40px; gap: 24px; overflow-y: auto;
 }
 
-/* ── Desktop header ───────────────────────────────── */
-.desktop-header {
-  text-align: center;
-  color: white;
-}
-.desktop-header h1 {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 4px;
-}
+.desktop-header { text-align: center; color: white; }
+.desktop-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
 .desktop-header p { font-size: 13px; opacity: 0.6; letter-spacing: 0.5px; text-transform: uppercase; }
-.block-pills { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
-.block-pill {
-  padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
-  cursor: pointer; transition: all 0.2s; border: 1px solid transparent;
-}
+.block-pills { display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+.block-pill { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
 .pill-c { background: rgba(76,175,80,0.2); color: #81C784; border-color: rgba(76,175,80,0.3); }
 .pill-a { background: rgba(33,150,243,0.2); color: #64B5F6; border-color: rgba(33,150,243,0.3); }
 .pill-e { background: rgba(156,39,176,0.2); color: #CE93D8; border-color: rgba(156,39,176,0.3); }
 .block-pill:hover { transform: scale(1.05); }
 
-/* ── iPhone shell ─────────────────────────────────── */
-.iphone-wrap {
-  position: relative;
-  width: 375px;
-  filter: drop-shadow(0 40px 80px rgba(0,0,0,0.6));
-}
-
+/* ── iPhone shell ── */
+.iphone-wrap { position: relative; width: 375px; filter: drop-shadow(0 40px 80px rgba(0,0,0,0.6)); }
 .iphone-shell {
-  position: relative;
-  width: 375px;
-  height: 780px;
-  background: #1a1a1a;
-  border-radius: 52px;
-  padding: 14px;
-  box-shadow:
-    0 0 0 1px #333,
-    inset 0 0 0 1px #444,
-    0 0 60px rgba(0,0,0,0.5);
+  position: relative; width: 375px; height: 780px;
+  background: #1a1a1a; border-radius: 52px; padding: 14px;
+  box-shadow: 0 0 0 1px #333, inset 0 0 0 1px #444, 0 0 60px rgba(0,0,0,0.5);
 }
-
-/* Side buttons */
 .iphone-shell::before {
-  content: '';
-  position: absolute;
-  left: -3px; top: 130px;
-  width: 3px; height: 34px;
-  background: #2a2a2a; border-radius: 2px 0 0 2px;
+  content: ''; position: absolute; left: -3px; top: 130px;
+  width: 3px; height: 34px; background: #2a2a2a; border-radius: 2px 0 0 2px;
   box-shadow: 0 44px 0 #2a2a2a, 0 88px 0 #2a2a2a;
 }
 .iphone-shell::after {
-  content: '';
-  position: absolute;
-  right: -3px; top: 170px;
-  width: 3px; height: 64px;
-  background: #2a2a2a; border-radius: 0 2px 2px 0;
+  content: ''; position: absolute; right: -3px; top: 170px;
+  width: 3px; height: 64px; background: #2a2a2a; border-radius: 0 2px 2px 0;
 }
-
 .iphone-screen {
-  width: 100%;
-  height: 100%;
-  background: #f2f2f7;
-  border-radius: 40px;
-  overflow: hidden;
-  position: relative;
+  width: 100%; height: 100%; background: #f2f2f7;
+  border-radius: 40px; overflow: hidden; position: relative;
 }
 
-/* ── Dynamic Island ───────────────────────────────── */
+/* Dynamic Island */
 .dynamic-island {
-  position: absolute;
-  top: 10px; left: 50%;
-  transform: translateX(-50%);
-  width: 120px; height: 34px;
-  background: #000;
-  border-radius: 20px;
-  z-index: 200;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 120px; height: 34px; background: #000; border-radius: 20px;
+  z-index: 500; display: flex; align-items: center; justify-content: center; gap: 8px;
+  pointer-events: none;
 }
-.di-cam {
-  width: 10px; height: 10px;
-  background: #1a1a1a; border-radius: 50%;
-  border: 1.5px solid #333;
-}
-.di-dot {
-  width: 6px; height: 6px;
-  background: #1a3d1a; border-radius: 50%;
-}
+.di-cam { width: 10px; height: 10px; background: #1a1a1a; border-radius: 50%; border: 1.5px solid #333; }
+.di-dot { width: 6px; height: 6px; background: #1a3d1a; border-radius: 50%; }
 
-/* ── Status bar ───────────────────────────────────── */
-.status-bar {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 54px;
-  display: flex; align-items: flex-end; justify-content: space-between;
-  padding: 0 22px 6px;
-  z-index: 100;
-  font-size: 12px; font-weight: 600;
-  color: white;
-}
-.status-bar.dark { color: #1a1a1a; }
-.status-left { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
-.status-right { display: flex; align-items: center; gap: 5px; font-size: 11px; }
-.battery {
-  width: 24px; height: 12px; border: 1.5px solid currentColor;
-  border-radius: 3px; position: relative;
-  display: flex; align-items: center; padding: 1.5px;
-}
-.battery::after {
-  content: ''; position: absolute;
-  right: -5px; top: 3px;
-  width: 3px; height: 6px;
-  background: currentColor; border-radius: 0 1px 1px 0;
-}
-.battery-fill {
-  height: 100%; width: 60%;
-  background: currentColor; border-radius: 1px;
-}
+/* App container */
+.app-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
 
-/* ── App container (scrollable area) ────────────────── */
-.app-container {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  overflow: hidden;
-}
-
-/* ── Screens ────────────────────────────────────────── */
+/* ── SCREENS: flex-column so scroll works ── */
 .screen {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: #f2f2f7;
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; overflow: hidden;
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
 }
 .screen.active { transform: translateX(0); }
 .screen.prev   { transform: translateX(-30%); }
 
-/* ── App header (blue like their app) ───────────────── */
+/* Scrollable body — sits between status-bar and bottom-nav */
+.screen-scroll {
+  flex: 1; overflow-y: scroll; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; background: #f2f2f7;
+  position: relative;
+}
+
+/* Status bar — flex item, NOT absolute, stays at top */
+.status-bar {
+  height: 54px; flex-shrink: 0;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 22px 6px; z-index: 100;
+  font-size: 12px; font-weight: 600; color: white;
+}
+.status-bar.white { color: #1a1a1a; background: white; }
+.status-left { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
+.status-right { display: flex; align-items: center; gap: 5px; font-size: 11px; }
+.battery {
+  width: 24px; height: 12px; border: 1.5px solid currentColor;
+  border-radius: 3px; position: relative; display: flex; align-items: center; padding: 1.5px;
+}
+.battery::after {
+  content: ''; position: absolute; right: -5px; top: 3px;
+  width: 3px; height: 6px; background: currentColor; border-radius: 0 1px 1px 0;
+}
+.battery-fill { height: 100%; width: 60%; background: currentColor; border-radius: 1px; }
+
+/* App header sticky inside scroll */
 .app-header {
-  background: #2B5CE6;
-  padding: 54px 16px 14px;
-  color: white;
+  background: #2B5CE6; padding: 14px 16px; color: white;
   position: sticky; top: 0; z-index: 50;
 }
-.app-header.green { background: #1B5E20; }
-.app-header.orange { background: #E65100; }
-.header-top {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 2px;
-}
+.app-header.green { background: linear-gradient(135deg,#43A047,#1B5E20); }
+.app-header.blue  { background: linear-gradient(135deg,#1565C0,#0D47A1); }
+.app-header.purple{ background: linear-gradient(135deg,#6A1B9A,#4A148C); }
+.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
 .header-title { font-size: 17px; font-weight: 700; }
-.header-back {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 15px; color: rgba(255,255,255,0.9);
-  cursor: pointer; background: none; border: none; color: white;
-}
-.header-currency {
-  font-size: 11px; opacity: 0.75;
-  margin-top: 2px;
-}
-.bell-btn {
-  width: 32px; height: 32px; background: rgba(255,255,255,0.15);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 14px; border: none; color: white; cursor: pointer;
-}
+.header-back { display: flex; align-items: center; gap: 4px; font-size: 15px; color: rgba(255,255,255,0.9); cursor: pointer; background: none; border: none; color: white; }
+.header-sub { font-size: 11px; opacity: 0.75; margin-top: 2px; }
 
-/* ── Bottom nav ──────────────────────────────────────── */
+/* Bottom nav — flex item, stays at bottom */
 .bottom-nav {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 82px;
-  background: rgba(249,249,249,0.94);
-  backdrop-filter: blur(20px);
+  height: 82px; flex-shrink: 0;
+  background: rgba(249,249,249,0.97);
   border-top: 0.5px solid rgba(0,0,0,0.12);
   display: flex; align-items: flex-start; justify-content: space-around;
-  padding-top: 10px;
-  z-index: 100;
+  padding-top: 10px; z-index: 100; position: relative;
 }
-.nav-item {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  font-size: 10px; color: #8e8e93; cursor: pointer;
-  transition: color 0.2s;
-  background: none; border: none; font-family: inherit;
-}
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; color: #8e8e93; cursor: pointer; transition: color 0.2s; background: none; border: none; font-family: inherit; }
 .nav-item.active { color: #2B5CE6; }
 .nav-icon { font-size: 22px; line-height: 1; }
-.home-indicator {
-  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
-  width: 130px; height: 5px; background: #1a1a1a; border-radius: 3px; opacity: 0.2;
-}
+.home-indicator { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 130px; height: 5px; background: #1a1a1a; border-radius: 3px; opacity: 0.2; }
 
-/* ── HOME SCREEN ────────────────────────────────────── */
-#screen-home .scroll-area {
-  padding: 0 0 90px;
+/* Toast */
+.toast {
+  position: absolute; top: 60px; left: 16px; right: 16px;
+  background: rgba(30,30,30,0.92); backdrop-filter: blur(20px);
+  color: white; border-radius: 14px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px; z-index: 400;
+  transform: translateY(-80px); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
-.currency-bar {
-  background: #2B5CE6;
-  padding: 8px 16px 14px;
-  color: white; font-size: 12px;
-  display: flex; align-items: center; gap: 8px;
-}
+.toast.visible { transform: translateY(0); }
+.toast-icon { font-size: 20px; flex-shrink: 0; }
+.toast-text strong { font-size: 13px; font-weight: 700; display: block; }
+.toast-text span { font-size: 11px; opacity: 0.7; }
+
+/* ── HOME SCREEN ── */
+.currency-bar { background: #2B5CE6; padding: 8px 16px 14px; color: white; font-size: 12px; display: flex; align-items: center; gap: 8px; }
 .currency-dot { width: 5px; height: 5px; background: rgba(255,255,255,0.4); border-radius: 50%; }
-
 .home-cards { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
-
-.big-card {
-  border-radius: 16px; padding: 18px;
-  display: flex; align-items: center; justify-content: space-between;
-  cursor: pointer; transition: transform 0.15s;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
+.big-card { border-radius: 16px; padding: 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: transform 0.15s; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 .big-card:active { transform: scale(0.98); }
 .big-card-left h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
 .big-card-left p { font-size: 12px; opacity: 0.8; }
 .big-card-emoji { font-size: 52px; }
-
 .card-catalog { background: #FFF8E6; }
 .card-catalog h3 { color: #E65100; }
 .card-catalog p { color: #BF6900; }
-
 .card-promo { background: #E3F2FD; }
 .card-promo h3 { color: #1565C0; }
-
-.section-title { font-size: 20px; font-weight: 700; padding: 16px 16px 8px; color: #1a1a1a; }
-
-.role-row { display: flex; gap: 10px; padding: 4px 16px 16px; justify-content: space-around; }
-.role-card {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  cursor: pointer; transition: transform 0.15s;
-}
+.role-card { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: transform 0.15s; }
 .role-card:active { transform: scale(0.95); }
-.role-avatar {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: #e8eaf6; display: flex; align-items: center; justify-content: center;
-  font-size: 30px; border: 2px solid transparent; transition: border-color 0.2s;
-}
+.role-avatar { width: 64px; height: 64px; border-radius: 50%; background: #e8eaf6; display: flex; align-items: center; justify-content: center; font-size: 30px; border: 2px solid transparent; transition: border-color 0.2s; }
 .role-card.selected .role-avatar { border-color: #2B5CE6; background: #e3f2fd; }
 .role-name { font-size: 12px; font-weight: 600; color: #2B5CE6; }
-
-/* AI Blocks section */
-.ai-section { padding: 0 16px 16px; }
-.ai-section-title {
-  font-size: 13px; font-weight: 700; color: #8e8e93;
-  text-transform: uppercase; letter-spacing: 0.5px;
-  margin-bottom: 10px;
-}
+.ai-section { padding: 0 16px 20px; }
+.ai-section-title { font-size: 13px; font-weight: 700; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
 .ai-blocks { display: flex; flex-direction: column; gap: 10px; }
-.ai-block-card {
-  background: white; border-radius: 14px; padding: 14px 16px;
-  display: flex; align-items: center; gap: 14px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-  cursor: pointer; transition: all 0.2s;
-  border: 1px solid rgba(0,0,0,0.06);
-}
-.ai-block-card:active { transform: scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.ai-block-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0;
-}
-.icon-c { background: linear-gradient(135deg, #43A047, #1B5E20); }
-.icon-a { background: linear-gradient(135deg, #1E88E5, #0D47A1); }
-.icon-e { background: linear-gradient(135deg, #7B1FA2, #4A148C); }
+.ai-block-card { background: white; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); cursor: pointer; transition: all 0.2s; border: 1px solid rgba(0,0,0,0.06); }
+.ai-block-card:active { transform: scale(0.98); }
+.ai-block-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.icon-c { background: linear-gradient(135deg,#43A047,#1B5E20); }
+.icon-a { background: linear-gradient(135deg,#1E88E5,#0D47A1); }
+.icon-e { background: linear-gradient(135deg,#7B1FA2,#4A148C); }
 .ai-block-text h4 { font-size: 14px; font-weight: 700; color: #1a1a1a; }
 .ai-block-text p { font-size: 11px; color: #8e8e93; margin-top: 1px; }
-.ai-block-badge {
-  margin-left: auto; padding: 3px 8px; border-radius: 20px;
-  font-size: 10px; font-weight: 700; white-space: nowrap;
-}
+.ai-block-badge { margin-left: auto; padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
 .badge-c { background: #E8F5E9; color: #2E7D32; }
 .badge-a { background: #E3F2FD; color: #1565C0; }
 .badge-e { background: #F3E5F5; color: #7B1FA2; }
 
-/* ── BLOCK E — VENDOR ANALYTICS ─────────────────── */
-.vendor-screen { padding: 0 0 90px; }
-.vendor-selector { padding: 14px 16px 0; }
-.vendor-selector label { font-size: 13px; font-weight: 600; color: #8e8e93; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
-.vendor-select {
-  width: 100%; padding: 10px 12px; border-radius: 10px;
-  border: 1.5px solid #e0e0e0; font-size: 14px; background: white;
-  color: #1a1a1a; font-family: inherit; outline: none;
-}
-.vendor-select:focus { border-color: #7B1FA2; }
-.vendor-kpis { display: flex; gap: 8px; padding: 12px 16px 4px; }
-.vendor-kpi {
-  flex: 1; background: white; border-radius: 12px; padding: 10px 10px;
-  text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-  border: 1px solid rgba(0,0,0,0.06);
-}
-.vkpi-val { font-size: 15px; font-weight: 800; color: #1a1a1a; }
-.vkpi-lbl { font-size: 9px; color: #8e8e93; margin-top: 2px; line-height: 1.3; }
-.vkpi-change { font-size: 10px; font-weight: 700; margin-top: 2px; }
-.products-section { padding: 10px 16px 0; }
-.prod-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.prod-name { font-size: 12px; font-weight: 600; color: #1a1a1a; width: 90px; flex-shrink: 0; }
-.prod-bar-wrap { flex: 1; background: #f0f0f0; border-radius: 4px; height: 8px; overflow: hidden; }
-.prod-bar-fill { height: 100%; border-radius: 4px; }
-.prod-val { font-size: 11px; color: #8e8e93; width: 50px; text-align: right; }
-.ai-report-card {
-  margin: 10px 16px 0; background: white; border-radius: 16px;
-  overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  border: 1px solid rgba(0,0,0,0.06);
-}
-.ai-report-header {
-  background: linear-gradient(135deg, #6A1B9A, #4A148C);
-  padding: 12px 16px; color: white;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.ai-report-body { padding: 14px 16px; }
-.report-insight { font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 10px; }
-.region-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-.region-chip {
-  padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
-}
-.chip-green { background: #E8F5E9; color: #2E7D32; }
-.chip-red { background: #FFEBEE; color: #C62828; }
-.chip-gray { background: #F5F5F5; color: #616161; }
-.alert-box {
-  background: #FFF8E1; border-left: 3px solid #FF8F00;
-  border-radius: 0 8px 8px 0; padding: 10px 12px; margin-bottom: 10px;
-}
-.alert-title { font-size: 11px; font-weight: 700; color: #E65100; margin-bottom: 3px; }
-.alert-text { font-size: 12px; color: #6D4C41; line-height: 1.4; }
-.focus-consultant {
-  background: #EDE7F6; border-radius: 10px; padding: 10px 12px;
-  display: flex; align-items: center; gap: 10px;
-}
-.fc-avatar { font-size: 28px; }
-.fc-name { font-size: 13px; font-weight: 700; color: #4A148C; }
-.fc-desc { font-size: 11px; color: #7B1FA2; margin-top: 1px; }
-.btn-gen-report {
-  width: calc(100% - 32px); margin: 12px 16px 0; padding: 14px;
-  background: linear-gradient(135deg, #7B1FA2, #4A148C);
-  color: white; border: none; border-radius: 14px; font-size: 15px;
-  font-weight: 700; cursor: pointer; font-family: inherit;
-  box-shadow: 0 4px 14px rgba(123,31,162,0.3);
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.vendor-thinking {
-  display: none; padding: 16px 16px;
-  flex-direction: column; align-items: center; gap: 10px;
-}
-.vendor-thinking.visible { display: flex; }
-
-/* ── BLOCK C — SMART OPERATOR ───────────────────────── */
-.kp-screen { padding: 0 0 90px; }
-.kp-input-area { padding: 14px 16px; }
-.kp-label { font-size: 13px; font-weight: 600; color: #8e8e93; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
-.kp-textarea {
-  width: 100%; border: 1.5px solid #e0e0e0; border-radius: 12px;
-  padding: 12px; font-size: 14px; font-family: inherit;
-  background: white; resize: none; outline: none;
-  transition: border-color 0.2s;
-  color: #1a1a1a; line-height: 1.5;
-}
-.kp-textarea:focus { border-color: #2B5CE6; }
-.kp-examples { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-.kp-chip {
-  padding: 5px 10px; background: #e3f2fd; border-radius: 20px;
-  font-size: 11px; color: #1565C0; cursor: pointer; border: none;
-  font-family: inherit; font-weight: 500; transition: background 0.2s;
-}
-.kp-chip:active { background: #bbdefb; }
-.btn-generate {
-  width: 100%; padding: 15px; background: linear-gradient(135deg, #43A047, #1B5E20);
-  color: white; border: none; border-radius: 14px; font-size: 15px;
-  font-weight: 700; cursor: pointer; font-family: inherit;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: opacity 0.2s; margin-top: 10px;
-  box-shadow: 0 4px 14px rgba(27,94,32,0.3);
-}
-.btn-generate:active { opacity: 0.85; }
-
-.kp-result {
-  margin: 0 16px; background: white; border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.06); display: none;
-}
-.kp-result.visible { display: block; animation: slideUp 0.4s ease; }
-.kp-result-header {
-  background: linear-gradient(135deg, #1B5E20, #2E7D32);
-  padding: 14px 16px; color: white;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.kp-result-header h4 { font-size: 14px; font-weight: 700; }
-.kp-status {
-  padding: 3px 10px; background: rgba(255,255,255,0.2);
-  border-radius: 20px; font-size: 11px; font-weight: 600;
-}
-.kp-result-body { padding: 14px 16px; }
-.kp-row {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  padding: 9px 0; border-bottom: 0.5px solid #f0f0f0;
-  font-size: 13px;
-}
-.kp-row:last-child { border-bottom: none; }
-.kp-row-label { color: #8e8e93; flex: 1; }
-.kp-row-value { color: #1a1a1a; font-weight: 600; text-align: right; flex: 1.5; }
-.kp-total {
-  background: #E8F5E9; border-radius: 10px; padding: 12px 14px;
-  margin-top: 10px; display: flex; justify-content: space-between; align-items: center;
-}
-.kp-total-label { font-size: 13px; font-weight: 600; color: #2E7D32; }
-.kp-total-value { font-size: 18px; font-weight: 800; color: #1B5E20; }
-.kp-upsell {
-  margin-top: 10px; background: #FFF8E1; border-radius: 10px; padding: 10px 14px;
-  border-left: 3px solid #FF8F00;
-}
-.kp-upsell-title { font-size: 11px; font-weight: 700; color: #E65100; margin-bottom: 4px; }
-.kp-upsell p { font-size: 12px; color: #6D4C41; }
-.kp-actions { display: flex; gap: 8px; padding: 14px 16px; }
-.btn-sf {
-  flex: 1; padding: 12px; border-radius: 12px; border: none;
-  font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
-  transition: opacity 0.2s;
-}
-.btn-sf:active { opacity: 0.8; }
-.btn-sf-primary { background: #2B5CE6; color: white; }
-.btn-sf-secondary { background: #f2f2f7; color: #1a1a1a; }
-
-.ai-thinking {
-  display: none; padding: 20px 16px;
-  flex-direction: column; align-items: center; gap: 12px;
-}
-.ai-thinking.visible { display: flex; }
-.thinking-dots { display: flex; gap: 6px; }
-.thinking-dot {
-  width: 8px; height: 8px; background: #2B5CE6; border-radius: 50%;
-  animation: bounce 1.2s infinite;
-}
-.thinking-dot:nth-child(2) { animation-delay: 0.2s; }
-.thinking-dot:nth-child(3) { animation-delay: 0.4s; }
-.thinking-label { font-size: 13px; color: #8e8e93; }
-
-/* ── BLOCK A — AGRO VISION ──────────────────────────── */
-.vision-screen { padding: 0 0 90px; }
-.camera-area {
-  margin: 14px 16px;
-  background: #1a1a1a; border-radius: 20px; overflow: hidden;
-  position: relative; height: 220px;
-  display: flex; align-items: center; justify-content: center;
-}
-.camera-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; color: white; cursor: pointer;
-}
-.camera-corners::before, .camera-corners::after {
-  content: ''; position: absolute; width: 24px; height: 24px;
-  border-color: white; border-style: solid;
-}
-.camera-corners::before { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
-.camera-corners::after { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
-.camera-icon { font-size: 40px; }
-.camera-label { font-size: 14px; font-weight: 600; }
-.camera-sublabel { font-size: 11px; opacity: 0.7; }
-
-.camera-image {
-  width: 100%; height: 100%; object-fit: cover; display: none;
-}
-.vision-samples { display: flex; gap: 8px; padding: 0 16px 12px; overflow-x: auto; }
-.vision-sample {
-  flex-shrink: 0; width: 70px; height: 70px; border-radius: 12px;
-  background: #e8f5e9; display: flex; align-items: center; justify-content: center;
-  font-size: 30px; cursor: pointer; border: 2px solid transparent;
-  transition: all 0.2s;
-}
-.vision-sample.selected { border-color: #2B5CE6; background: #e3f2fd; }
-.sample-label {
-  flex-shrink: 0; font-size: 10px; color: #8e8e93; text-align: center;
-  width: 70px; display: block; margin-top: -6px; padding: 0 4px;
-}
-
-.vision-result { margin: 0 16px; display: none; }
-.vision-result.visible { display: block; animation: slideUp 0.4s ease; }
-.diagnosis-card {
-  background: white; border-radius: 16px; overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 10px;
-}
-.diagnosis-header {
-  background: linear-gradient(135deg, #1565C0, #0D47A1);
-  padding: 14px 16px; color: white;
-  display: flex; align-items: center; gap: 10px;
-}
-.diagnosis-icon { font-size: 24px; }
-.diagnosis-title { font-size: 14px; font-weight: 700; }
-.diagnosis-conf { font-size: 11px; opacity: 0.8; margin-top: 1px; }
-.confidence-bar {
-  margin: 10px 16px 4px;
-  display: flex; align-items: center; gap: 8px;
-}
-.conf-track { flex: 1; height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
-.conf-fill { height: 100%; background: linear-gradient(90deg, #43A047, #1B5E20); border-radius: 3px; }
-.conf-label { font-size: 12px; font-weight: 700; color: #2E7D32; }
-.diagnosis-body { padding: 12px 16px 14px; }
-.diag-detail { font-size: 13px; color: #444; margin-bottom: 10px; line-height: 1.5; }
-.rec-title { font-size: 12px; font-weight: 700; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 8px; }
-
-.sku-card {
-  background: #f8f8f8; border-radius: 12px; padding: 10px 12px;
-  display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
-  border: 1px solid #f0f0f0; cursor: pointer; transition: all 0.2s;
-}
-.sku-card:active { background: #e3f2fd; }
-.sku-icon { font-size: 28px; flex-shrink: 0; }
-.sku-info { flex: 1; }
-.sku-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
-.sku-desc { font-size: 11px; color: #8e8e93; margin-top: 1px; }
-.sku-price { font-size: 14px; font-weight: 800; color: #1B5E20; }
-.btn-add-cart {
-  padding: 7px 12px; background: #2B5CE6; color: white;
-  border-radius: 8px; border: none; font-size: 11px; font-weight: 700;
-  cursor: pointer; font-family: inherit;
-}
-
-/* ── BLOCK B — TRADING AGENT ────────────────────────── */
-.trading-screen { padding: 0 0 90px; }
-.farm-selector { padding: 14px 16px 0; }
-.farm-selector label { font-size: 13px; font-weight: 600; color: #8e8e93; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
-.farm-select {
-  width: 100%; padding: 10px 12px; border-radius: 10px;
-  border: 1.5px solid #e0e0e0; font-size: 14px; background: white;
-  color: #1a1a1a; font-family: inherit; outline: none;
-}
-.farm-select:focus { border-color: #FF8F00; }
-
-.market-cards { display: flex; gap: 8px; padding: 14px 16px; overflow-x: auto; }
-.market-card {
-  flex-shrink: 0; background: white; border-radius: 14px; padding: 12px 14px;
-  min-width: 110px; box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-  border: 1px solid rgba(0,0,0,0.06);
-}
-.market-crop { font-size: 11px; color: #8e8e93; margin-bottom: 4px; font-weight: 500; }
-.market-price { font-size: 16px; font-weight: 800; color: #1a1a1a; }
-.market-change { font-size: 11px; font-weight: 600; margin-top: 2px; }
-.up { color: #2E7D32; }
-.down { color: #C62828; }
-
-.trade-recommend { margin: 0 16px; }
-.recommend-card {
-  background: white; border-radius: 16px; overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 10px;
-  border: 1px solid rgba(0,0,0,0.06);
-}
-.recommend-header {
-  padding: 14px 16px; color: white;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.rh-sell { background: linear-gradient(135deg, #E65100, #BF360C); }
-.rh-plant { background: linear-gradient(135deg, #1B5E20, #2E7D32); }
-.rh-hold { background: linear-gradient(135deg, #1565C0, #0D47A1); }
-.recommend-badge {
-  padding: 4px 10px; background: rgba(255,255,255,0.2);
-  border-radius: 20px; font-size: 11px; font-weight: 700;
-}
-.recommend-body { padding: 14px 16px; }
-.rec-insight { font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 10px; }
-.rec-metrics { display: flex; gap: 8px; }
-.rec-metric {
-  flex: 1; background: #f8f8f8; border-radius: 10px;
-  padding: 8px 10px; text-align: center;
-}
-.rec-metric-val { font-size: 15px; font-weight: 800; color: #1a1a1a; }
-.rec-metric-lbl { font-size: 10px; color: #8e8e93; margin-top: 2px; }
-
-.chart-area { margin: 0 16px 10px; background: white; border-radius: 16px; padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
-.chart-title { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
-.chart-svg { width: 100%; }
-
-.btn-full-report {
-  width: calc(100% - 32px); margin: 0 16px 10px; padding: 14px;
-  background: linear-gradient(135deg, #FF8F00, #E65100);
-  color: white; border: none; border-radius: 14px; font-size: 15px;
-  font-weight: 700; cursor: pointer; font-family: inherit;
-  box-shadow: 0 4px 14px rgba(230,81,0,0.3);
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-
-/* ── CATALOG SCREEN ──────────────────────────────────── */
-.catalog-list { padding: 14px 16px 90px; display: flex; flex-direction: column; gap: 2px; }
-.catalog-item {
-  background: white; border-radius: 0; padding: 14px 16px;
-  display: flex; align-items: center; justify-content: space-between;
-  cursor: pointer; transition: background 0.15s;
-  border-bottom: 0.5px solid #f0f0f0;
-}
+/* ── CATALOG ── */
+.catalog-list { padding: 14px 16px 20px; display: flex; flex-direction: column; gap: 2px; }
+.catalog-item { background: white; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; border-bottom: 0.5px solid #f0f0f0; }
 .catalog-item:first-child { border-radius: 14px 14px 0 0; }
 .catalog-item:last-child { border-radius: 0 0 14px 14px; border-bottom: none; }
 .catalog-item:active { background: #f5f5f5; }
@@ -618,54 +184,129 @@ body {
 .catalog-count { font-size: 12px; color: #8e8e93; margin-top: 1px; }
 .chevron { color: #c7c7cc; font-size: 14px; }
 
-/* ── Animations ──────────────────────────────────────── */
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes bounce { 0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; } 40% { transform: scale(1.2); opacity: 1; } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+/* ── BLOCK C ── */
+.kp-input-area { padding: 14px 16px; }
+.kp-label { font-size: 13px; font-weight: 600; color: #8e8e93; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
+.kp-textarea { width: 100%; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 12px; font-size: 14px; font-family: inherit; background: white; resize: none; outline: none; transition: border-color 0.2s; color: #1a1a1a; line-height: 1.5; }
+.kp-textarea:focus { border-color: #2B5CE6; }
+.kp-examples { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.kp-chip { padding: 5px 10px; background: #e3f2fd; border-radius: 20px; font-size: 11px; color: #1565C0; cursor: pointer; border: none; font-family: inherit; font-weight: 500; transition: background 0.2s; }
+.kp-chip:active { background: #bbdefb; }
+.btn-generate { width: 100%; padding: 15px; background: linear-gradient(135deg,#43A047,#1B5E20); color: white; border: none; border-radius: 14px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s; margin-top: 10px; box-shadow: 0 4px 14px rgba(27,94,32,0.3); }
+.btn-generate:active { opacity: 0.85; }
+.kp-result { margin: 0 16px 20px; background: white; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; border: 1px solid rgba(0,0,0,0.06); display: none; }
+.kp-result.visible { display: block; animation: slideUp 0.4s ease; }
+.kp-result-header { background: linear-gradient(135deg,#1B5E20,#2E7D32); padding: 14px 16px; color: white; display: flex; align-items: center; justify-content: space-between; }
+.kp-result-header h4 { font-size: 14px; font-weight: 700; }
+.kp-status { padding: 3px 10px; background: rgba(255,255,255,0.2); border-radius: 20px; font-size: 11px; font-weight: 600; }
+.kp-result-body { padding: 14px 16px; }
+.kp-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 0.5px solid #f0f0f0; font-size: 13px; }
+.kp-row:last-child { border-bottom: none; }
+.kp-row-label { color: #8e8e93; flex: 1; }
+.kp-row-value { color: #1a1a1a; font-weight: 600; text-align: right; flex: 1.5; }
+.kp-total { background: #E8F5E9; border-radius: 10px; padding: 12px 14px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+.kp-total-label { font-size: 13px; font-weight: 600; color: #2E7D32; }
+.kp-total-value { font-size: 18px; font-weight: 800; color: #1B5E20; }
+.kp-upsell { margin-top: 10px; background: #FFF8E1; border-radius: 10px; padding: 10px 14px; border-left: 3px solid #FF8F00; }
+.kp-upsell-title { font-size: 11px; font-weight: 700; color: #E65100; margin-bottom: 4px; }
+.kp-upsell p { font-size: 12px; color: #6D4C41; }
+.kp-actions { display: flex; gap: 8px; padding: 14px 16px; }
+.btn-sf { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: opacity 0.2s; }
+.btn-sf:active { opacity: 0.8; }
+.btn-sf-primary { background: #2B5CE6; color: white; }
+.btn-sf-secondary { background: #f2f2f7; color: #1a1a1a; }
+.ai-thinking { display: none; padding: 20px 16px; flex-direction: column; align-items: center; gap: 12px; }
+.ai-thinking.visible { display: flex; }
+.thinking-dots { display: flex; gap: 6px; }
+.thinking-dot { width: 8px; height: 8px; background: #2B5CE6; border-radius: 50%; animation: bounce 1.2s infinite; }
+.thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+.thinking-label { font-size: 13px; color: #8e8e93; }
 
-.scanning-ring {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 100px; height: 100px; border-radius: 50%;
-  border: 2px solid #2B5CE6;
-  animation: scanPulse 1.5s infinite;
-}
-@keyframes scanPulse {
-  0% { transform: translate(-50%,-50%) scale(0.8); opacity: 1; }
-  100% { transform: translate(-50%,-50%) scale(1.4); opacity: 0; }
-}
+/* ── BLOCK A ── */
+.camera-area { margin: 14px 16px; background: #1a1a1a; border-radius: 20px; overflow: hidden; position: relative; height: 200px; display: flex; align-items: center; justify-content: center; }
+.camera-overlay { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.4) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: white; cursor: pointer; }
+.camera-corners::before,.camera-corners::after { content: ''; position: absolute; width: 24px; height: 24px; border-color: white; border-style: solid; }
+.camera-corners::before { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
+.camera-corners::after { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+.camera-icon { font-size: 40px; }
+.camera-label { font-size: 14px; font-weight: 600; }
+.camera-sublabel { font-size: 11px; opacity: 0.7; }
+.vision-sample { flex-shrink: 0; width: 70px; height: 70px; border-radius: 12px; background: #e8f5e9; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
+.vision-sample.selected { border-color: #2B5CE6; background: #e3f2fd; }
+.vision-result { margin: 0 16px 20px; display: none; }
+.vision-result.visible { display: block; animation: slideUp 0.4s ease; }
+.diagnosis-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 10px; }
+.diagnosis-header { background: linear-gradient(135deg,#1565C0,#0D47A1); padding: 14px 16px; color: white; display: flex; align-items: center; gap: 10px; }
+.diagnosis-icon { font-size: 24px; }
+.diagnosis-title { font-size: 14px; font-weight: 700; }
+.diagnosis-conf { font-size: 11px; opacity: 0.8; margin-top: 1px; }
+.confidence-bar { margin: 10px 16px 4px; display: flex; align-items: center; gap: 8px; }
+.conf-track { flex: 1; height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
+.conf-fill { height: 100%; background: linear-gradient(90deg,#43A047,#1B5E20); border-radius: 3px; }
+.conf-label { font-size: 12px; font-weight: 700; color: #2E7D32; }
+.diagnosis-body { padding: 12px 16px 14px; }
+.diag-detail { font-size: 13px; color: #444; margin-bottom: 10px; line-height: 1.5; }
+.rec-title { font-size: 12px; font-weight: 700; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 8px; }
+.sku-card { background: #f8f8f8; border-radius: 12px; padding: 10px 12px; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; border: 1px solid #f0f0f0; cursor: pointer; transition: all 0.2s; }
+.sku-card:active { background: #e3f2fd; }
+.sku-icon { font-size: 28px; flex-shrink: 0; }
+.sku-info { flex: 1; }
+.sku-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+.sku-desc { font-size: 11px; color: #8e8e93; margin-top: 1px; }
+.sku-price { font-size: 14px; font-weight: 800; color: #1B5E20; }
+.btn-add-cart { padding: 7px 12px; background: #2B5CE6; color: white; border-radius: 8px; border: none; font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.scanning-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 100px; height: 100px; border-radius: 50%; border: 2px solid #2B5CE6; animation: scanPulse 1.5s infinite; }
 
-/* ── Notification toast ──────────────────────────────── */
-.toast {
-  position: absolute; top: 60px; left: 16px; right: 16px;
-  background: rgba(30,30,30,0.92); backdrop-filter: blur(20px);
-  color: white; border-radius: 14px; padding: 12px 14px;
-  display: flex; align-items: center; gap: 10px; z-index: 300;
-  transform: translateY(-80px); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-.toast.visible { transform: translateY(0); }
-.toast-icon { font-size: 20px; flex-shrink: 0; }
-.toast-text strong { font-size: 13px; font-weight: 700; display: block; }
-.toast-text span { font-size: 11px; opacity: 0.7; }
+/* ── BLOCK E ── */
+.vendor-select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1.5px solid #e0e0e0; font-size: 14px; background: white; color: #1a1a1a; font-family: inherit; outline: none; }
+.vendor-select:focus { border-color: #7B1FA2; }
+.vendor-kpis { display: flex; gap: 8px; padding: 12px 16px 4px; }
+.vendor-kpi { flex: 1; background: white; border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.06); }
+.vkpi-val { font-size: 14px; font-weight: 800; color: #1a1a1a; }
+.vkpi-lbl { font-size: 9px; color: #8e8e93; margin-top: 2px; line-height: 1.3; }
+.vkpi-change { font-size: 10px; font-weight: 700; margin-top: 2px; }
+.prod-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.prod-name { font-size: 11px; font-weight: 600; color: #1a1a1a; width: 80px; flex-shrink: 0; }
+.prod-bar-wrap { flex: 1; background: #f0f0f0; border-radius: 4px; height: 8px; overflow: hidden; }
+.prod-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+.prod-val { font-size: 10px; color: #8e8e93; width: 46px; text-align: right; }
+.ai-report-card { margin: 10px 16px 0; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.06); }
+.ai-report-header { background: linear-gradient(135deg,#6A1B9A,#4A148C); padding: 12px 16px; color: white; display: flex; align-items: center; justify-content: space-between; }
+.ai-report-body { padding: 14px 16px; }
+.report-insight { font-size: 12px; color: #444; line-height: 1.5; margin-bottom: 10px; }
+.region-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.region-chip { padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+.chip-green { background: #E8F5E9; color: #2E7D32; }
+.chip-red { background: #FFEBEE; color: #C62828; }
+.chip-gray { background: #F5F5F5; color: #616161; }
+.alert-box { background: #FFF8E1; border-left: 3px solid #FF8F00; border-radius: 0 8px 8px 0; padding: 10px 12px; margin-bottom: 10px; }
+.alert-title { font-size: 11px; font-weight: 700; color: #E65100; margin-bottom: 3px; }
+.alert-text { font-size: 11px; color: #6D4C41; line-height: 1.4; }
+.focus-consultant { background: #EDE7F6; border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; }
+.fc-avatar { font-size: 28px; }
+.fc-name { font-size: 12px; font-weight: 700; color: #4A148C; }
+.fc-desc { font-size: 10px; color: #7B1FA2; margin-top: 1px; }
+.btn-gen-report { width: calc(100% - 32px); margin: 12px 16px 20px; padding: 14px; background: linear-gradient(135deg,#7B1FA2,#4A148C); color: white; border: none; border-radius: 14px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 4px 14px rgba(123,31,162,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; }
+.vendor-thinking { display: none; padding: 16px; flex-direction: column; align-items: center; gap: 10px; }
+.vendor-thinking.visible { display: flex; }
 
-/* ── Desktop tip ──────────────────────────────────────── */
-.demo-tips {
-  display: flex; gap: 10px; max-width: 375px; width: 100%;
-}
-.tip {
-  flex: 1; background: rgba(255,255,255,0.07); border-radius: 12px;
-  padding: 10px 12px; border: 1px solid rgba(255,255,255,0.1);
-}
-.tip-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
-  text-transform: uppercase; margin-bottom: 3px;
-}
+/* ── Misc ── */
+.up { color: #2E7D32; }
+.down { color: #C62828; }
+
+@keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes bounce { 0%,80%,100%{transform:scale(0.8);opacity:0.5} 40%{transform:scale(1.2);opacity:1} }
+@keyframes scanPulse { 0%{transform:translate(-50%,-50%) scale(0.8);opacity:1} 100%{transform:translate(-50%,-50%) scale(1.4);opacity:0} }
+
+/* Desktop tips */
+.demo-tips { display: flex; gap: 10px; max-width: 375px; width: 100%; flex-wrap: wrap; }
+.tip { flex: 1; background: rgba(255,255,255,0.07); border-radius: 12px; padding: 10px 12px; border: 1px solid rgba(255,255,255,0.1); min-width: 100px; }
+.tip-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 3px; }
 .tip-text { font-size: 11px; opacity: 0.6; line-height: 1.4; }
 .tip-c .tip-label { color: #81C784; }
 .tip-a .tip-label { color: #64B5F6; }
-.tip-b .tip-label { color: #FFB74D; }
-
+.tip-e .tip-label { color: #CE93D8; }
 </style>
 </head>
 <body>
@@ -680,523 +321,351 @@ body {
   </div>
 </div>
 
-<!-- iPhone -->
 <div class="iphone-wrap">
   <div class="iphone-shell">
     <div class="iphone-screen">
+      <div class="dynamic-island"><div class="di-cam"></div><div class="di-dot"></div></div>
 
-      <!-- Dynamic Island -->
-      <div class="dynamic-island">
-        <div class="di-cam"></div>
-        <div class="di-dot"></div>
-      </div>
-
-      <!-- Toast notification -->
+      <!-- Toast -->
       <div class="toast" id="toast">
         <div class="toast-icon" id="toast-icon">✅</div>
         <div class="toast-text">
-          <strong id="toast-title">КП збережено</strong>
-          <span id="toast-body">Відкрито в Salesforce</span>
+          <strong id="toast-title">Збережено</strong>
+          <span id="toast-body">Успішно</span>
         </div>
       </div>
 
-      <!-- ════════════ HOME SCREEN ════════════ -->
-      <div class="screen active" id="screen-home">
-        <div class="status-bar">
-          <span class="status-left">17:23</span>
-          <div class="status-right">
-            <span>5G</span>
-            <div class="battery"><div class="battery-fill"></div></div>
-          </div>
-        </div>
-        <div class="currency-bar">
-          <span>1 USD = 44.07 UAH</span>
-          <div class="currency-dot"></div>
-          <span>1 EUR = 51.49 UAH</span>
-          <div style="margin-left:auto">🔔</div>
-        </div>
-        <div style="background:white; padding:8px 16px 0; font-size:12px; color:#8e8e93; letter-spacing:-0.2px;">
-          <input style="width:100%; border:none; background:#f2f2f7; border-radius:10px; padding:7px 12px; font-size:14px; color:#8e8e93; outline:none;" placeholder="🔍  Пошук від 3-х символів" readonly/>
-        </div>
+      <div class="app-container">
 
-        <div class="home-cards">
-          <div class="big-card card-catalog" onclick="navTo('screen-catalog')">
-            <div class="big-card-left">
-              <h3>Каталог</h3>
-              <p>Насіння, агрохімія та паливо</p>
-            </div>
-            <div class="big-card-emoji">🌽</div>
+        <!-- ══════════ HOME ══════════ -->
+        <div class="screen active" id="screen-home">
+          <div class="status-bar" style="background:#2B5CE6">
+            <span class="status-left">17:23</span>
+            <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
           </div>
-          <div class="big-card card-promo" onclick="showToast('🎁','Акції','3 активні пропозиції від вендорів')">
-            <div class="big-card-left">
-              <h3>Акції</h3>
-              <p>Знижки до 25%</p>
+          <div class="screen-scroll">
+            <div class="currency-bar">
+              <span>1 USD = 44.07 UAH</span><div class="currency-dot"></div>
+              <span>1 EUR = 51.49 UAH</span><div style="margin-left:auto">🔔</div>
             </div>
-            <div class="big-card-emoji">🏷️</div>
-          </div>
-        </div>
-
-        <div style="padding:0 16px 8px;">
-          <div style="background:white;border-radius:16px;padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
-            <div style="font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:12px;">👋 Вітаємо! Оберіть, хто Ви:</div>
-            <div class="role-row" style="padding:0;">
-              <div class="role-card selected" onclick="selectRole(this,'screen-home')">
-                <div class="role-avatar">👨‍🌾</div>
-                <div class="role-name">Фермер</div>
+            <div style="background:white;padding:8px 16px;">
+              <input style="width:100%;border:none;background:#f2f2f7;border-radius:10px;padding:7px 12px;font-size:14px;color:#8e8e93;outline:none;" placeholder="🔍  Пошук від 3-х символів" readonly/>
+            </div>
+            <div class="home-cards">
+              <div class="big-card card-catalog" onclick="navTo('screen-catalog')">
+                <div class="big-card-left"><h3>Каталог</h3><p>Насіння, агрохімія та паливо</p></div>
+                <div class="big-card-emoji">🌽</div>
               </div>
-              <div class="role-card" onclick="selectRole(this,'screen-home')">
-                <div class="role-avatar">🎧</div>
-                <div class="role-name">Консультант</div>
-              </div>
-              <div class="role-card" onclick="selectRole(this,'screen-home')">
-                <div class="role-avatar">🤔</div>
-                <div class="role-name">А я так</div>
+              <div class="big-card card-promo" onclick="showToast('🎁','Акції','3 активні пропозиції від вендорів')">
+                <div class="big-card-left"><h3>Акції</h3><p>Знижки до 25%</p></div>
+                <div class="big-card-emoji">🏷️</div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="ai-section">
-          <div class="ai-section-title">✨ AI Agro Agent — нові функції</div>
-          <div class="ai-blocks">
-            <div class="ai-block-card" onclick="navTo('screen-c')">
-              <div class="ai-block-icon icon-c">📋</div>
-              <div class="ai-block-text">
-                <h4>Smart Operator</h4>
-                <p>Авто-генерація КП за 2 хвилини</p>
-              </div>
-              <div class="ai-block-badge badge-c">Block C</div>
-            </div>
-            <div class="ai-block-card" onclick="navTo('screen-a')">
-              <div class="ai-block-icon icon-a">📷</div>
-              <div class="ai-block-text">
-                <h4>Agro-Vision</h4>
-                <p>Діагностика культур за фото</p>
-              </div>
-              <div class="ai-block-badge badge-a">Block A</div>
-            </div>
-            <div class="ai-block-card" onclick="navTo('screen-e')">
-              <div class="ai-block-icon icon-e">📊</div>
-              <div class="ai-block-text">
-                <h4>Vendor Analytics</h4>
-                <p>AI звіти для вендорів в реальному часі</p>
-              </div>
-              <div class="ai-block-badge badge-e">Block E</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bottom-nav">
-          <button class="nav-item active" onclick="navTo('screen-home')">
-            <span class="nav-icon">🏠</span><span>Головна</span>
-          </button>
-          <button class="nav-item" onclick="navTo('screen-catalog')">
-            <span class="nav-icon">📖</span><span>Каталог</span>
-          </button>
-          <button class="nav-item" onclick="showToast('🛒','Кошик','Кошик порожній')">
-            <span class="nav-icon">🛒</span><span>Кошик</span>
-          </button>
-          <button class="nav-item" onclick="showToast('👤','Профіль','Консультант · Степан')">
-            <span class="nav-icon">👤</span><span>Профіль</span>
-          </button>
-          <div class="home-indicator"></div>
-        </div>
-      </div>
-
-      <!-- ════════════ CATALOG SCREEN ════════════ -->
-      <div class="screen" id="screen-catalog">
-        <div class="status-bar dark">
-          <span class="status-left" style="color:#1a1a1a">17:23</span>
-          <div class="status-right" style="color:#1a1a1a">
-            <span>5G</span>
-            <div class="battery" style="border-color:#1a1a1a"><div class="battery-fill" style="background:#1a1a1a"></div></div>
-          </div>
-        </div>
-        <div class="app-header" style="background:white; color:#1a1a1a; padding-top:54px;">
-          <div class="header-top">
-            <button class="header-back" style="color:#2B5CE6" onclick="navBack()">‹ Назад</button>
-            <span style="font-size:17px;font-weight:700;">Каталог</span>
-            <div style="width:60px"></div>
-          </div>
-        </div>
-        <div style="padding:8px 16px 0; background:white;">
-          <input style="width:100%; border:none; background:#f2f2f7; border-radius:10px; padding:7px 12px; font-size:14px; color:#8e8e93; outline:none; margin-bottom:10px;" placeholder="🔍  Пошук від 3-х символів" readonly/>
-        </div>
-        <div class="catalog-list">
-          <div class="catalog-item" onclick="showToast('🌱','Насіння','862 товари · BASF, DEKALB, KWS...')">
-            <div class="catalog-item-left">
-              <span class="catalog-icon">🌱</span>
-              <div>
-                <div class="catalog-name">Насіння</div>
-                <div class="catalog-count">862 товари</div>
-              </div>
-            </div>
-            <span class="chevron">›</span>
-          </div>
-          <div class="catalog-item" onclick="showToast('🐛','Засоби захисту рослин','1,240 товари · BASF, Bayer, Syngenta...')">
-            <div class="catalog-item-left">
-              <span class="catalog-icon">🐛</span>
-              <div>
-                <div class="catalog-name">Засоби захисту рослин</div>
-                <div class="catalog-count">1,240 товарів</div>
-              </div>
-            </div>
-            <span class="chevron">›</span>
-          </div>
-          <div class="catalog-item" onclick="showToast('⚗️','Добрива та МКД','540 товарів · Yara, ICL, EuroChem...')">
-            <div class="catalog-item-left">
-              <span class="catalog-icon">⚗️</span>
-              <div>
-                <div class="catalog-name">Добрива та МКД</div>
-                <div class="catalog-count">540 товарів</div>
-              </div>
-            </div>
-            <span class="chevron">›</span>
-          </div>
-          <div class="catalog-item" onclick="showToast('⛽','Паливо','12 позицій · Дизель, Бензин')">
-            <div class="catalog-item-left">
-              <span class="catalog-icon">⛽</span>
-              <div>
-                <div class="catalog-name">Паливо</div>
-                <div class="catalog-count">12 позицій</div>
-              </div>
-            </div>
-            <span class="chevron">›</span>
-          </div>
-        </div>
-        <div class="bottom-nav">
-          <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
-          <button class="nav-item active"><span class="nav-icon">📖</span><span>Каталог</span></button>
-          <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
-          <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
-          <div class="home-indicator"></div>
-        </div>
-      </div>
-
-      <!-- ════════════ BLOCK C — SMART OPERATOR ════════════ -->
-      <div class="screen" id="screen-c">
-        <div class="status-bar">
-          <span class="status-left">17:23</span>
-          <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
-        </div>
-        <div class="app-header green">
-          <div class="header-top">
-            <button class="header-back" onclick="navBack()">‹ Назад</button>
-            <span class="header-title">Smart Operator</span>
-            <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block C</div>
-          </div>
-          <div class="header-currency">AI-генерація КП · Salesforce · Автопідбір аналогів</div>
-        </div>
-        <div class="kp-screen">
-          <div class="kp-input-area">
-            <div class="kp-label">Опишіть запит клієнта</div>
-            <textarea class="kp-textarea" id="kp-input" rows="3" placeholder="Напр: Потрібно насіння соняшнику 200 га, клієнт Іваненко, Полтавська обл..."></textarea>
-            <div class="kp-examples">
-              <button class="kp-chip" onclick="setKP('Насіння кукурудзи 150 га, клієнт Петренко, Харківська обл, гібрид DEKALB')">🌽 Кукурудза</button>
-              <button class="kp-chip" onclick="setKP('Соняшник 300 га + гербіцид, клієнт Коваль, Дніпропетровська, Clearfield')">🌻 Соняшник</button>
-              <button class="kp-chip" onclick="setKP('Пшениця озима 500 га + добрива NPK, клієнт Шевченко, Вінницька обл')">🌾 Пшениця</button>
-              <button class="kp-chip" onclick="setKP('Ріпак 80 га, захист рослин повний пакет, клієнт Бондар, Київська обл')">🌿 Ріпак</button>
-            </div>
-            <button class="btn-generate" onclick="generateKP()">
-              <span>⚡</span> Згенерувати КП в Salesforce
-            </button>
-          </div>
-
-          <div class="ai-thinking" id="kp-thinking">
-            <div class="thinking-dots">
-              <div class="thinking-dot"></div>
-              <div class="thinking-dot"></div>
-              <div class="thinking-dot"></div>
-            </div>
-            <div class="thinking-label" id="thinking-step">Аналізую запит клієнта...</div>
-          </div>
-
-          <div class="kp-result" id="kp-result">
-            <div class="kp-result-header">
-              <div>
-                <h4 id="kp-title">КП — Насіння кукурудзи</h4>
-                <div style="font-size:11px;opacity:0.8;margin-top:2px;" id="kp-subtitle">Клієнт: Петренко · Харківська обл</div>
-              </div>
-              <div class="kp-status">✓ Готово</div>
-            </div>
-            <div class="kp-result-body" id="kp-body">
-              <div class="kp-row"><span class="kp-row-label">Культура</span><span class="kp-row-value" id="kp-culture">Кукурудза</span></div>
-              <div class="kp-row"><span class="kp-row-label">Площа</span><span class="kp-row-value" id="kp-area">150 га</span></div>
-              <div class="kp-row"><span class="kp-row-label">Продукт</span><span class="kp-row-value" id="kp-product">DEKALB DKC 3623 (Clearfield)</span></div>
-              <div class="kp-row"><span class="kp-row-label">Норма висіву</span><span class="kp-row-value" id="kp-norm">80,000 нас/га</span></div>
-              <div class="kp-row"><span class="kp-row-label">Кількість</span><span class="kp-row-value" id="kp-qty">15 п.о. (150 га)</span></div>
-              <div class="kp-row"><span class="kp-row-label">Ціна/п.о.</span><span class="kp-row-value" id="kp-price">₴12,400</span></div>
-              <div class="kp-total">
-                <span class="kp-total-label">💰 Сума КП</span>
-                <span class="kp-total-value" id="kp-total">₴186,000</span>
-              </div>
-              <div class="kp-upsell" id="kp-upsell">
-                <div class="kp-upsell-title">🤖 AI рекомендує додати (+18% GMV)</div>
-                <p id="kp-upsell-text">Гербіцид Евро-Лайтнінг — сумісний з Clearfield технологією, ₴28,000 за 150 га. Комплексна пропозиція збільшить КП до ₴214,000.</p>
-              </div>
-            </div>
-            <div class="kp-actions">
-              <button class="btn-sf btn-sf-primary" onclick="saveToSF()">💾 Зберегти в SF</button>
-              <button class="btn-sf btn-sf-secondary" onclick="shareKP()">📤 Надіслати</button>
-            </div>
-          </div>
-        </div>
-        <div class="bottom-nav">
-          <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
-          <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
-          <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
-          <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
-          <div class="home-indicator"></div>
-        </div>
-      </div>
-
-      <!-- ════════════ BLOCK A — AGRO VISION ════════════ -->
-      <div class="screen" id="screen-a">
-        <div class="status-bar">
-          <span class="status-left">17:23</span>
-          <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
-        </div>
-        <div class="app-header" style="background:linear-gradient(135deg,#1565C0,#0D47A1)">
-          <div class="header-top">
-            <button class="header-back" onclick="navBack()">‹ Назад</button>
-            <span class="header-title">Agro-Vision</span>
-            <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block A</div>
-          </div>
-          <div class="header-currency">AI-діагностика · 20k SKU · Рецепт за 5 сек</div>
-        </div>
-        <div class="vision-screen">
-          <div class="camera-area" id="camera-box" onclick="startScan()">
-            <img class="camera-image" id="cam-img" src="" alt=""/>
-            <div class="camera-overlay" id="camera-overlay">
-              <div class="camera-corners"></div>
-              <div class="camera-icon">📷</div>
-              <div class="camera-label">Зробити фото</div>
-              <div class="camera-sublabel">або оберіть приклад нижче</div>
-            </div>
-            <div id="scanning-overlay" style="display:none; position:absolute; inset:0; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; flex-direction:column; gap:10px; color:white;">
-              <div class="scanning-ring"></div>
-              <div style="font-size:13px;font-weight:600;margin-top:60px;">🤖 Аналізую зображення...</div>
-            </div>
-          </div>
-
-          <div style="padding:0 16px 6px; font-size:12px; font-weight:600; color:#8e8e93; text-transform:uppercase; letter-spacing:0.3px;">Приклади полів</div>
-          <div style="display:flex; gap:8px; padding:0 16px 14px; overflow-x:auto;">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-              <div class="vision-sample" id="s1" onclick="selectSample('s1','🌽','Кукурудза — Фузаріоз стебла','Fusarium graminearum','#1E88E5','94')">🌽</div>
-              <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Кукурудза</span>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-              <div class="vision-sample" id="s2" onclick="selectSample('s2','🌻','Соняшник — Фомопсис','Phomopsis helianthi','#43A047','91')">🌻</div>
-              <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Соняшник</span>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-              <div class="vision-sample" id="s3" onclick="selectSample('s3','🌾','Пшениця — Бура іржа','Puccinia triticina','#FF8F00','97')">🌾</div>
-              <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Пшениця</span>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-              <div class="vision-sample" id="s4" onclick="selectSample('s4','🌿','Ріпак — Склеротиніоз','Sclerotinia sclerotiorum','#E65100','88')">🌿</div>
-              <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Ріпак</span>
-            </div>
-          </div>
-
-          <div class="vision-result" id="vision-result">
-            <div class="diagnosis-card">
-              <div class="diagnosis-header">
-                <div class="diagnosis-icon" id="diag-icon">🌽</div>
-                <div>
-                  <div class="diagnosis-title" id="diag-title">Фузаріоз стебла кукурудзи</div>
-                  <div class="diagnosis-conf" id="diag-latin">Fusarium graminearum</div>
+            <div style="padding:0 16px 12px;">
+              <div style="background:white;border-radius:16px;padding:14px 16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
+                <div style="font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:12px;">👋 Вітаємо! Оберіть, хто Ви:</div>
+                <div style="display:flex;gap:10px;justify-content:space-around;">
+                  <div class="role-card selected" onclick="selectRole(this)"><div class="role-avatar">👨‍🌾</div><div class="role-name">Фермер</div></div>
+                  <div class="role-card" onclick="selectRole(this)"><div class="role-avatar">🎧</div><div class="role-name">Консультант</div></div>
+                  <div class="role-card" onclick="selectRole(this)"><div class="role-avatar">🤔</div><div class="role-name">А я так</div></div>
                 </div>
               </div>
-              <div class="confidence-bar">
-                <div class="conf-track"><div class="conf-fill" id="conf-bar" style="width:94%"></div></div>
-                <div class="conf-label" id="conf-val">94%</div>
-              </div>
-              <div class="diagnosis-body">
-                <div class="diag-detail" id="diag-detail">Виявлено ознаки фузаріозу стебла: коричневе забарвлення вузлів, розм'якшення тканин. Рекомендовано термінове обприскування.</div>
-                <div class="rec-title">🧪 Рекомендації з каталогу (20k SKU)</div>
-                <div class="sku-card" onclick="addToCart('Фунгіцид Амістар Екстра')">
-                  <div class="sku-icon">🧪</div>
-                  <div class="sku-info">
-                    <div class="sku-name" id="sku1-name">Амістар Екстра 280 SC</div>
-                    <div class="sku-desc" id="sku1-desc">Фунгіцид · 0.75 л/га · Syngenta</div>
-                  </div>
-                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
-                    <div class="sku-price" id="sku1-price">₴2,840/л</div>
-                    <button class="btn-add-cart">+ Кошик</button>
-                  </div>
+            </div>
+            <div class="ai-section">
+              <div class="ai-section-title">✨ AI Agro Agent — нові функції</div>
+              <div class="ai-blocks">
+                <div class="ai-block-card" onclick="navTo('screen-c')">
+                  <div class="ai-block-icon icon-c">📋</div>
+                  <div class="ai-block-text"><h4>Smart Operator</h4><p>Авто-генерація КП за 2 хвилини</p></div>
+                  <div class="ai-block-badge badge-c">Block C</div>
                 </div>
-                <div class="sku-card" onclick="addToCart('Фунгіцид Пропіконазол')">
-                  <div class="sku-icon">💊</div>
-                  <div class="sku-info">
-                    <div class="sku-name" id="sku2-name">Пропіконазол 25% EC</div>
-                    <div class="sku-desc" id="sku2-desc">Аналог · -22% ціна · На складі</div>
+                <div class="ai-block-card" onclick="navTo('screen-a')">
+                  <div class="ai-block-icon icon-a">📷</div>
+                  <div class="ai-block-text"><h4>Agro-Vision</h4><p>Діагностика культур за фото</p></div>
+                  <div class="ai-block-badge badge-a">Block A</div>
+                </div>
+                <div class="ai-block-card" onclick="navTo('screen-e')">
+                  <div class="ai-block-icon icon-e">📊</div>
+                  <div class="ai-block-text"><h4>Vendor Analytics</h4><p>AI звіти для вендорів live</p></div>
+                  <div class="ai-block-badge badge-e">Block E</div>
+                </div>
+              </div>
+            </div>
+          </div><!-- end screen-scroll -->
+          <div class="bottom-nav">
+            <button class="nav-item active" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
+            <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
+            <button class="nav-item" onclick="showToast('🛒','Кошик','Кошик порожній')"><span class="nav-icon">🛒</span><span>Кошик</span></button>
+            <button class="nav-item" onclick="showToast('👤','Профіль','Консультант · Степан')"><span class="nav-icon">👤</span><span>Профіль</span></button>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+
+        <!-- ══════════ CATALOG ══════════ -->
+        <div class="screen" id="screen-catalog">
+          <div class="status-bar white">
+            <span class="status-left" style="color:#1a1a1a">17:23</span>
+            <div class="status-right" style="color:#1a1a1a"><span>5G</span><div class="battery" style="border-color:#1a1a1a"><div class="battery-fill" style="background:#1a1a1a"></div></div></div>
+          </div>
+          <div class="screen-scroll">
+            <div class="app-header" style="background:white;color:#1a1a1a;padding:14px 16px;">
+              <div class="header-top">
+                <button class="header-back" style="color:#2B5CE6" onclick="navBack()">‹ Назад</button>
+                <span style="font-size:17px;font-weight:700;">Каталог</span>
+                <div style="width:60px"></div>
+              </div>
+            </div>
+            <div style="padding:8px 16px;background:white;">
+              <input style="width:100%;border:none;background:#f2f2f7;border-radius:10px;padding:7px 12px;font-size:14px;color:#8e8e93;outline:none;margin-bottom:10px;" placeholder="🔍  Пошук від 3-х символів" readonly/>
+            </div>
+            <div class="catalog-list">
+              <div class="catalog-item" onclick="showToast('🌱','Насіння','862 товари · BASF, DEKALB, KWS...')"><div class="catalog-item-left"><span class="catalog-icon">🌱</span><div><div class="catalog-name">Насіння</div><div class="catalog-count">862 товари</div></div></div><span class="chevron">›</span></div>
+              <div class="catalog-item" onclick="showToast('🐛','Засоби захисту','1,240 товарів · BASF, Bayer, Syngenta...')"><div class="catalog-item-left"><span class="catalog-icon">🐛</span><div><div class="catalog-name">Засоби захисту рослин</div><div class="catalog-count">1,240 товарів</div></div></div><span class="chevron">›</span></div>
+              <div class="catalog-item" onclick="showToast('⚗️','Добрива','540 товарів · Yara, ICL, EuroChem...')"><div class="catalog-item-left"><span class="catalog-icon">⚗️</span><div><div class="catalog-name">Добрива та МКД</div><div class="catalog-count">540 товарів</div></div></div><span class="chevron">›</span></div>
+              <div class="catalog-item" onclick="showToast('⛽','Паливо','12 позицій · Дизель, Бензин')"><div class="catalog-item-left"><span class="catalog-icon">⛽</span><div><div class="catalog-name">Паливо</div><div class="catalog-count">12 позицій</div></div></div><span class="chevron">›</span></div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
+            <button class="nav-item active"><span class="nav-icon">📖</span><span>Каталог</span></button>
+            <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
+            <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+
+        <!-- ══════════ BLOCK C ══════════ -->
+        <div class="screen" id="screen-c">
+          <div class="status-bar" style="background:linear-gradient(135deg,#43A047,#1B5E20)">
+            <span class="status-left">17:23</span>
+            <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
+          </div>
+          <div class="screen-scroll">
+            <div class="app-header green">
+              <div class="header-top">
+                <button class="header-back" onclick="navBack()">‹ Назад</button>
+                <span class="header-title">Smart Operator</span>
+                <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block C</div>
+              </div>
+              <div class="header-sub">AI-генерація КП · Salesforce · Автопідбір аналогів</div>
+            </div>
+            <div class="kp-input-area">
+              <div class="kp-label">Опишіть запит клієнта</div>
+              <textarea class="kp-textarea" id="kp-input" rows="3" placeholder="Напр: Насіння соняшнику 200 га, клієнт Іваненко, Полтавська обл..."></textarea>
+              <div class="kp-examples">
+                <button class="kp-chip" onclick="setKP('Насіння кукурудзи 150 га, клієнт Петренко, Харківська обл, гібрид DEKALB')">🌽 Кукурудза</button>
+                <button class="kp-chip" onclick="setKP('Соняшник 300 га + гербіцид, клієнт Коваль, Дніпропетровська, Clearfield')">🌻 Соняшник</button>
+                <button class="kp-chip" onclick="setKP('Пшениця озима 500 га + добрива NPK, клієнт Шевченко, Вінницька обл')">🌾 Пшениця</button>
+                <button class="kp-chip" onclick="setKP('Ріпак 80 га, захист рослин повний пакет, клієнт Бондар, Київська обл')">🌿 Ріпак</button>
+              </div>
+              <button class="btn-generate" onclick="generateKP()"><span>⚡</span> Згенерувати КП в Salesforce</button>
+            </div>
+            <div class="ai-thinking" id="kp-thinking">
+              <div class="thinking-dots"><div class="thinking-dot"></div><div class="thinking-dot"></div><div class="thinking-dot"></div></div>
+              <div class="thinking-label" id="thinking-step">Аналізую запит клієнта...</div>
+            </div>
+            <div class="kp-result" id="kp-result">
+              <div class="kp-result-header">
+                <div><h4 id="kp-title">КП — Насіння кукурудзи</h4><div style="font-size:11px;opacity:0.8;margin-top:2px;" id="kp-subtitle">Клієнт: Петренко · Харківська</div></div>
+                <div class="kp-status">✓ Готово</div>
+              </div>
+              <div class="kp-result-body">
+                <div class="kp-row"><span class="kp-row-label">Культура</span><span class="kp-row-value" id="kp-culture">Кукурудза</span></div>
+                <div class="kp-row"><span class="kp-row-label">Площа</span><span class="kp-row-value" id="kp-area">150 га</span></div>
+                <div class="kp-row"><span class="kp-row-label">Продукт</span><span class="kp-row-value" id="kp-product">DEKALB DKC 3623</span></div>
+                <div class="kp-row"><span class="kp-row-label">Кількість</span><span class="kp-row-value" id="kp-qty">15 п.о.</span></div>
+                <div class="kp-row"><span class="kp-row-label">Ціна/п.о.</span><span class="kp-row-value" id="kp-price">₴12,400</span></div>
+                <div class="kp-total"><span class="kp-total-label">💰 Сума КП</span><span class="kp-total-value" id="kp-total">₴186,000</span></div>
+                <div class="kp-upsell"><div class="kp-upsell-title">🤖 AI рекомендує додати (+18% GMV)</div><p id="kp-upsell-text">Гербіцид Євро-Лайтнінг — сумісний з Clearfield, ₴28,000 за 150 га.</p></div>
+              </div>
+              <div class="kp-actions">
+                <button class="btn-sf btn-sf-primary" onclick="showToast('✅','КП збережено в Salesforce','Відкрито як Selling Opportunity')">💾 Зберегти в SF</button>
+                <button class="btn-sf btn-sf-secondary" onclick="showToast('📤','Надіслано','Email + Telegram клієнту')">📤 Надіслати</button>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
+            <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
+            <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
+            <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+
+        <!-- ══════════ BLOCK A ══════════ -->
+        <div class="screen" id="screen-a">
+          <div class="status-bar" style="background:linear-gradient(135deg,#1565C0,#0D47A1)">
+            <span class="status-left">17:23</span>
+            <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
+          </div>
+          <div class="screen-scroll">
+            <div class="app-header blue">
+              <div class="header-top">
+                <button class="header-back" onclick="navBack()">‹ Назад</button>
+                <span class="header-title">Agro-Vision</span>
+                <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block A</div>
+              </div>
+              <div class="header-sub">AI-діагностика · 20k SKU · Рецепт за 5 сек</div>
+            </div>
+            <div class="camera-area" id="camera-box" onclick="startScan()">
+              <div class="camera-overlay" id="camera-overlay">
+                <div class="camera-corners"></div>
+                <div class="camera-icon">📷</div>
+                <div class="camera-label">Зробити фото</div>
+                <div class="camera-sublabel">або оберіть приклад нижче</div>
+              </div>
+              <div id="scanning-overlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;flex-direction:column;gap:10px;color:white;">
+                <div class="scanning-ring"></div>
+                <div style="font-size:13px;font-weight:600;margin-top:60px;">🤖 Аналізую зображення...</div>
+              </div>
+            </div>
+            <div style="padding:0 16px 6px;font-size:12px;font-weight:600;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">Приклади полів</div>
+            <div style="display:flex;gap:8px;padding:0 16px 14px;overflow-x:auto;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
+                <div class="vision-sample" id="s1" onclick="selectSample('s1')">🌽</div>
+                <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Кукурудза</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
+                <div class="vision-sample" id="s2" onclick="selectSample('s2')">🌻</div>
+                <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Соняшник</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
+                <div class="vision-sample" id="s3" onclick="selectSample('s3')">🌾</div>
+                <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Пшениця</span>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
+                <div class="vision-sample" id="s4" onclick="selectSample('s4')">🌿</div>
+                <span style="font-size:10px;color:#8e8e93;text-align:center;width:70px;">Ріпак</span>
+              </div>
+            </div>
+            <div class="vision-result" id="vision-result">
+              <div class="diagnosis-card">
+                <div class="diagnosis-header">
+                  <div class="diagnosis-icon" id="diag-icon">🌽</div>
+                  <div><div class="diagnosis-title" id="diag-title">Фузаріоз стебла кукурудзи</div><div class="diagnosis-conf" id="diag-latin">Fusarium graminearum</div></div>
+                </div>
+                <div class="confidence-bar">
+                  <div class="conf-track"><div class="conf-fill" id="conf-bar" style="width:94%"></div></div>
+                  <div class="conf-label" id="conf-val">94%</div>
+                </div>
+                <div class="diagnosis-body">
+                  <div class="diag-detail" id="diag-detail">Виявлено ознаки фузаріозу стебла. Рекомендовано термінове обприскування.</div>
+                  <div class="rec-title">🧪 Рекомендації з каталогу (20k SKU)</div>
+                  <div class="sku-card" onclick="showToast('🛒','Додано','Амістар Екстра · 1 л')">
+                    <div class="sku-icon">🧪</div>
+                    <div class="sku-info"><div class="sku-name" id="sku1-name">Амістар Екстра 280 SC</div><div class="sku-desc" id="sku1-desc">Фунгіцид · 0.75 л/га · Syngenta</div></div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><div class="sku-price" id="sku1-price">₴2,840/л</div><button class="btn-add-cart">+ Кошик</button></div>
                   </div>
-                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
-                    <div class="sku-price" id="sku2-price">₴1,980/л</div>
-                    <button class="btn-add-cart">+ Кошик</button>
+                  <div class="sku-card" onclick="showToast('🛒','Додано','Пропіконазол · 1 л')">
+                    <div class="sku-icon">💊</div>
+                    <div class="sku-info"><div class="sku-name" id="sku2-name">Пропіконазол 25% EC</div><div class="sku-desc" id="sku2-desc">Аналог · -22% ціна · На складі</div></div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;"><div class="sku-price" id="sku2-price">₴1,980/л</div><button class="btn-add-cart">+ Кошик</button></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="bottom-nav">
-          <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
-          <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
-          <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
-          <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
-          <div class="home-indicator"></div>
-        </div>
-      </div>
-
-      <!-- ════════════ BLOCK E — VENDOR ANALYTICS ════════════ -->
-      <div class="screen" id="screen-e">
-        <div class="status-bar">
-          <span class="status-left">17:23</span>
-          <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
-        </div>
-        <div class="app-header" style="background:linear-gradient(135deg,#6A1B9A,#4A148C)">
-          <div class="header-top">
-            <button class="header-back" onclick="navBack()">‹ Назад</button>
-            <span class="header-title">Vendor Analytics</span>
-            <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block E</div>
+          <div class="bottom-nav">
+            <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
+            <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
+            <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
+            <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
+            <div class="home-indicator"></div>
           </div>
-          <div class="header-currency">AI звіти · Live дашборд · Персоналізовані інсайти</div>
         </div>
-        <div class="vendor-screen">
 
-          <div class="vendor-selector">
-            <label>Оберіть вендора</label>
-            <select class="vendor-select" onchange="updateVendor(this.value)">
-              <option value="basf">🟡 BASF Ukraine — Насіння та ЗЗР</option>
-              <option value="syngenta">🔵 Syngenta Ukraine — Агрохімія</option>
-              <option value="bayer">🟢 Bayer CropScience — Засоби захисту</option>
-              <option value="yara">🟠 Yara Ukraine — Добрива</option>
-            </select>
+        <!-- ══════════ BLOCK E ══════════ -->
+        <div class="screen" id="screen-e">
+          <div class="status-bar" style="background:linear-gradient(135deg,#6A1B9A,#4A148C)">
+            <span class="status-left">17:23</span>
+            <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
           </div>
-
-          <div class="vendor-kpis">
-            <div class="vendor-kpi">
-              <div class="vkpi-val" id="v-sales">₴4.2M</div>
-              <div class="vkpi-lbl">Продажі цього місяця</div>
-              <div class="vkpi-change up" id="v-sales-chg">↑ +18%</div>
-            </div>
-            <div class="vendor-kpi">
-              <div class="vkpi-val" id="v-consult">47</div>
-              <div class="vkpi-lbl">Активних консультантів</div>
-              <div class="vkpi-change up" id="v-consult-chg">↑ +6</div>
-            </div>
-            <div class="vendor-kpi">
-              <div class="vkpi-val" id="v-problem">3</div>
-              <div class="vkpi-lbl">Проблемних регіони</div>
-              <div class="vkpi-change down" id="v-prob-chg">↓ -12%</div>
-            </div>
-          </div>
-
-          <div style="padding:10px 16px 6px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">📦 Топ продуктів</div>
-          <div class="products-section">
-            <div class="prod-row">
-              <div class="prod-name" id="p1-name">Луміген</div>
-              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p1-bar" style="width:90%;background:linear-gradient(90deg,#7B1FA2,#AB47BC)"></div></div>
-              <div class="prod-val" id="p1-val">₴1.8M</div>
-            </div>
-            <div class="prod-row">
-              <div class="prod-name" id="p2-name">Белайт Актив</div>
-              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p2-bar" style="width:65%;background:linear-gradient(90deg,#1565C0,#42A5F5)"></div></div>
-              <div class="prod-val" id="p2-val">₴1.2M</div>
-            </div>
-            <div class="prod-row">
-              <div class="prod-name" id="p3-name">Стомп Аква</div>
-              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p3-bar" style="width:42%;background:linear-gradient(90deg,#2E7D32,#66BB6A)"></div></div>
-              <div class="prod-val" id="p3-val">₴780K</div>
-            </div>
-            <div class="prod-row">
-              <div class="prod-name" id="p4-name">Регент 200</div>
-              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p4-bar" style="width:22%;background:linear-gradient(90deg,#E65100,#FFA726)"></div></div>
-              <div class="prod-val" id="p4-val">₴420K</div>
-            </div>
-          </div>
-
-          <div style="padding:10px 16px 4px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">🤖 AI Звіт · Live</div>
-          <div class="ai-report-card">
-            <div class="ai-report-header">
-              <div>
-                <div style="font-size:14px;font-weight:700;" id="v-report-title">BASF Ukraine · Травень 2026</div>
-                <div style="font-size:11px;opacity:0.8;margin-top:2px;">Згенеровано AI · Оновлено сьогодні</div>
+          <div class="screen-scroll">
+            <div class="app-header purple">
+              <div class="header-top">
+                <button class="header-back" onclick="navBack()">‹ Назад</button>
+                <span class="header-title">Vendor Analytics</span>
+                <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block E</div>
               </div>
-              <div style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;">LIVE</div>
+              <div class="header-sub">AI звіти · Live дашборд · Персоналізовані інсайти</div>
             </div>
-            <div class="ai-report-body">
-              <div class="report-insight" id="v-insight">Луміген показує рекордні продажі +18% — драйвер зростання Харківська та Полтавська обл. Белайт Актив стагнує в Одеській обл: 3 консультанти не провели жодного демо за 30 днів. Рекомендуємо фокусну сесію з ними цього тижня.</div>
-
-              <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Регіони</div>
-              <div class="region-chips" id="v-regions">
-                <span class="region-chip chip-green">✅ Харків +34%</span>
-                <span class="region-chip chip-green">✅ Полтава +22%</span>
-                <span class="region-chip chip-gray">➡ Київ 0%</span>
-                <span class="region-chip chip-red">⚠ Одеса -15%</span>
-                <span class="region-chip chip-red">⚠ Миколаїв -8%</span>
+            <div style="padding:14px 16px 0;">
+              <div style="font-size:13px;font-weight:600;color:#8e8e93;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.3px;">Оберіть вендора</div>
+              <select class="vendor-select" onchange="updateVendor(this.value)">
+                <option value="basf">🟡 BASF Ukraine — Насіння та ЗЗР</option>
+                <option value="syngenta">🔵 Syngenta Ukraine — Агрохімія</option>
+                <option value="bayer">🟢 Bayer CropScience — Засоби захисту</option>
+                <option value="yara">🟠 Yara Ukraine — Добрива</option>
+              </select>
+            </div>
+            <div class="vendor-kpis">
+              <div class="vendor-kpi"><div class="vkpi-val" id="v-sales">₴4.2M</div><div class="vkpi-lbl">Продажі місяця</div><div class="vkpi-change up" id="v-sales-chg">↑ +18%</div></div>
+              <div class="vendor-kpi"><div class="vkpi-val" id="v-consult">47</div><div class="vkpi-lbl">Активних консультантів</div><div class="vkpi-change up" id="v-consult-chg">↑ +6</div></div>
+              <div class="vendor-kpi"><div class="vkpi-val" id="v-problem">3</div><div class="vkpi-lbl">Проблем. регіони</div><div class="vkpi-change down" id="v-prob-chg">↓ -12%</div></div>
+            </div>
+            <div style="padding:10px 16px 6px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">📦 Топ продуктів</div>
+            <div style="padding:0 16px;">
+              <div class="prod-row"><div class="prod-name" id="p1-name">Луміген</div><div class="prod-bar-wrap"><div class="prod-bar-fill" id="p1-bar" style="width:90%;background:linear-gradient(90deg,#7B1FA2,#AB47BC)"></div></div><div class="prod-val" id="p1-val">₴1.8M</div></div>
+              <div class="prod-row"><div class="prod-name" id="p2-name">Белайт Актив</div><div class="prod-bar-wrap"><div class="prod-bar-fill" id="p2-bar" style="width:65%;background:linear-gradient(90deg,#1565C0,#42A5F5)"></div></div><div class="prod-val" id="p2-val">₴1.2M</div></div>
+              <div class="prod-row"><div class="prod-name" id="p3-name">Стомп Аква</div><div class="prod-bar-wrap"><div class="prod-bar-fill" id="p3-bar" style="width:42%;background:linear-gradient(90deg,#2E7D32,#66BB6A)"></div></div><div class="prod-val" id="p3-val">₴780K</div></div>
+              <div class="prod-row"><div class="prod-name" id="p4-name">Регент 200</div><div class="prod-bar-wrap"><div class="prod-bar-fill" id="p4-bar" style="width:22%;background:linear-gradient(90deg,#E65100,#FFA726)"></div></div><div class="prod-val" id="p4-val">₴420K</div></div>
+            </div>
+            <div style="padding:4px 16px 4px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">🤖 AI Звіт · Live</div>
+            <div class="ai-report-card">
+              <div class="ai-report-header">
+                <div><div style="font-size:14px;font-weight:700;" id="v-report-title">BASF Ukraine · Травень 2026</div><div style="font-size:11px;opacity:0.8;margin-top:2px;">Згенеровано AI · Оновлено сьогодні</div></div>
+                <div style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;">LIVE</div>
               </div>
-
-              <div class="alert-box" id="v-alert">
-                <div class="alert-title">⚠ Проблема: Одеська обл</div>
-                <div class="alert-text" id="v-alert-text">Белайт Актив: продажі -15% vs квітень. 3 консультанти (Марченко, Гриценко, Бойко) не активні 28+ днів. AI рекомендує провести індивідуальні дзвінки цього тижня.</div>
-              </div>
-
-              <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Фокусний консультант</div>
-              <div class="focus-consultant" id="v-consultant">
-                <div class="fc-avatar">👨‍💼</div>
-                <div>
-                  <div class="fc-name" id="fc-name">Олексій Марченко · Одеса</div>
-                  <div class="fc-desc" id="fc-desc">Найвищий потенціал зростання · Потребує підтримки з Белайт Актив</div>
+              <div class="ai-report-body">
+                <div class="report-insight" id="v-insight">Луміген показує рекордні продажі +18% — драйвер зростання Харківська та Полтавська обл. Белайт Актив стагнує в Одеській обл: 3 консультанти не провели жодного демо за 30 днів.</div>
+                <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Регіони</div>
+                <div class="region-chips" id="v-regions">
+                  <span class="region-chip chip-green">✅ Харків +34%</span>
+                  <span class="region-chip chip-green">✅ Полтава +22%</span>
+                  <span class="region-chip chip-gray">➡ Київ 0%</span>
+                  <span class="region-chip chip-red">⚠ Одеса -15%</span>
+                  <span class="region-chip chip-red">⚠ Миколаїв -8%</span>
+                </div>
+                <div class="alert-box">
+                  <div class="alert-title" id="v-alert-title">⚠ Проблема: Одеська обл</div>
+                  <div class="alert-text" id="v-alert-text">Белайт Актив: -15% vs квітень. Консультанти Марченко, Гриценко, Бойко не активні 28+ днів. Рекомендуємо індивідуальні дзвінки цього тижня.</div>
+                </div>
+                <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Фокусний консультант</div>
+                <div class="focus-consultant">
+                  <div class="fc-avatar">👨‍💼</div>
+                  <div><div class="fc-name" id="fc-name">Олексій Марченко · Одеса</div><div class="fc-desc" id="fc-desc">Найвищий потенціал · Потребує підтримки з Белайт Актив</div></div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="vendor-thinking" id="vendor-thinking">
-            <div class="thinking-dots">
-              <div class="thinking-dot" style="background:#7B1FA2"></div>
-              <div class="thinking-dot" style="background:#7B1FA2;animation-delay:0.2s"></div>
-              <div class="thinking-dot" style="background:#7B1FA2;animation-delay:0.4s"></div>
+            <div class="vendor-thinking" id="vendor-thinking">
+              <div class="thinking-dots">
+                <div class="thinking-dot" style="background:#7B1FA2"></div>
+                <div class="thinking-dot" style="background:#7B1FA2;animation-delay:0.2s"></div>
+                <div class="thinking-dot" style="background:#7B1FA2;animation-delay:0.4s"></div>
+              </div>
+              <div class="thinking-label" id="vendor-thinking-step">Збираю дані продажів...</div>
             </div>
-            <div class="thinking-label" id="vendor-thinking-step">Збираю дані продажів...</div>
+            <button class="btn-gen-report" onclick="generateVendorReport()">📊 Згенерувати повний PDF звіт</button>
           </div>
-
-          <button class="btn-gen-report" onclick="generateVendorReport()">
-            📊 Згенерувати повний PDF звіт
-          </button>
-
-          <div style="height:14px;"></div>
+          <div class="bottom-nav">
+            <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
+            <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
+            <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
+            <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
+            <div class="home-indicator"></div>
+          </div>
         </div>
-        <div class="bottom-nav">
-          <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
-          <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
-          <button class="nav-item"><span class="nav-icon">🛒</span><span>Кошик</span></button>
-          <button class="nav-item"><span class="nav-icon">👤</span><span>Профіль</span></button>
-          <div class="home-indicator"></div>
-        </div>
-      </div>
 
-      <!-- ════ App container end ════ -->
-    </div>
-  </div>
-</div>
+      </div><!-- app-container -->
+    </div><!-- iphone-screen -->
+  </div><!-- iphone-shell -->
+</div><!-- iphone-wrap -->
 
 <div class="demo-tips">
-  <div class="tip tip-c">
-    <div class="tip-label">Block C</div>
-    <div class="tip-text">Натисніть чіп → Згенерувати КП → Зберегти в SF</div>
-  </div>
-  <div class="tip tip-a">
-    <div class="tip-label">Block A</div>
-    <div class="tip-text">Оберіть культуру → AI аналізує → Додати в кошик</div>
-  </div>
-  <div class="tip tip-b" style="--tip-color:#CE93D8">
-    <div class="tip-label" style="color:#CE93D8">Block E</div>
-    <div class="tip-text">Обрати вендора → переглянути звіт → PDF</div>
-  </div>
+  <div class="tip tip-c"><div class="tip-label">Block C</div><div class="tip-text">Тап чіп → Згенерувати КП → Зберегти в SF</div></div>
+  <div class="tip tip-a"><div class="tip-label">Block A</div><div class="tip-text">Обрати культуру → AI аналізує → Кошик</div></div>
+  <div class="tip tip-e"><div class="tip-label">Block E</div><div class="tip-text">Обрати вендора → Live звіт → PDF</div></div>
 </div>
 
 <script>
@@ -1204,24 +673,26 @@ const screens = ['screen-home','screen-catalog','screen-c','screen-a','screen-e'
 let history = ['screen-home'];
 
 function navTo(id) {
-  const current = history[history.length - 1];
+  const current = history[history.length-1];
   if (current === id) return;
   document.getElementById(current).classList.remove('active');
   document.getElementById(current).classList.add('prev');
   setTimeout(() => document.getElementById(current).classList.remove('prev'), 400);
   document.getElementById(id).classList.add('active');
+  // Reset scroll to top
+  const scroll = document.getElementById(id).querySelector('.screen-scroll');
+  if (scroll) scroll.scrollTop = 0;
   history.push(id);
 }
 
 function navBack() {
   if (history.length <= 1) return;
   const current = history.pop();
-  const prev = history[history.length - 1];
+  const prev = history[history.length-1];
   document.getElementById(current).classList.remove('active');
   document.getElementById(prev).classList.add('active');
 }
 
-// ── Toast ─────────────────────────────────────────
 let toastTimer;
 function showToast(icon, title, body) {
   clearTimeout(toastTimer);
@@ -1232,51 +703,21 @@ function showToast(icon, title, body) {
   toastTimer = setTimeout(() => document.getElementById('toast').classList.remove('visible'), 3000);
 }
 
-// ── Role select ────────────────────────────────────
 function selectRole(el) {
   document.querySelectorAll('.role-card').forEach(r => r.classList.remove('selected'));
   el.classList.add('selected');
 }
 
-// ── Block C ────────────────────────────────────────
+// Block C
 const kpData = {
-  'Насіння кукурудзи 150 га, клієнт Петренко, Харківська обл, гібрид DEKALB': {
-    title:'КП — Насіння кукурудзи', subtitle:'Клієнт: Петренко · Харківська обл',
-    culture:'Кукурудза', area:'150 га', product:'DEKALB DKC 3623 (Clearfield)',
-    norm:'80,000 нас/га', qty:'15 п.о.', price:'₴12,400', total:'₴186,000',
-    upsell:'Гербіцид Євро-Лайтнінг — сумісний з Clearfield, ₴28,000 за 150 га. КП зросте до ₴214,000.'
-  },
-  'Соняшник 300 га + гербіцид, клієнт Коваль, Дніпропетровська, Clearfield': {
-    title:'КП — Насіння соняшнику', subtitle:'Клієнт: Коваль · Дніпропетровська',
-    culture:'Соняшник Clearfield', area:'300 га', product:'НК Брио КЛ (Syngenta)',
-    norm:'62,000 нас/га', qty:'30 п.о.', price:'₴9,800', total:'₴294,000',
-    upsell:'Імазамокс (гербіцид Clearfield) ₴45,000 + фунгіцид Амістар ₴32,000. Комплекс: ₴371,000.'
-  },
-  'Пшениця озима 500 га + добрива NPK, клієнт Шевченко, Вінницька обл': {
-    title:'КП — Пшениця + Добрива', subtitle:'Клієнт: Шевченко · Вінницька обл',
-    culture:'Пшениця озима', area:'500 га', product:'Кредо (Limagrain) + NPK 16:16:16',
-    norm:'200 кг/га насіння', qty:'100 т нас + 150 т NPK', price:'₴8,200 / ₴14,500 т', total:'₴498,500',
-    upsell:'Фунгіцид Фалькон ₴68,000 для захисту від іржі. Повний пакет: ₴566,500.'
-  },
-  'Ріпак 80 га, захист рослин повний пакет, клієнт Бондар, Київська обл': {
-    title:'КП — Ріпак + Захист', subtitle:'Клієнт: Бондар · Київська обл',
-    culture:'Ріпак озимий', area:'80 га', product:'ДК Ексклузів (DEKALB) + Butisan Star',
-    norm:'3.5 кг/га', qty:'8 п.о. + 80 л герб.', price:'₴18,400 / ₴1,240', total:'₴246,400',
-    upsell:'Реглон Супер (десикант) ₴18,000 + борна кислота ₴8,000. Сезонний пакет: ₴272,400.'
-  }
+  'Насіння кукурудзи 150 га, клієнт Петренко, Харківська обл, гібрид DEKALB': { title:'КП — Насіння кукурудзи', subtitle:'Клієнт: Петренко · Харківська', culture:'Кукурудза', area:'150 га', product:'DEKALB DKC 3623 (Clearfield)', qty:'15 п.о.', price:'₴12,400', total:'₴186,000', upsell:'Гербіцид Євро-Лайтнінг — сумісний з Clearfield, ₴28,000 за 150 га. КП зросте до ₴214,000.' },
+  'Соняшник 300 га + гербіцид, клієнт Коваль, Дніпропетровська, Clearfield': { title:'КП — Насіння соняшнику', subtitle:'Клієнт: Коваль · Дніпропетровська', culture:'Соняшник Clearfield', area:'300 га', product:'НК Брио КЛ (Syngenta)', qty:'30 п.о.', price:'₴9,800', total:'₴294,000', upsell:'Імазамокс гербіцид ₴45,000 + фунгіцид Амістар ₴32,000. Комплекс: ₴371,000.' },
+  'Пшениця озима 500 га + добрива NPK, клієнт Шевченко, Вінницька обл': { title:'КП — Пшениця + Добрива', subtitle:'Клієнт: Шевченко · Вінницька', culture:'Пшениця озима', area:'500 га', product:'Кредо (Limagrain) + NPK 16:16:16', qty:'100 т нас + 150 т NPK', price:'₴8,200 / ₴14,500 т', total:'₴498,500', upsell:'Фунгіцид Фалькон ₴68,000 для захисту від іржі. Повний пакет: ₴566,500.' },
+  'Ріпак 80 га, захист рослин повний пакет, клієнт Бондар, Київська обл': { title:'КП — Ріпак + Захист', subtitle:'Клієнт: Бондар · Київська', culture:'Ріпак озимий', area:'80 га', product:'ДК Ексклузів (DEKALB) + Butisan Star', qty:'8 п.о. + 80 л герб.', price:'₴18,400 / ₴1,240', total:'₴246,400', upsell:'Реглон Супер ₴18,000 + борна кислота ₴8,000. Сезонний пакет: ₴272,400.' },
 };
+const thinkingSteps = ['Аналізую запит клієнта...','Підбираю продукти з каталогу (20k SKU)...','Перевіряю наявність на складах...','Генерую КП у Salesforce...','Розраховую AI upsell...'];
 
-function setKP(text) {
-  document.getElementById('kp-input').value = text;
-}
-
-const thinkingSteps = [
-  'Аналізую запит клієнта...',
-  'Підбираю продукти з каталогу (20k SKU)...',
-  'Перевіряю наявність на складах...',
-  'Генерую КП у Salesforce...',
-  'Розраховую AI upsell...'
-];
+function setKP(text) { document.getElementById('kp-input').value = text; }
 
 function generateKP() {
   const text = document.getElementById('kp-input').value.trim();
@@ -1285,200 +726,122 @@ function generateKP() {
   const thinking = document.getElementById('kp-thinking');
   thinking.classList.add('visible');
   let step = 0;
-  const stepInterval = setInterval(() => {
+  const iv = setInterval(() => {
     step++;
     if (step < thinkingSteps.length) {
       document.getElementById('thinking-step').textContent = thinkingSteps[step];
     } else {
-      clearInterval(stepInterval);
+      clearInterval(iv);
       thinking.classList.remove('visible');
-      const data = kpData[text] || kpData[Object.keys(kpData)[0]];
-      document.getElementById('kp-title').textContent = data.title;
-      document.getElementById('kp-subtitle').textContent = data.subtitle;
-      document.getElementById('kp-culture').textContent = data.culture;
-      document.getElementById('kp-area').textContent = data.area;
-      document.getElementById('kp-product').textContent = data.product;
-      document.getElementById('kp-norm').textContent = data.norm;
-      document.getElementById('kp-qty').textContent = data.qty;
-      document.getElementById('kp-price').textContent = data.price;
-      document.getElementById('kp-total').textContent = data.total;
-      document.getElementById('kp-upsell-text').textContent = data.upsell;
+      const d = kpData[text] || kpData[Object.keys(kpData)[0]];
+      document.getElementById('kp-title').textContent = d.title;
+      document.getElementById('kp-subtitle').textContent = d.subtitle;
+      document.getElementById('kp-culture').textContent = d.culture;
+      document.getElementById('kp-area').textContent = d.area;
+      document.getElementById('kp-product').textContent = d.product;
+      document.getElementById('kp-qty').textContent = d.qty;
+      document.getElementById('kp-price').textContent = d.price;
+      document.getElementById('kp-total').textContent = d.total;
+      document.getElementById('kp-upsell-text').textContent = d.upsell;
       document.getElementById('kp-result').classList.add('visible');
-      document.querySelector('.kp-screen').scrollTop = 999;
+      setTimeout(() => {
+        const sc = document.getElementById('screen-c').querySelector('.screen-scroll');
+        if (sc) sc.scrollTop = sc.scrollHeight;
+      }, 100);
     }
   }, 700);
 }
 
-function saveToSF() {
-  showToast('✅','КП збережено в Salesforce','Відкрито як Selling Opportunity');
-}
-function shareKP() {
-  showToast('📤','КП надіслано','Email + Telegram клієнту');
-}
-
-// ── Block A ────────────────────────────────────────
+// Block A
 const sampleData = {
-  s1: { icon:'🌽', title:'Фузаріоз стебла кукурудзи', latin:'Fusarium graminearum', conf:94,
-    detail:'Виявлено ознаки фузаріозу стебла: коричневе забарвлення вузлів, розм\'якшення тканин. Рекомендовано термінове обприскування фунгіцидом.',
-    sku1n:'Амістар Екстра 280 SC', sku1d:'Фунгіцид · 0.75 л/га · Syngenta', sku1p:'₴2,840/л',
-    sku2n:'Пропіконазол 25% EC', sku2d:'Аналог · -22% ціна · На складі', sku2p:'₴1,980/л' },
-  s2: { icon:'🌻', title:'Фомопсис соняшнику', latin:'Phomopsis helianthi', conf:91,
-    detail:'Некротичні плями на стеблі з фіолетовим обідком. Уражено 15-20% площі. Необхідна фунгіцидна обробка в наступні 48 годин.',
-    sku1n:'Карамба Турбо', sku1d:'Фунгіцид · 1.0 л/га · BASF', sku1p:'₴3,120/л',
-    sku2n:'Тілт 250 EC', sku2d:'Аналог · -18% ціна · На складі', sku2p:'₴2,100/л' },
-  s3: { icon:'🌾', title:'Бура листкова іржа пшениці', latin:'Puccinia triticina', conf:97,
-    detail:'Помаранчево-коричневі пустули на листках. Висока інтенсивність ураження. Необхідна негайна обробка для захисту врожайності.',
-    sku1n:'Фалькон 460 EC', sku1d:'Фунгіцид · 0.6 л/га · Bayer', sku1p:'₴4,200/л',
-    sku2n:'Ретроспект Плюс', sku2d:'Аналог · -25% ціна · На складі', sku2p:'₴2,890/л' },
-  s4: { icon:'🌿', title:'Склеротиніоз ріпаку', latin:'Sclerotinia sclerotiorum', conf:88,
-    detail:'Білий ватоподібний наліт на стеблах, склероції. Ризик втрати 30-40% врожаю. Обробка обов\'язкова до закінчення цвітіння.',
-    sku1n:'Коронет 300 SC', sku1d:'Фунгіцид · 1.5 л/га · Nufarm', sku1p:'₴1,980/л',
-    sku2n:'Іпродіон 500 SC', sku2d:'Аналог · -20% ціна · На складі', sku2p:'₴1,420/л' },
+  s1: { icon:'🌽', title:'Фузаріоз стебла кукурудзи', latin:'Fusarium graminearum', conf:94, detail:'Виявлено ознаки фузаріозу стебла: коричневе забарвлення вузлів, розм\'якшення тканин. Рекомендовано термінове обприскування фунгіцидом.', sku1n:'Амістар Екстра 280 SC', sku1d:'Фунгіцид · 0.75 л/га · Syngenta', sku1p:'₴2,840/л', sku2n:'Пропіконазол 25% EC', sku2d:'Аналог · -22% ціна · На складі', sku2p:'₴1,980/л' },
+  s2: { icon:'🌻', title:'Фомопсис соняшнику', latin:'Phomopsis helianthi', conf:91, detail:'Некротичні плями на стеблі з фіолетовим обідком. Уражено 15-20% площі. Необхідна фунгіцидна обробка в наступні 48 годин.', sku1n:'Карамба Турбо', sku1d:'Фунгіцид · 1.0 л/га · BASF', sku1p:'₴3,120/л', sku2n:'Тілт 250 EC', sku2d:'Аналог · -18% ціна · На складі', sku2p:'₴2,100/л' },
+  s3: { icon:'🌾', title:'Бура листкова іржа пшениці', latin:'Puccinia triticina', conf:97, detail:'Помаранчево-коричневі пустули на листках. Висока інтенсивність. Необхідна негайна обробка для захисту врожайності.', sku1n:'Фалькон 460 EC', sku1d:'Фунгіцид · 0.6 л/га · Bayer', sku1p:'₴4,200/л', sku2n:'Ретроспект Плюс', sku2d:'Аналог · -25% ціна · На складі', sku2p:'₴2,890/л' },
+  s4: { icon:'🌿', title:'Склеротиніоз ріпаку', latin:'Sclerotinia sclerotiorum', conf:88, detail:'Білий ватоподібний наліт на стеблах, склероції. Ризик втрати 30-40% врожаю. Обробка обов\'язкова до закінчення цвітіння.', sku1n:'Коронет 300 SC', sku1d:'Фунгіцид · 1.5 л/га · Nufarm', sku1p:'₴1,980/л', sku2n:'Іпродіон 500 SC', sku2d:'Аналог · -20% ціна · На складі', sku2p:'₴1,420/л' },
 };
 
-function selectSample(id, icon, title, latin, col, conf) {
+function selectSample(id) {
   document.querySelectorAll('.vision-sample').forEach(s => s.classList.remove('selected'));
   document.getElementById(id).classList.add('selected');
-  startScan(id);
-}
-
-function startScan(sampleId) {
-  const sid = sampleId || document.querySelector('.vision-sample.selected')?.id;
-  if (!sid) {
-    document.getElementById('s1').classList.add('selected');
-    startScan('s1'); return;
-  }
-  const data = sampleData[sid];
+  const d = sampleData[id];
   document.getElementById('vision-result').classList.remove('visible');
   const ov = document.getElementById('scanning-overlay');
   ov.style.display = 'flex';
   setTimeout(() => {
     ov.style.display = 'none';
-    document.getElementById('diag-icon').textContent = data.icon;
-    document.getElementById('diag-title').textContent = data.title;
-    document.getElementById('diag-latin').textContent = data.latin;
-    document.getElementById('conf-bar').style.width = data.conf + '%';
-    document.getElementById('conf-val').textContent = data.conf + '%';
-    document.getElementById('diag-detail').textContent = data.detail;
-    document.getElementById('sku1-name').textContent = data.sku1n;
-    document.getElementById('sku1-desc').textContent = data.sku1d;
-    document.getElementById('sku1-price').textContent = data.sku1p;
-    document.getElementById('sku2-name').textContent = data.sku2n;
-    document.getElementById('sku2-desc').textContent = data.sku2d;
-    document.getElementById('sku2-price').textContent = data.sku2p;
+    document.getElementById('diag-icon').textContent = d.icon;
+    document.getElementById('diag-title').textContent = d.title;
+    document.getElementById('diag-latin').textContent = d.latin;
+    document.getElementById('conf-bar').style.width = d.conf + '%';
+    document.getElementById('conf-val').textContent = d.conf + '%';
+    document.getElementById('diag-detail').textContent = d.detail;
+    document.getElementById('sku1-name').textContent = d.sku1n;
+    document.getElementById('sku1-desc').textContent = d.sku1d;
+    document.getElementById('sku1-price').textContent = d.sku1p;
+    document.getElementById('sku2-name').textContent = d.sku2n;
+    document.getElementById('sku2-desc').textContent = d.sku2d;
+    document.getElementById('sku2-price').textContent = d.sku2p;
     document.getElementById('vision-result').classList.add('visible');
-    document.querySelector('.vision-screen').scrollTop = 999;
+    setTimeout(() => {
+      const sc = document.getElementById('screen-a').querySelector('.screen-scroll');
+      if (sc) sc.scrollTop = sc.scrollHeight;
+    }, 100);
   }, 2000);
 }
 
-function addToCart(name) {
-  showToast('🛒', 'Додано до кошика', name + ' · 1 л');
+function startScan() {
+  const sel = document.querySelector('.vision-sample.selected');
+  selectSample(sel ? sel.id : 's1');
+  if (!sel) document.getElementById('s1').classList.add('selected');
 }
 
-// ── Block E ─────────────────────────────────────────
+// Block E
 const vendorData = {
-  basf: {
-    title:'BASF Ukraine · Травень 2026',
-    sales:'₴4.2M', salesChg:'↑ +18%', consult:'47', consultChg:'↑ +6', problems:'3', probChg:'↓ -12%',
-    insight:'Луміген показує рекордні продажі +18% — драйвер зростання Харківська та Полтавська обл. Белайт Актив стагнує в Одеській обл: 3 консультанти не провели жодного демо за 30 днів. Рекомендуємо фокусну сесію цього тижня.',
-    regions:'<span class="region-chip chip-green">✅ Харків +34%</span><span class="region-chip chip-green">✅ Полтава +22%</span><span class="region-chip chip-gray">➡ Київ 0%</span><span class="region-chip chip-red">⚠ Одеса -15%</span><span class="region-chip chip-red">⚠ Миколаїв -8%</span>',
-    alertTitle:'⚠ Проблема: Одеська обл', alertText:'Белайт Актив: продажі -15% vs квітень. 3 консультанти (Марченко, Гриценко, Бойко) не активні 28+ днів. AI рекомендує провести індивідуальні дзвінки.',
-    fcName:'Олексій Марченко · Одеса', fcDesc:'Найвищий потенціал зростання · Потребує підтримки з Белайт Актив',
-    p1:'Луміген', p1v:'₴1.8M', p1w:'90%',
-    p2:'Белайт Актив', p2v:'₴1.2M', p2w:'65%',
-    p3:'Стомп Аква', p3v:'₴780K', p3w:'42%',
-    p4:'Регент 200', p4v:'₴420K', p4w:'22%',
-  },
-  syngenta: {
-    title:'Syngenta Ukraine · Травень 2026',
-    sales:'₴6.8M', salesChg:'↑ +9%', consult:'63', consultChg:'↑ +4', problems:'1', probChg:'↓ -5%',
-    insight:'Амістар Екстра — топ продукт мережі з NPS 92. Найкращі результати у Вінницькій та Черкаській областях. Єдина проблемна зона — Запорізька обл, де конкурент BASF знижує ціни агресивно. Рекомендуємо цінову акцію для 2 консультантів.',
-    regions:'<span class="region-chip chip-green">✅ Вінниця +41%</span><span class="region-chip chip-green">✅ Черкаси +28%</span><span class="region-chip chip-green">✅ Київ +15%</span><span class="region-chip chip-red">⚠ Запоріжжя -19%</span>',
-    alertTitle:'⚠ Конкурентний тиск: Запоріжжя', alertText:'BASF знизив ціну на аналог Амістару на 12%. Консультант Коваленко втратив 2 клієнти. AI рекомендує надати персональну знижку 8% + безкоштовний демо-набір.',
-    fcName:'Наталія Коваленко · Запоріжжя', fcDesc:'Під конкурентним тиском · Потребує цінової підтримки',
-    p1:'Амістар Екстра', p1v:'₴2.9M', p1w:'90%',
-    p2:'НК Брио КЛ', p2v:'₴2.1M', p2w:'72%',
-    p3:'Актара 25 WG', p3v:'₴1.1M', p3w:'48%',
-    p4:'Дерозал', p4v:'₴700K', p4w:'28%',
-  },
-  bayer: {
-    title:'Bayer CropScience · Травень 2026',
-    sales:'₴3.1M', salesChg:'↓ -4%', consult:'38', consultChg:'↓ -3', problems:'5', probChg:'↑ +2',
-    insight:'Фалькон 460 падає в продажах через дефіцит на складі (лише 12% залишку). Луна 75 WG показує зростання +22% але охоплює лише 8 консультантів. AI рекомендує: терміново поповнити склад Фалькон та розширити охоплення Луна на 15+ консультантів.',
-    regions:'<span class="region-chip chip-green">✅ Дніпро +22%</span><span class="region-chip chip-red">⚠ Харків -31%</span><span class="region-chip chip-red">⚠ Полтава -18%</span><span class="region-chip chip-red">⚠ Суми -22%</span><span class="region-chip chip-red">⚠ Чернігів -14%</span>',
-    alertTitle:'🚨 Критично: Дефіцит складу', alertText:'Фалькон 460 EC — залишок 12% (180 л). При поточному темпі продажів запас вичерпається за 8 днів. Замовлення ще не підтверджене постачальником.',
-    fcName:'Ігор Сидоренко · Харків', fcDesc:'Топ-продавець Луна 75 WG · Може взяти Фалькон на себе',
-    p1:'Луна 75 WG', p1v:'₴1.4M', p1w:'90%',
-    p2:'Фалькон 460', p2v:'₴980K', p2w:'55%',
-    p3:'Конфідор', p3v:'₴520K', p3w:'38%',
-    p4:'Байєр Актив', p4v:'₴200K', p4w:'14%',
-  },
-  yara: {
-    title:'Yara Ukraine · Травень 2026',
-    sales:'₴8.4M', salesChg:'↑ +31%', consult:'71', consultChg:'↑ +12', problems:'2', probChg:'↓ -8%',
-    insight:'YaraBela AXAN — абсолютний лідер сезону, +31% vs минулого травня. Зростання зумовлене дефіцитом аміачної селітри на ринку. YaraMila Complex відстає в Закарпатті та Львові: низька обізнаність консультантів. Рекомендуємо тренінг для 8 консультантів заходу.',
-    regions:'<span class="region-chip chip-green">✅ Вінниця +52%</span><span class="region-chip chip-green">✅ Полтава +44%</span><span class="region-chip chip-green">✅ Харків +38%</span><span class="region-chip chip-red">⚠ Львів -11%</span><span class="region-chip chip-red">⚠ Закарпаття -17%</span>',
-    alertTitle:'📚 Навчання: Захід України', alertText:'YaraMila Complex: 8 консультантів у Львівській та Закарпатській обл не пройшли сертифікацію. AI рекомендує провести вебінар наступного вівторка — прогноз +₴240K виторгу за 30 днів.',
-    fcName:'Марія Павленко · Львів', fcDesc:'Готова до сертифікації · Найкращий потенціал регіону',
-    p1:'YaraBela AXAN', p1v:'₴4.2M', p1w:'90%',
-    p2:'YaraMila Complex', p2v:'₴2.6M', p2w:'68%',
-    p3:'YaraLiva Calcinit', p3v:'₴1.1M', p3w:'42%',
-    p4:'YaraVita Cereals', p4v:'₴500K', p4w:'20%',
-  },
+  basf: { title:'BASF Ukraine · Травень 2026', sales:'₴4.2M', salesChg:'↑ +18%', salesUp:true, consult:'47', consultChg:'↑ +6', problems:'3', probChg:'↓ -12%', insight:'Луміген показує рекордні продажі +18% — драйвер зростання Харківська та Полтавська обл. Белайт Актив стагнує в Одеській обл: 3 консультанти не провели жодного демо за 30 днів. Рекомендуємо фокусну сесію цього тижня.', regions:'<span class="region-chip chip-green">✅ Харків +34%</span><span class="region-chip chip-green">✅ Полтава +22%</span><span class="region-chip chip-gray">➡ Київ 0%</span><span class="region-chip chip-red">⚠ Одеса -15%</span><span class="region-chip chip-red">⚠ Миколаїв -8%</span>', alertTitle:'⚠ Проблема: Одеська обл', alertText:'Белайт Актив: -15% vs квітень. Консультанти Марченко, Гриценко, Бойко не активні 28+ днів. Рекомендуємо індивідуальні дзвінки.', fcName:'Олексій Марченко · Одеса', fcDesc:'Найвищий потенціал · Потребує підтримки з Белайт Актив', p1:'Луміген', p1v:'₴1.8M', p1w:'90%', p2:'Белайт Актив', p2v:'₴1.2M', p2w:'65%', p3:'Стомп Аква', p3v:'₴780K', p3w:'42%', p4:'Регент 200', p4v:'₴420K', p4w:'22%' },
+  syngenta: { title:'Syngenta Ukraine · Травень 2026', sales:'₴6.8M', salesChg:'↑ +9%', salesUp:true, consult:'63', consultChg:'↑ +4', problems:'1', probChg:'↓ -5%', insight:'Амістар Екстра — топ продукт мережі з NPS 92. Найкращі результати у Вінницькій та Черкаській областях. Єдина проблемна зона — Запорізька обл, де конкурент знижує ціни агресивно.', regions:'<span class="region-chip chip-green">✅ Вінниця +41%</span><span class="region-chip chip-green">✅ Черкаси +28%</span><span class="region-chip chip-green">✅ Київ +15%</span><span class="region-chip chip-red">⚠ Запоріжжя -19%</span>', alertTitle:'⚠ Конкурентний тиск: Запоріжжя', alertText:'BASF знизив ціну на аналог на 12%. Консультант Коваленко втратила 2 клієнти. Рекомендуємо персональну знижку 8% + безкоштовний демо-набір.', fcName:'Наталія Коваленко · Запоріжжя', fcDesc:'Під конкурентним тиском · Потребує цінової підтримки', p1:'Амістар Екстра', p1v:'₴2.9M', p1w:'90%', p2:'НК Брио КЛ', p2v:'₴2.1M', p2w:'72%', p3:'Актара 25 WG', p3v:'₴1.1M', p3w:'48%', p4:'Дерозал', p4v:'₴700K', p4w:'28%' },
+  bayer: { title:'Bayer CropScience · Травень 2026', sales:'₴3.1M', salesChg:'↓ -4%', salesUp:false, consult:'38', consultChg:'↓ -3', problems:'5', probChg:'↑ +2', insight:'Фалькон 460 падає через дефіцит на складі (лише 12% залишку). Луна 75 WG зростає +22% але охоплює лише 8 консультантів. Терміново поповнити склад та розширити охоплення.', regions:'<span class="region-chip chip-green">✅ Дніпро +22%</span><span class="region-chip chip-red">⚠ Харків -31%</span><span class="region-chip chip-red">⚠ Полтава -18%</span><span class="region-chip chip-red">⚠ Суми -22%</span>', alertTitle:'🚨 Критично: Дефіцит складу', alertText:'Фалькон 460 EC — залишок 12% (180 л). При поточному темпі запас вичерпається за 8 днів. Замовлення ще не підтверджене.', fcName:'Ігор Сидоренко · Харків', fcDesc:'Топ-продавець Луна 75 WG · Може взяти Фалькон на себе', p1:'Луна 75 WG', p1v:'₴1.4M', p1w:'90%', p2:'Фалькон 460', p2v:'₴980K', p2w:'55%', p3:'Конфідор', p3v:'₴520K', p3w:'38%', p4:'Байєр Актив', p4v:'₴200K', p4w:'14%' },
+  yara: { title:'Yara Ukraine · Травень 2026', sales:'₴8.4M', salesChg:'↑ +31%', salesUp:true, consult:'71', consultChg:'↑ +12', problems:'2', probChg:'↓ -8%', insight:'YaraBela AXAN — абсолютний лідер сезону, +31% vs минулого травня. Зростання зумовлене дефіцитом аміачної селітри. YaraMila Complex відстає на Заході: низька обізнаність консультантів.', regions:'<span class="region-chip chip-green">✅ Вінниця +52%</span><span class="region-chip chip-green">✅ Полтава +44%</span><span class="region-chip chip-green">✅ Харків +38%</span><span class="region-chip chip-red">⚠ Львів -11%</span><span class="region-chip chip-red">⚠ Закарпаття -17%</span>', alertTitle:'📚 Навчання: Захід України', alertText:'YaraMila Complex: 8 консультантів у Львівській та Закарпатській обл не пройшли сертифікацію. Вебінар наступного вівторка → прогноз +₴240K за 30 днів.', fcName:'Марія Павленко · Львів', fcDesc:'Готова до сертифікації · Найкращий потенціал регіону', p1:'YaraBela AXAN', p1v:'₴4.2M', p1w:'90%', p2:'YaraMila Complex', p2v:'₴2.6M', p2w:'68%', p3:'YaraLiva Calcinit', p3v:'₴1.1M', p3w:'42%', p4:'YaraVita Cereals', p4v:'₴500K', p4w:'20%' },
 };
-
-const vendorThinkingSteps = [
-  'Збираю дані продажів...','Аналізую активність консультантів...','Виявляю проблемні регіони...','Генерую персоналізований звіт...'
-];
+const vendorSteps = ['Збираю дані продажів...','Аналізую активність консультантів...','Виявляю проблемні регіони...','Генерую персоналізований звіт...'];
 
 function updateVendor(val) {
-  const d = vendorData[val];
-  if (!d) return;
+  const d = vendorData[val]; if (!d) return;
   document.getElementById('v-report-title').textContent = d.title;
   document.getElementById('v-sales').textContent = d.sales;
   document.getElementById('v-sales-chg').textContent = d.salesChg;
-  document.getElementById('v-sales-chg').className = 'vkpi-change ' + (d.salesChg.includes('+') ? 'up' : 'down');
+  document.getElementById('v-sales-chg').className = 'vkpi-change ' + (d.salesUp ? 'up' : 'down');
   document.getElementById('v-consult').textContent = d.consult;
   document.getElementById('v-consult-chg').textContent = d.consultChg;
   document.getElementById('v-problem').textContent = d.problems;
   document.getElementById('v-prob-chg').textContent = d.probChg;
   document.getElementById('v-insight').textContent = d.insight;
   document.getElementById('v-regions').innerHTML = d.regions;
-  document.getElementById('v-alert').querySelector('.alert-title').textContent = d.alertTitle;
+  document.getElementById('v-alert-title').textContent = d.alertTitle;
   document.getElementById('v-alert-text').textContent = d.alertText;
   document.getElementById('fc-name').textContent = d.fcName;
   document.getElementById('fc-desc').textContent = d.fcDesc;
-  document.getElementById('p1-name').textContent = d.p1;
-  document.getElementById('p1-val').textContent = d.p1v;
-  document.getElementById('p1-bar').style.width = d.p1w;
-  document.getElementById('p2-name').textContent = d.p2;
-  document.getElementById('p2-val').textContent = d.p2v;
-  document.getElementById('p2-bar').style.width = d.p2w;
-  document.getElementById('p3-name').textContent = d.p3;
-  document.getElementById('p3-val').textContent = d.p3v;
-  document.getElementById('p3-bar').style.width = d.p3w;
-  document.getElementById('p4-name').textContent = d.p4;
-  document.getElementById('p4-val').textContent = d.p4v;
-  document.getElementById('p4-bar').style.width = d.p4w;
+  document.getElementById('p1-name').textContent = d.p1; document.getElementById('p1-val').textContent = d.p1v; document.getElementById('p1-bar').style.width = d.p1w;
+  document.getElementById('p2-name').textContent = d.p2; document.getElementById('p2-val').textContent = d.p2v; document.getElementById('p2-bar').style.width = d.p2w;
+  document.getElementById('p3-name').textContent = d.p3; document.getElementById('p3-val').textContent = d.p3v; document.getElementById('p3-bar').style.width = d.p3w;
+  document.getElementById('p4-name').textContent = d.p4; document.getElementById('p4-val').textContent = d.p4v; document.getElementById('p4-bar').style.width = d.p4w;
 }
 
 function generateVendorReport() {
-  const thinking = document.getElementById('vendor-thinking');
-  thinking.classList.add('visible');
+  const t = document.getElementById('vendor-thinking');
+  t.classList.add('visible');
   let step = 0;
   const iv = setInterval(() => {
     step++;
-    if (step < vendorThinkingSteps.length) {
-      document.getElementById('vendor-thinking-step').textContent = vendorThinkingSteps[step];
+    if (step < vendorSteps.length) {
+      document.getElementById('vendor-thinking-step').textContent = vendorSteps[step];
     } else {
-      clearInterval(iv);
-      thinking.classList.remove('visible');
+      clearInterval(iv); t.classList.remove('visible');
       showToast('📊','PDF звіт готовий','Надіслано вендору та менеджеру');
     }
   }, 700);
 }
 
-// ── Live clock ──────────────────────────────────────
+// Live clock
 function updateClock() {
   const now = new Date();
   const t = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
