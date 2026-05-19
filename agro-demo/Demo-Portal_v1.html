@@ -473,6 +473,197 @@ body {
 .send-success-icon { font-size: 44px; margin-bottom: 8px; }
 .send-success-title { font-size: 17px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
 .send-success-sub { font-size: 13px; color: #8e8e93; }
+
+/* ══════════════════════════════════════════
+   BLOCK C — AI MARKET ANALYSIS CARD
+══════════════════════════════════════════ */
+.btn-market-analysis {
+  width: 100%; margin-top: 12px; padding: 14px;
+  background: linear-gradient(135deg, #1565C0, #0D47A1);
+  color: white; border: none; border-radius: 14px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  font-family: inherit; display: flex; align-items: center;
+  justify-content: center; gap: 8px;
+  box-shadow: 0 4px 16px rgba(21,101,192,0.35);
+  transition: opacity 0.2s;
+}
+.btn-market-analysis:active { opacity: 0.85; }
+
+/* card wrapper */
+.market-card {
+  margin: 12px 0 4px; border-radius: 18px; overflow: hidden;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.13);
+}
+
+/* header band */
+.market-card-header {
+  background: #1A3C2A;
+  border-top: 3px solid #D4A843;
+  padding: 12px 14px 10px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.market-header-left { flex: 1; }
+.market-header-title { color: white; font-size: 14px; font-weight: 700; }
+.market-header-sub { color: rgba(255,255,255,0.55); font-size: 10px; margin-top: 2px; }
+.market-live-pill {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.1); border-radius: 20px;
+  padding: 3px 10px; font-size: 11px; color: #69F0AE; font-weight: 700;
+}
+.market-live-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #69F0AE;
+  animation: livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+
+/* skeleton / loading */
+.market-skeleton { background: #0f2318; padding: 16px 14px; }
+.market-skeleton-bar {
+  height: 12px; border-radius: 6px; background: rgba(255,255,255,0.07);
+  margin-bottom: 10px; position: relative; overflow: hidden;
+}
+.market-skeleton-bar::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);
+  animation: shimmerSkeleton 1.4s infinite;
+}
+@keyframes shimmerSkeleton { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+.market-skeleton-bar.w60 { width: 60%; }
+.market-skeleton-bar.w80 { width: 80%; }
+.market-skeleton-bar.w45 { width: 45%; }
+
+/* progress phases */
+.market-phase-row {
+  background: #0f2318; padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.market-phase-label { color: #69F0AE; font-size: 12px; font-weight: 600; flex: 1; }
+.market-phase-cursor { color: #69F0AE; animation: blink 1s step-end infinite; }
+@keyframes blink { 50%{opacity:0} }
+.market-progress-bg { background: rgba(255,255,255,0.1); border-radius: 4px; height: 3px; margin: 0 14px 12px; }
+.market-progress-fill { height: 3px; border-radius: 4px; background: linear-gradient(90deg,#D4A843,#69F0AE); width: 0%; transition: width 0.35s ease; }
+
+/* section panels */
+.market-panel { background: #0f2318; padding: 12px 14px; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+.market-panel.revealed { opacity: 1; transform: translateY(0); }
+.market-panel + .market-panel { border-top: 1px solid rgba(255,255,255,0.06); }
+.market-section-label {
+  font-size: 9px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; color: #D4A843; margin-bottom: 10px;
+}
+
+/* executive signal */
+.market-signal {
+  background: rgba(212,168,67,0.12); border-left: 3px solid #D4A843;
+  border-radius: 0 10px 10px 0; padding: 10px 12px;
+}
+.market-signal-text { color: rgba(255,255,255,0.9); font-size: 12px; line-height: 1.55; }
+.market-signal-source {
+  display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;
+}
+.market-source-chip {
+  background: rgba(255,255,255,0.07); border-radius: 20px;
+  padding: 2px 8px; font-size: 9px; color: rgba(255,255,255,0.45);
+}
+
+/* commodity rows */
+.market-commodity-row { margin-bottom: 10px; }
+.market-commodity-row:last-child { margin-bottom: 0; }
+.market-commodity-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.market-commodity-name { color: rgba(255,255,255,0.7); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+.market-price-big { color: white; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.market-price-delta {
+  padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 700;
+}
+.delta-up { background: rgba(105,240,174,0.15); color: #69F0AE; }
+.delta-down { background: rgba(239,83,80,0.15); color: #EF5350; }
+.market-sparkline { display: flex; align-items: flex-end; gap: 3px; height: 28px; }
+.spark-bar {
+  flex: 1; border-radius: 2px 2px 0 0; min-height: 4px;
+  transition: height 0.6s ease;
+}
+.spark-bar.up   { background: rgba(105,240,174,0.7); }
+.spark-bar.flat { background: rgba(255,255,255,0.2); }
+.spark-bar.down { background: rgba(239,83,80,0.6); }
+.spark-bar.today { box-shadow: 0 0 6px #69F0AE; }
+
+/* regional demand */
+.market-demand-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.market-demand-row:last-child { margin-bottom: 0; }
+.market-demand-label { color: rgba(255,255,255,0.65); font-size: 11px; width: 82px; flex-shrink: 0; }
+.market-demand-bar-bg { flex: 1; background: rgba(255,255,255,0.08); border-radius: 4px; height: 7px; overflow: hidden; }
+.market-demand-bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 0.8s ease; }
+.demand-high   { background: linear-gradient(90deg,#26A69A,#00BFA5); }
+.demand-medium { background: linear-gradient(90deg,#FFA726,#FF9800); }
+.demand-low    { background: linear-gradient(90deg,#78909C,#546E7A); }
+.market-demand-tag { font-size: 9px; font-weight: 700; width: 40px; flex-shrink: 0; text-align: right; }
+.tag-high { color: #26A69A; } .tag-med { color: #FFA726; } .tag-low { color: #78909C; }
+
+/* weather chips */
+.market-weather-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+.market-weather-chip {
+  flex-shrink: 0; width: 58px; border-radius: 12px; padding: 8px 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.weather-chip-good { background: rgba(105,240,174,0.08); }
+.weather-chip-warn { background: rgba(255,167,38,0.1); border-color: rgba(255,167,38,0.2); }
+.weather-emoji { font-size: 18px; }
+.weather-temp { color: white; font-size: 11px; font-weight: 700; }
+.weather-impact { font-size: 12px; }
+.weather-window-text { color: rgba(255,255,255,0.6); font-size: 11px; margin-top: 8px; line-height: 1.4; }
+
+/* competitor box */
+.market-competitor-box {
+  background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.25);
+  border-radius: 12px; padding: 10px 12px;
+}
+.market-competitor-gap { color: rgba(255,255,255,0.85); font-size: 12px; line-height: 1.5; margin-bottom: 8px; }
+.market-percentile-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(105,240,174,0.12); border-radius: 20px;
+  padding: 4px 10px; font-size: 11px; color: #69F0AE; font-weight: 700;
+}
+.market-surprise { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 9px 11px; margin-top: 10px; }
+.market-surprise-text { color: rgba(255,255,255,0.6); font-size: 11px; line-height: 1.5; font-style: italic; }
+
+/* AI forecast */
+.market-forecast-text { color: rgba(255,255,255,0.85); font-size: 12px; line-height: 1.6; margin-bottom: 10px; }
+.market-conf-row { display: flex; align-items: center; gap: 10px; }
+.market-conf-ring-wrap { position: relative; width: 44px; height: 44px; flex-shrink: 0; }
+.market-conf-ring-wrap svg { transform: rotate(-90deg); }
+.market-conf-pct { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #69F0AE; }
+.market-conf-label { color: rgba(255,255,255,0.7); font-size: 11px; line-height: 1.5; }
+.market-conf-strong { color: white; font-weight: 700; }
+
+/* card footer */
+.market-footer {
+  background: #0a1a12; padding: 10px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.market-footer-engine { font-size: 9px; color: rgba(255,255,255,0.3); font-family: monospace; }
+.market-footer-actions { display: flex; gap: 8px; }
+.market-action-btn {
+  padding: 7px 12px; border-radius: 20px; border: none;
+  font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit;
+}
+.market-action-primary { background: #1B5E20; color: #69F0AE; }
+.market-action-secondary { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+
+/* signature shimmer */
+.market-shimmer-overlay {
+  position: absolute; inset: 0; pointer-events: none; border-radius: 18px; overflow: hidden;
+}
+.market-shimmer-overlay::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(120deg,transparent 30%,rgba(212,168,67,0.15) 50%,transparent 70%);
+  transform: translateX(-100%);
+}
+.market-shimmer-overlay.run::after {
+  animation: marketShimmer 0.9s ease forwards;
+}
+@keyframes marketShimmer { to { transform: translateX(200%); } }
 </style>
 </head>
 <body>
@@ -650,7 +841,134 @@ body {
                 <button class="btn-sf btn-sf-primary" onclick="showToast('✅','КП збережено в Salesforce','Відкрито як Selling Opportunity')">💾 Зберегти в SF</button>
                 <button class="btn-sf btn-sf-secondary" onclick="openSendSheet()">📤 Надіслати</button>
               </div>
+              <!-- AI Market Analysis trigger -->
+              <button class="btn-market-analysis" id="btn-market-analysis" onclick="openMarketAnalysis()" style="display:none">
+                🤖 AI Аналіз Ринку
+              </button>
             </div>
+
+            <!-- AI Market Analysis Card -->
+            <div class="market-card" id="market-card" style="display:none;position:relative;">
+              <div class="market-shimmer-overlay" id="market-shimmer"></div>
+
+              <!-- header -->
+              <div class="market-card-header">
+                <div class="market-header-left">
+                  <div class="market-header-title">📊 AI Аналіз Ринку</div>
+                  <div class="market-header-sub" id="market-header-sub">Станом на: — трав 2026</div>
+                </div>
+                <div class="market-live-pill"><div class="market-live-dot"></div>Live</div>
+              </div>
+
+              <!-- skeleton (shown during loading) -->
+              <div class="market-skeleton" id="market-skeleton">
+                <div class="market-skeleton-bar w80"></div>
+                <div class="market-skeleton-bar w60"></div>
+                <div class="market-skeleton-bar w45"></div>
+                <div class="market-skeleton-bar w80"></div>
+              </div>
+
+              <!-- phase indicator -->
+              <div class="market-phase-row" id="market-phase-row" style="display:none">
+                <div class="market-phase-label" id="market-phase-label">Ініціалізація...</div>
+                <div class="market-phase-cursor">▌</div>
+              </div>
+              <div class="market-progress-bg" id="market-progress-bg" style="display:none">
+                <div class="market-progress-fill" id="market-progress-fill"></div>
+              </div>
+
+              <!-- PANEL 1: Executive Signal -->
+              <div class="market-panel" id="mp1">
+                <div class="market-section-label">⚡ Сигнал AI</div>
+                <div class="market-signal">
+                  <div class="market-signal-text" id="market-signal-text">—</div>
+                  <div class="market-signal-source">
+                    <span class="market-source-chip">• USDA WASDE</span>
+                    <span class="market-source-chip">• APK-Inform</span>
+                    <span class="market-source-chip">• Ukrstat 2026</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANEL 2: Commodity Prices -->
+              <div class="market-panel" id="mp2">
+                <div class="market-section-label">💱 Ціни на товарних ринках</div>
+                <div class="market-commodity-row" id="mc-row1">
+                  <div class="market-commodity-top">
+                    <div class="market-commodity-name"><span id="mc1-icon">🌽</span><span id="mc1-name">Кукурудза FC1</span></div>
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div class="market-price-big" id="mc1-price">0</div>
+                      <div class="market-price-delta" id="mc1-delta"></div>
+                    </div>
+                  </div>
+                  <div class="market-sparkline" id="mc1-spark"></div>
+                </div>
+                <div class="market-commodity-row" id="mc-row2" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06)">
+                  <div class="market-commodity-top">
+                    <div class="market-commodity-name"><span id="mc2-icon">🌾</span><span id="mc2-name">Пшениця 3кл</span></div>
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div class="market-price-big" id="mc2-price">0</div>
+                      <div class="market-price-delta" id="mc2-delta"></div>
+                    </div>
+                  </div>
+                  <div class="market-sparkline" id="mc2-spark"></div>
+                </div>
+                <div style="margin-top:8px;font-size:9px;color:rgba(255,255,255,0.3);font-style:italic" id="mc-basis"></div>
+              </div>
+
+              <!-- PANEL 3: Regional Demand -->
+              <div class="market-panel" id="mp3">
+                <div class="market-section-label">📍 Регіональний попит</div>
+                <div id="market-demand-list"></div>
+              </div>
+
+              <!-- PANEL 4: Weather Window -->
+              <div class="market-panel" id="mp4">
+                <div class="market-section-label">🌤 Погодне вікно · 5 днів</div>
+                <div class="market-weather-scroll" id="market-weather"></div>
+                <div class="weather-window-text" id="weather-window"></div>
+              </div>
+
+              <!-- PANEL 5: Competitor + Surprise -->
+              <div class="market-panel" id="mp5">
+                <div class="market-section-label">🏢 Конкурентне середовище</div>
+                <div class="market-competitor-box">
+                  <div class="market-competitor-gap" id="market-comp-gap">—</div>
+                  <div class="market-percentile-badge" id="market-percentile">📊 —</div>
+                </div>
+                <div class="market-surprise" style="margin-top:10px">
+                  <div class="market-surprise-text" id="market-surprise">—</div>
+                </div>
+              </div>
+
+              <!-- PANEL 6: AI Forecast + Confidence -->
+              <div class="market-panel" id="mp6">
+                <div class="market-section-label">🤖 AI Прогноз · Наступні 14 днів</div>
+                <div class="market-forecast-text" id="market-forecast-text">—</div>
+                <div class="market-conf-row">
+                  <div class="market-conf-ring-wrap">
+                    <svg width="44" height="44" viewBox="0 0 44 44">
+                      <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+                      <circle cx="22" cy="22" r="18" fill="none" stroke="#69F0AE" stroke-width="4"
+                        stroke-dasharray="113" stroke-dashoffset="113" stroke-linecap="round"
+                        id="conf-ring-circle" style="transition:stroke-dashoffset 1s ease"/>
+                    </svg>
+                    <div class="market-conf-pct" id="conf-pct-text">0%</div>
+                  </div>
+                  <div class="market-conf-label">Впевненість моделі<br/><span class="market-conf-strong" id="conf-label-detail">—</span></div>
+                </div>
+              </div>
+
+              <!-- footer -->
+              <div class="market-footer" id="mp-footer" style="opacity:0;transition:opacity 0.6s ease">
+                <div class="market-footer-engine">Agro-Arena Intelligence Engine v2.1<br/>• USDA WASDE • APK-Inform • Ukrstat</div>
+                <div class="market-footer-actions">
+                  <button class="market-action-btn market-action-primary" onclick="addAnalysisToKP()">📋 До КП</button>
+                  <button class="market-action-btn market-action-secondary" onclick="openSendSheet()">📤</button>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div class="bottom-nav">
             <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
@@ -1113,6 +1431,12 @@ function generateKP() {
       document.getElementById('kp-total').textContent = d.total;
       document.getElementById('kp-upsell-text').textContent = d.upsell;
       document.getElementById('kp-result').classList.add('visible');
+      // show AI analysis button + reset card
+      const analysisBtn = document.getElementById('btn-market-analysis');
+      analysisBtn.style.display = 'flex';
+      analysisBtn.disabled = false;
+      analysisBtn.innerHTML = '🤖 AI Аналіз Ринку';
+      document.getElementById('market-card').style.display = 'none';
       setTimeout(() => {
         const sc = document.getElementById('screen-c').querySelector('.screen-scroll');
         if (sc) sc.scrollTop = sc.scrollHeight;
@@ -1545,6 +1869,354 @@ function renderCart() {
   document.getElementById('cart-vat').textContent = `₴${vat.toLocaleString('uk')}`;
   document.getElementById('cart-total').textContent = `₴${grandTotal.toLocaleString('uk')}`;
   document.getElementById('cart-total-bar').textContent = `₴${grandTotal.toLocaleString('uk')}`;
+}
+
+// ══════════════════════════════════════════
+// BLOCK C — AI MARKET ANALYSIS ENGINE
+// ══════════════════════════════════════════
+
+const marketData = {
+  // Кукурудза — Петренко, Харків
+  'Насіння кукурудзи 150 га, клієнт Петренко, Харківська обл, гібрид DEKALB': {
+    region: 'Харківська обл', date: '19 трав 2026, 14:32',
+    signal: 'Ринок сприятливий: ціна Agro-Arena нижче медіани регіону на 11%. Попит на добрива у Харківській обл аномально зростає (+23% до тренду) — рекомендовано зафіксувати ціну зараз. Економія клієнта vs. очікування 2 тижні: до ₴47,000.',
+    mc1: { icon:'🌽', name:'Кукурудза FC1',  price:5210, delta:'+2.1%', up:true,  spark:[35,40,38,50,45,55,60] },
+    mc2: { icon:'🌾', name:'Пшениця 3кл',    price:6840, delta:'+3.2%', up:true,  spark:[60,55,58,62,59,65,70] },
+    basis: 'Базис Чорноморськ: -₴320/т від CBOT · Спред +8% ширше 30д норми — елеватори тиснуть на ціну',
+    demand: [
+      { oblast:'Харківська', pct:88, level:'high' },
+      { oblast:'Полтавська',  pct:72, level:'medium' },
+      { oblast:'Сумська',     pct:45, level:'low' },
+    ],
+    weather: [
+      { e:'☀️', t:'+22°', good:true,  label:'Збір ✓' },
+      { e:'⛅',  t:'+19°', good:true,  label:'Збір ✓' },
+      { e:'🌧️', t:'+16°', good:false, label:'Ризик ⚠️' },
+      { e:'🌧️', t:'+15°', good:false, label:'Ризик ⚠️' },
+      { e:'☀️', t:'+23°', good:true,  label:'Збір ✓' },
+    ],
+    weatherWindow: '⚡ Оптимальне вікно для збору: 19–20 трав та 23 трав. Уникайте 21–22 трав.',
+    compGap: 'Конкуренти (AgroSmart UA, FarmDrive) котирують насіння DEKALB на 10–14% вище за поточний обсяг у регіоні.',
+    percentile: '📊 23-й перцентиль ринку · Нижче 77% пропозицій',
+    surprise: '💡 Аномалія: Харківська обл показує +23% попиту на добрива попри загальний тренд — причина: примусова зміна структури посіву. Клієнт має перевагу раннього замовлення.',
+    forecast: 'Очікується зростання попиту на кукурудзу +8–12% протягом наступних 14 днів у зв\'язку з сезонними закупками елеваторів Харківщини. Рекомендовано закрити КП до 25 трав.',
+    conf: 89,
+    confDetail: 'на основі 2,847 транзакцій у регіоні',
+  },
+  // Соняшник — Коваль, Дніпро
+  'Соняшник 300 га + гербіцид, клієнт Коваль, Дніпропетровська, Clearfield': {
+    region: 'Дніпропетровська обл', date: '19 трав 2026, 14:32',
+    signal: 'Ціна соняшнику на CBOT зросла на 4.7% за тиждень. Місцевий базис ще не відреагував — вікно 5–7 днів до вирівнювання. Пропозиція Agro-Arena на 8% нижче регіональної медіани по гербіцидах Clearfield.',
+    mc1: { icon:'🌻', name:'Соняшник (ДСТУ)',  price:16400, delta:'+4.7%', up:true,  spark:[40,42,45,43,50,55,62] },
+    mc2: { icon:'🌽', name:'Кукурудза FC1',     price:5210,  delta:'-1.1%', up:false, spark:[65,60,58,55,52,50,48] },
+    basis: 'Базис Миколаїв: -₴480/т · Спред у нормі — сприятливий момент для продажу',
+    demand: [
+      { oblast:'Дніпропетровська', pct:91, level:'high' },
+      { oblast:'Запорізька',        pct:68, level:'medium' },
+      { oblast:'Херсонська',        pct:38, level:'low' },
+    ],
+    weather: [
+      { e:'☀️', t:'+26°', good:true,  label:'Обробка ✓' },
+      { e:'☀️', t:'+27°', good:true,  label:'Обробка ✓' },
+      { e:'☀️', t:'+25°', good:true,  label:'Обробка ✓' },
+      { e:'⛅',  t:'+22°', good:true,  label:'Норм ✓' },
+      { e:'🌧️', t:'+18°', good:false, label:'Ризик ⚠️' },
+    ],
+    weatherWindow: '✅ Оптимальне вікно для гербіцидної обробки: 19–22 трав. Дощ очікується 23 трав.',
+    compGap: 'Імазамокс-вмісні гербіциди Clearfield: конкуренти котирують на 12–18% вище. Belchim та BASF — дефіцит складу у регіоні.',
+    percentile: '📊 18-й перцентиль ринку · Нижче 82% пропозицій',
+    surprise: '💡 Аномалія: дефіцит Clearfield-гербіцидів у Дніпропетровській та Запорізькій обл — запаси AgroSmart UA вичерпаються за 8–10 днів за поточним темпом реалізації.',
+    forecast: 'Ціна соняшнику продовжить зростання ще 10–15 днів (сезонне вікно). Водночас ціни на гербіциди стабілізуються після дефіциту. Рекомендовано укласти КП негайно.',
+    conf: 92,
+    confDetail: 'на основі 4,120 транзакцій у регіоні',
+  },
+  // Пшениця — Шевченко, Вінниця
+  'Пшениця озима 500 га + добрива NPK, клієнт Шевченко, Вінницька обл': {
+    region: 'Вінницька обл', date: '19 трав 2026, 14:32',
+    signal: 'Вінницький регіон — топ-3 по врожайності пшениці в Україні. Ціни NPK зростуть після оголошення квот ЄС (очікується 26 трав). Замовлення зараз — економія ₴28,000–₴45,000 на поточний обсяг.',
+    mc1: { icon:'🌾', name:'Пшениця 3кл',      price:6840, delta:'+3.2%', up:true,  spark:[55,58,60,57,63,68,72] },
+    mc2: { icon:'⚗️', name:'NPK 16:16:16 /т',   price:14500, delta:'+1.8%', up:true,  spark:[40,42,41,44,45,47,50] },
+    basis: 'Базис Одеса: -₴295/т · Спред звужується — сигнал до зростання фермерських цін',
+    demand: [
+      { oblast:'Вінницька',  pct:94, level:'high' },
+      { oblast:'Хмельницька', pct:76, level:'medium' },
+      { oblast:'Черкаська',   pct:71, level:'medium' },
+    ],
+    weather: [
+      { e:'⛅',  t:'+18°', good:true,  label:'Норм ✓' },
+      { e:'🌧️', t:'+14°', good:false, label:'Ризик ⚠️' },
+      { e:'⛅',  t:'+17°', good:true,  label:'Норм ✓' },
+      { e:'☀️', t:'+21°', good:true,  label:'Добриво ✓' },
+      { e:'☀️', t:'+22°', good:true,  label:'Добриво ✓' },
+    ],
+    weatherWindow: '💧 Внесення NPK: найкраще 21–23 трав (після дощу 20-го — ґрунт вологий, засвоєння +18%).',
+    compGap: 'NPK 16:16:16: EuroChem та ICL котирують ₴15,800–₴16,400/т на аналогічні обсяги. Agro-Arena — ₴14,500/т.',
+    percentile: '📊 12-й перцентиль ринку · Нижче 88% пропозицій',
+    surprise: '💡 Аномалія: квоти ЄС на імпорт добрив очікуються 26 трав. Аналітики прогнозують зростання ціни NPK на 8–15% протягом 30 днів після оголошення.',
+    forecast: 'Ціна пшениці стабільна з помірним зростанням. Критичний момент — квоти ЄС 26 трав. Рекомендовано зафіксувати ціну на добрива до 25 трав, продаж зерна — після 10 черв.',
+    conf: 87,
+    confDetail: 'на основі 3,560 транзакцій у регіоні',
+  },
+  // Ріпак — Бондар, Київ
+  'Ріпак 80 га, захист рослин повний пакет, клієнт Бондар, Київська обл': {
+    region: 'Київська обл', date: '19 трав 2026, 14:32',
+    signal: 'Ціна ріпаку досягла 12-місячного максимуму. Термін внесення захисту рослин критичний — вікно до завершення цвітіння 3–5 днів. Пакет Agro-Arena на 16% нижче альтернативного постачальника в регіоні.',
+    mc1: { icon:'🌿', name:'Ріпак (EURONEXT)', price:19800, delta:'+5.1%', up:true,  spark:[42,45,50,55,58,62,70] },
+    mc2: { icon:'🌾', name:'Пшениця 3кл',      price:6840,  delta:'+3.2%', up:true,  spark:[55,58,60,57,63,68,72] },
+    basis: 'Базис Одеса (ріпак): -₴620/т · EURONEXT-ф\'ючерс на максимумі сезону',
+    demand: [
+      { oblast:'Київська',    pct:82, level:'high' },
+      { oblast:'Житомирська', pct:65, level:'medium' },
+      { oblast:'Черкаська',   pct:58, level:'medium' },
+    ],
+    weather: [
+      { e:'☀️', t:'+20°', good:true,  label:'Обробка ✓' },
+      { e:'☀️', t:'+22°', good:true,  label:'Обробка ✓' },
+      { e:'⛅',  t:'+18°', good:true,  label:'Норм ✓' },
+      { e:'🌧️', t:'+13°', good:false, label:'Стоп ⚠️' },
+      { e:'⛅',  t:'+16°', good:true,  label:'Норм ✓' },
+    ],
+    weatherWindow: '🚨 КРИТИЧНО: вікно для фунгіцидної обробки ріпаку — 19–21 трав. Після дощу 22-го обробка неефективна. Затримка = втрата 30–40% врожаю.',
+    compGap: 'Nufarm та BASF: пакет захисту ріпаку котирується ₴285,000–₴310,000 за 80 га. Agro-Arena: ₴246,400.',
+    percentile: '📊 9-й перцентиль ринку · Нижче 91% пропозицій',
+    surprise: '💡 Аномалія: ціна ріпаку на EURONEXT — 12-місячний максимум через посуху в Канаді та Австралії. Аналітики Reuters прогнозують ще +7–12% до серпня.',
+    forecast: 'Ріпак — найбільш перспективна культура сезону. Рекомендовано застрахувати врожай та розглянути ф\'ючерсний контракт на продаж. Негайна обробка захистом критична для реалізації цінового потенціалу.',
+    conf: 94,
+    confDetail: 'на основі 1,890 транзакцій у регіоні',
+  },
+};
+
+// fallback data for custom text input
+const marketDataDefault = {
+  region: 'Україна', date: '19 трав 2026, 14:32',
+  signal: 'AI аналізує ринкові умови для вашого запиту. Загальний тренд: ціни на зернові зростають. Рекомендовано зафіксувати ціну на вхідні ресурси до наступного тижня.',
+  mc1: { icon:'🌽', name:'Кукурудза FC1', price:5210, delta:'+2.1%', up:true,  spark:[35,40,38,50,45,55,60] },
+  mc2: { icon:'🌾', name:'Пшениця 3кл',   price:6840, delta:'+3.2%', up:true,  spark:[60,55,58,62,59,65,70] },
+  basis: 'Базис Чорноморськ: -₴320/т від CBOT',
+  demand: [
+    { oblast:'Полтавська',  pct:88, level:'high' },
+    { oblast:'Харківська',  pct:72, level:'medium' },
+    { oblast:'Вінницька',   pct:65, level:'medium' },
+  ],
+  weather: [
+    { e:'☀️', t:'+22°', good:true,  label:'Збір ✓' },
+    { e:'⛅',  t:'+19°', good:true,  label:'Норм ✓' },
+    { e:'🌧️', t:'+16°', good:false, label:'Ризик ⚠️' },
+    { e:'☀️', t:'+21°', good:true,  label:'Норм ✓' },
+    { e:'☀️', t:'+23°', good:true,  label:'Збір ✓' },
+  ],
+  weatherWindow: '✅ Сприятливе вікно: 19–20 та 22–23 трав.',
+  compGap: 'Конкуренти котирують аналогічні продукти на 10–15% вище у вашому регіоні.',
+  percentile: '📊 25-й перцентиль ринку · Нижче 75% пропозицій',
+  surprise: '💡 Аномалія: зростання попиту на агрохімію у центральних областях спричинене ранньою ротацією культур.',
+  forecast: 'Ринкові умови сприятливі. Рекомендовано закрити КП протягом 3–5 днів для фіксації поточної цінової переваги.',
+  conf: 85,
+  confDetail: 'загальна оцінка по ринку',
+};
+
+function openMarketAnalysis() {
+  const btn = document.getElementById('btn-market-analysis');
+  btn.disabled = true;
+  btn.textContent = '⏳ Аналізую ринок...';
+
+  const card = document.getElementById('market-card');
+  card.style.display = 'block';
+
+  // pick data
+  const input = document.getElementById('kp-input').value.trim();
+  const d = marketData[input] || marketDataDefault;
+
+  // set header date
+  document.getElementById('market-header-sub').textContent = 'Станом на: ' + d.date;
+
+  // hide all panels, reset
+  ['mp1','mp2','mp3','mp4','mp5','mp6'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('revealed');
+    el.style.display = 'none';
+  });
+  document.getElementById('mp-footer').style.opacity = '0';
+  document.getElementById('market-skeleton').style.display = 'block';
+  document.getElementById('market-phase-row').style.display = 'none';
+  document.getElementById('market-progress-bg').style.display = 'none';
+
+  // scroll to card
+  setTimeout(() => {
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+
+  // ACT I: skeleton + border trace (0–1.5s)
+  setTimeout(() => {
+    document.getElementById('market-skeleton').style.display = 'none';
+    document.getElementById('market-phase-row').style.display = 'flex';
+    document.getElementById('market-progress-bg').style.display = 'block';
+    runMarketPhases(d, btn);
+  }, 1400);
+}
+
+function runMarketPhases(d, btn) {
+  const phases = [
+    { label:'Завантаження ринкових даних...', pct:30, ms:800 },
+    { label:'Аналіз конкурентного ландшафту...', pct:67, ms:1400 },
+    { label:'', pct:67, ms:420 },   // THE PAUSE at 67%
+    { label:'Генерація рекомендацій...', pct:100, ms:700 },
+  ];
+  const fill = document.getElementById('market-progress-fill');
+  const label = document.getElementById('market-phase-label');
+  let idx = 0;
+
+  function next() {
+    if (idx >= phases.length) {
+      // done — populate data and reveal
+      document.getElementById('market-phase-row').style.display = 'none';
+      document.getElementById('market-progress-bg').style.display = 'none';
+      populateMarketData(d);
+      revealMarketPanels(d, btn);
+      return;
+    }
+    const p = phases[idx++];
+    fill.style.width = p.pct + '%';
+    if (p.label) label.textContent = p.label;
+    setTimeout(next, p.ms);
+  }
+  next();
+}
+
+function populateMarketData(d) {
+  // signal
+  document.getElementById('market-signal-text').textContent = d.signal;
+
+  // commodities
+  document.getElementById('mc1-icon').textContent  = d.mc1.icon;
+  document.getElementById('mc1-name').textContent  = d.mc1.name;
+  document.getElementById('mc1-delta').textContent = d.mc1.delta;
+  document.getElementById('mc1-delta').className   = 'market-price-delta ' + (d.mc1.up ? 'delta-up' : 'delta-down');
+  buildSparkline('mc1-spark', d.mc1.spark);
+
+  document.getElementById('mc2-icon').textContent  = d.mc2.icon;
+  document.getElementById('mc2-name').textContent  = d.mc2.name;
+  document.getElementById('mc2-delta').textContent = d.mc2.delta;
+  document.getElementById('mc2-delta').className   = 'market-price-delta ' + (d.mc2.up ? 'delta-up' : 'delta-down');
+  buildSparkline('mc2-spark', d.mc2.spark);
+  document.getElementById('mc-basis').textContent = d.basis;
+
+  // demand
+  const demandList = document.getElementById('market-demand-list');
+  demandList.innerHTML = d.demand.map(r => `
+    <div class="market-demand-row">
+      <div class="market-demand-label">${r.oblast}</div>
+      <div class="market-demand-bar-bg">
+        <div class="market-demand-bar-fill demand-${r.level}" data-pct="${r.pct}" style="width:0%"></div>
+      </div>
+      <div class="market-demand-tag tag-${r.level === 'high' ? 'high' : r.level === 'medium' ? 'med' : 'low'}">${r.level === 'high' ? 'Висок.' : r.level === 'medium' ? 'Серед.' : 'Низьк.'}</div>
+    </div>`).join('');
+
+  // weather
+  const weatherEl = document.getElementById('market-weather');
+  weatherEl.innerHTML = d.weather.map(w => `
+    <div class="market-weather-chip ${w.good ? 'weather-chip-good' : 'weather-chip-warn'}">
+      <div class="weather-emoji">${w.e}</div>
+      <div class="weather-temp">${w.t}</div>
+      <div class="weather-impact">${w.good ? '✓' : '⚠️'}</div>
+    </div>`).join('');
+  document.getElementById('weather-window').textContent = d.weatherWindow;
+
+  // competitor
+  document.getElementById('market-comp-gap').textContent   = d.compGap;
+  document.getElementById('market-percentile').textContent = d.percentile;
+  document.getElementById('market-surprise').textContent   = d.surprise;
+
+  // forecast
+  document.getElementById('market-forecast-text').textContent = d.forecast;
+  document.getElementById('conf-pct-text').textContent = '0%';
+  document.getElementById('conf-label-detail').textContent = d.confDetail;
+}
+
+function buildSparkline(containerId, data) {
+  const el = document.getElementById(containerId);
+  const max = Math.max(...data);
+  el.innerHTML = data.map((v, i) => {
+    const h = Math.round((v / max) * 28);
+    const isToday = i === data.length - 1;
+    const cls = isToday ? 'spark-bar today up' : (i > 0 && data[i] > data[i-1] ? 'spark-bar up' : i > 0 && data[i] < data[i-1] ? 'spark-bar down' : 'spark-bar flat');
+    return `<div class="${cls}" style="height:${h}px"></div>`;
+  }).join('');
+}
+
+function revealMarketPanels(d, btn) {
+  const panels = ['mp1','mp2','mp3','mp4','mp5','mp6'];
+  panels.forEach((id, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      el.style.display = 'block';
+      setTimeout(() => el.classList.add('revealed'), 20);
+
+      // animate demand bars when panel 3 reveals
+      if (id === 'mp3') {
+        setTimeout(() => {
+          document.querySelectorAll('.market-demand-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.pct + '%';
+          });
+        }, 200);
+      }
+
+      // animate confidence ring when panel 6 reveals
+      if (id === 'mp6') {
+        setTimeout(() => {
+          const conf = d.conf;
+          const circumference = 113;
+          const offset = circumference - (conf / 100) * circumference;
+          document.getElementById('conf-ring-circle').style.strokeDashoffset = offset;
+          // count up pct text
+          let current = 0;
+          const ticker = setInterval(() => {
+            current = Math.min(current + 2, conf);
+            document.getElementById('conf-pct-text').textContent = current + '%';
+            if (current >= conf) clearInterval(ticker);
+          }, 20);
+        }, 300);
+      }
+
+    }, i * 200);
+  });
+
+  // animate price counters when panel 2 appears
+  setTimeout(() => {
+    animateCounter('mc1-price', 0, d.mc1.price, 900);
+    animateCounter('mc2-price', 0, d.mc2.price, 900);
+  }, 200);
+
+  // footer + shimmer
+  setTimeout(() => {
+    document.getElementById('mp-footer').style.opacity = '1';
+    const shimmer = document.getElementById('market-shimmer');
+    shimmer.classList.add('run');
+    setTimeout(() => shimmer.classList.remove('run'), 1000);
+    btn.disabled = false;
+    btn.innerHTML = '✅ Аналіз готовий · Оновити';
+  }, panels.length * 200 + 600);
+}
+
+function animateCounter(id, from, to, duration) {
+  const el = document.getElementById(id);
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3); // ease-out-cubic
+    const val = Math.round(from + (to - from) * eased);
+    el.textContent = '₴' + val.toLocaleString('uk');
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function addAnalysisToKP() {
+  const upsell = document.getElementById('kp-upsell-text');
+  if (upsell) {
+    const signal = document.getElementById('market-signal-text').textContent.split('.')[0] + '.';
+    upsell.textContent = signal + ' ' + upsell.textContent;
+  }
+  document.getElementById('btn-market-analysis').textContent = '✅ Аналіз додано до КП';
 }
 
 // Live clock
