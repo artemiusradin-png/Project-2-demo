@@ -416,8 +416,12 @@ body {
               <span>1 USD = 44.07 UAH</span><div class="currency-dot"></div>
               <span>1 EUR = 51.49 UAH</span><div style="margin-left:auto">🔔</div>
             </div>
-            <div style="background:white;padding:8px 16px;">
-              <input style="width:100%;border:none;background:#f2f2f7;border-radius:10px;padding:7px 12px;font-size:14px;color:#8e8e93;outline:none;" placeholder="🔍  Пошук від 3-х символів" readonly/>
+            <div class="cat-search-row">
+              <div class="cat-search-box">
+                <span style="font-size:14px;color:#8e8e93">🔍</span>
+                <input placeholder="Пошук від 3-х символів" readonly/>
+              </div>
+              <button class="cat-scan-btn" onclick="openCatalogScan()" title="AI Сканування">📷</button>
             </div>
             <div class="home-cards">
               <div class="big-card card-catalog" onclick="navTo('screen-catalog')">
