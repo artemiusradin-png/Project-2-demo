@@ -14,9 +14,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  justify-content: flex-start;
+  padding: 32px 20px 40px;
   gap: 24px;
+  overflow-y: auto;
 }
 
 /* ── Desktop header ───────────────────────────────── */
@@ -38,7 +39,7 @@ body {
 }
 .pill-c { background: rgba(76,175,80,0.2); color: #81C784; border-color: rgba(76,175,80,0.3); }
 .pill-a { background: rgba(33,150,243,0.2); color: #64B5F6; border-color: rgba(33,150,243,0.3); }
-.pill-b { background: rgba(255,152,0,0.2); color: #FFB74D; border-color: rgba(255,152,0,0.3); }
+.pill-e { background: rgba(156,39,176,0.2); color: #CE93D8; border-color: rgba(156,39,176,0.3); }
 .block-pill:hover { transform: scale(1.05); }
 
 /* ── iPhone shell ─────────────────────────────────── */
@@ -283,7 +284,7 @@ body {
 }
 .icon-c { background: linear-gradient(135deg, #43A047, #1B5E20); }
 .icon-a { background: linear-gradient(135deg, #1E88E5, #0D47A1); }
-.icon-b { background: linear-gradient(135deg, #FF8F00, #E65100); }
+.icon-e { background: linear-gradient(135deg, #7B1FA2, #4A148C); }
 .ai-block-text h4 { font-size: 14px; font-weight: 700; color: #1a1a1a; }
 .ai-block-text p { font-size: 11px; color: #8e8e93; margin-top: 1px; }
 .ai-block-badge {
@@ -292,7 +293,78 @@ body {
 }
 .badge-c { background: #E8F5E9; color: #2E7D32; }
 .badge-a { background: #E3F2FD; color: #1565C0; }
-.badge-b { background: #FFF3E0; color: #E65100; }
+.badge-e { background: #F3E5F5; color: #7B1FA2; }
+
+/* ── BLOCK E — VENDOR ANALYTICS ─────────────────── */
+.vendor-screen { padding: 0 0 90px; }
+.vendor-selector { padding: 14px 16px 0; }
+.vendor-selector label { font-size: 13px; font-weight: 600; color: #8e8e93; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.vendor-select {
+  width: 100%; padding: 10px 12px; border-radius: 10px;
+  border: 1.5px solid #e0e0e0; font-size: 14px; background: white;
+  color: #1a1a1a; font-family: inherit; outline: none;
+}
+.vendor-select:focus { border-color: #7B1FA2; }
+.vendor-kpis { display: flex; gap: 8px; padding: 12px 16px 4px; }
+.vendor-kpi {
+  flex: 1; background: white; border-radius: 12px; padding: 10px 10px;
+  text-align: center; box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.vkpi-val { font-size: 15px; font-weight: 800; color: #1a1a1a; }
+.vkpi-lbl { font-size: 9px; color: #8e8e93; margin-top: 2px; line-height: 1.3; }
+.vkpi-change { font-size: 10px; font-weight: 700; margin-top: 2px; }
+.products-section { padding: 10px 16px 0; }
+.prod-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.prod-name { font-size: 12px; font-weight: 600; color: #1a1a1a; width: 90px; flex-shrink: 0; }
+.prod-bar-wrap { flex: 1; background: #f0f0f0; border-radius: 4px; height: 8px; overflow: hidden; }
+.prod-bar-fill { height: 100%; border-radius: 4px; }
+.prod-val { font-size: 11px; color: #8e8e93; width: 50px; text-align: right; }
+.ai-report-card {
+  margin: 10px 16px 0; background: white; border-radius: 16px;
+  overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.ai-report-header {
+  background: linear-gradient(135deg, #6A1B9A, #4A148C);
+  padding: 12px 16px; color: white;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ai-report-body { padding: 14px 16px; }
+.report-insight { font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 10px; }
+.region-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.region-chip {
+  padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+}
+.chip-green { background: #E8F5E9; color: #2E7D32; }
+.chip-red { background: #FFEBEE; color: #C62828; }
+.chip-gray { background: #F5F5F5; color: #616161; }
+.alert-box {
+  background: #FFF8E1; border-left: 3px solid #FF8F00;
+  border-radius: 0 8px 8px 0; padding: 10px 12px; margin-bottom: 10px;
+}
+.alert-title { font-size: 11px; font-weight: 700; color: #E65100; margin-bottom: 3px; }
+.alert-text { font-size: 12px; color: #6D4C41; line-height: 1.4; }
+.focus-consultant {
+  background: #EDE7F6; border-radius: 10px; padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.fc-avatar { font-size: 28px; }
+.fc-name { font-size: 13px; font-weight: 700; color: #4A148C; }
+.fc-desc { font-size: 11px; color: #7B1FA2; margin-top: 1px; }
+.btn-gen-report {
+  width: calc(100% - 32px); margin: 12px 16px 0; padding: 14px;
+  background: linear-gradient(135deg, #7B1FA2, #4A148C);
+  color: white; border: none; border-radius: 14px; font-size: 15px;
+  font-weight: 700; cursor: pointer; font-family: inherit;
+  box-shadow: 0 4px 14px rgba(123,31,162,0.3);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.vendor-thinking {
+  display: none; padding: 16px 16px;
+  flex-direction: column; align-items: center; gap: 10px;
+}
+.vendor-thinking.visible { display: flex; }
 
 /* ── BLOCK C — SMART OPERATOR ───────────────────────── */
 .kp-screen { padding: 0 0 90px; }
@@ -604,7 +676,7 @@ body {
   <div class="block-pills">
     <span class="block-pill pill-c" onclick="navTo('screen-c')">Block C · Smart Operator</span>
     <span class="block-pill pill-a" onclick="navTo('screen-a')">Block A · Agro-Vision</span>
-    <span class="block-pill pill-b" onclick="navTo('screen-b')">Block B · Trading Agent</span>
+    <span class="block-pill pill-e" onclick="navTo('screen-e')">Block E · Vendor Analytics</span>
   </div>
 </div>
 
@@ -703,13 +775,13 @@ body {
               </div>
               <div class="ai-block-badge badge-a">Block A</div>
             </div>
-            <div class="ai-block-card" onclick="navTo('screen-b')">
-              <div class="ai-block-icon icon-b">📈</div>
+            <div class="ai-block-card" onclick="navTo('screen-e')">
+              <div class="ai-block-icon icon-e">📊</div>
               <div class="ai-block-text">
-                <h4>Trading Agent</h4>
-                <p>Аналіз ринку та рекомендації</p>
+                <h4>Vendor Analytics</h4>
+                <p>AI звіти для вендорів в реальному часі</p>
               </div>
-              <div class="ai-block-badge badge-b">Block B</div>
+              <div class="ai-block-badge badge-e">Block E</div>
             </div>
           </div>
         </div>
@@ -978,117 +1050,125 @@ body {
         </div>
       </div>
 
-      <!-- ════════════ BLOCK B — TRADING AGENT ════════════ -->
-      <div class="screen" id="screen-b">
+      <!-- ════════════ BLOCK E — VENDOR ANALYTICS ════════════ -->
+      <div class="screen" id="screen-e">
         <div class="status-bar">
           <span class="status-left">17:23</span>
           <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
         </div>
-        <div class="app-header orange">
+        <div class="app-header" style="background:linear-gradient(135deg,#6A1B9A,#4A148C)">
           <div class="header-top">
             <button class="header-back" onclick="navBack()">‹ Назад</button>
-            <span class="header-title">Trading Agent</span>
-            <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block B</div>
+            <span class="header-title">Vendor Analytics</span>
+            <div style="font-size:11px;background:rgba(255,255,255,0.2);padding:3px 8px;border-radius:20px;font-weight:600;">Block E</div>
           </div>
-          <div class="header-currency">CBOT/CME · USBE/UEX · AI рекомендації</div>
+          <div class="header-currency">AI звіти · Live дашборд · Персоналізовані інсайти</div>
         </div>
-        <div class="trading-screen">
-          <div class="farm-selector">
-            <label>Оберіть господарство</label>
-            <select class="farm-select" onchange="updateFarm(this.value)">
-              <option value="1">🌻 ФГ Іваненко · Полтавська обл · 450 га</option>
-              <option value="2">🌽 ФГ Петренко · Харківська обл · 800 га</option>
-              <option value="3">🌾 АФ Шевченко · Вінницька обл · 1,200 га</option>
+        <div class="vendor-screen">
+
+          <div class="vendor-selector">
+            <label>Оберіть вендора</label>
+            <select class="vendor-select" onchange="updateVendor(this.value)">
+              <option value="basf">🟡 BASF Ukraine — Насіння та ЗЗР</option>
+              <option value="syngenta">🔵 Syngenta Ukraine — Агрохімія</option>
+              <option value="bayer">🟢 Bayer CropScience — Засоби захисту</option>
+              <option value="yara">🟠 Yara Ukraine — Добрива</option>
             </select>
           </div>
 
-          <div style="padding:12px 16px 4px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">📊 Ринкові ціни сьогодні</div>
-          <div class="market-cards">
-            <div class="market-card">
-              <div class="market-crop">🌻 Соняшник</div>
-              <div class="market-price">₴18,400</div>
-              <div class="market-change up">↑ +2.3%</div>
+          <div class="vendor-kpis">
+            <div class="vendor-kpi">
+              <div class="vkpi-val" id="v-sales">₴4.2M</div>
+              <div class="vkpi-lbl">Продажі цього місяця</div>
+              <div class="vkpi-change up" id="v-sales-chg">↑ +18%</div>
             </div>
-            <div class="market-card">
-              <div class="market-crop">🌾 Пшениця</div>
-              <div class="market-price">₴7,200</div>
-              <div class="market-change down">↓ -0.8%</div>
+            <div class="vendor-kpi">
+              <div class="vkpi-val" id="v-consult">47</div>
+              <div class="vkpi-lbl">Активних консультантів</div>
+              <div class="vkpi-change up" id="v-consult-chg">↑ +6</div>
             </div>
-            <div class="market-card">
-              <div class="market-crop">🌽 Кукурудза</div>
-              <div class="market-price">₴6,850</div>
-              <div class="market-change up">↑ +1.1%</div>
-            </div>
-            <div class="market-card">
-              <div class="market-crop">🌿 Ріпак</div>
-              <div class="market-price">₴22,100</div>
-              <div class="market-change up">↑ +3.7%</div>
+            <div class="vendor-kpi">
+              <div class="vkpi-val" id="v-problem">3</div>
+              <div class="vkpi-lbl">Проблемних регіони</div>
+              <div class="vkpi-change down" id="v-prob-chg">↓ -12%</div>
             </div>
           </div>
 
-          <div style="padding:0 16px 8px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">🤖 AI рекомендації для господарства</div>
-          <div class="trade-recommend">
-            <div class="recommend-card">
-              <div class="recommend-header rh-sell">
+          <div style="padding:10px 16px 6px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">📦 Топ продуктів</div>
+          <div class="products-section">
+            <div class="prod-row">
+              <div class="prod-name" id="p1-name">Луміген</div>
+              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p1-bar" style="width:90%;background:linear-gradient(90deg,#7B1FA2,#AB47BC)"></div></div>
+              <div class="prod-val" id="p1-val">₴1.8M</div>
+            </div>
+            <div class="prod-row">
+              <div class="prod-name" id="p2-name">Белайт Актив</div>
+              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p2-bar" style="width:65%;background:linear-gradient(90deg,#1565C0,#42A5F5)"></div></div>
+              <div class="prod-val" id="p2-val">₴1.2M</div>
+            </div>
+            <div class="prod-row">
+              <div class="prod-name" id="p3-name">Стомп Аква</div>
+              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p3-bar" style="width:42%;background:linear-gradient(90deg,#2E7D32,#66BB6A)"></div></div>
+              <div class="prod-val" id="p3-val">₴780K</div>
+            </div>
+            <div class="prod-row">
+              <div class="prod-name" id="p4-name">Регент 200</div>
+              <div class="prod-bar-wrap"><div class="prod-bar-fill" id="p4-bar" style="width:22%;background:linear-gradient(90deg,#E65100,#FFA726)"></div></div>
+              <div class="prod-val" id="p4-val">₴420K</div>
+            </div>
+          </div>
+
+          <div style="padding:10px 16px 4px;font-size:12px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;">🤖 AI Звіт · Live</div>
+          <div class="ai-report-card">
+            <div class="ai-report-header">
+              <div>
+                <div style="font-size:14px;font-weight:700;" id="v-report-title">BASF Ukraine · Травень 2026</div>
+                <div style="font-size:11px;opacity:0.8;margin-top:2px;">Згенеровано AI · Оновлено сьогодні</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;">LIVE</div>
+            </div>
+            <div class="ai-report-body">
+              <div class="report-insight" id="v-insight">Луміген показує рекордні продажі +18% — драйвер зростання Харківська та Полтавська обл. Белайт Актив стагнує в Одеській обл: 3 консультанти не провели жодного демо за 30 днів. Рекомендуємо фокусну сесію з ними цього тижня.</div>
+
+              <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Регіони</div>
+              <div class="region-chips" id="v-regions">
+                <span class="region-chip chip-green">✅ Харків +34%</span>
+                <span class="region-chip chip-green">✅ Полтава +22%</span>
+                <span class="region-chip chip-gray">➡ Київ 0%</span>
+                <span class="region-chip chip-red">⚠ Одеса -15%</span>
+                <span class="region-chip chip-red">⚠ Миколаїв -8%</span>
+              </div>
+
+              <div class="alert-box" id="v-alert">
+                <div class="alert-title">⚠ Проблема: Одеська обл</div>
+                <div class="alert-text" id="v-alert-text">Белайт Актив: продажі -15% vs квітень. 3 консультанти (Марченко, Гриценко, Бойко) не активні 28+ днів. AI рекомендує провести індивідуальні дзвінки цього тижня.</div>
+              </div>
+
+              <div style="font-size:11px;font-weight:700;color:#8e8e93;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Фокусний консультант</div>
+              <div class="focus-consultant" id="v-consultant">
+                <div class="fc-avatar">👨‍💼</div>
                 <div>
-                  <div style="font-size:14px;font-weight:700;">🌻 Продати соняшник ЗАРАЗ</div>
-                  <div style="font-size:11px;opacity:0.8;margin-top:2px;">Вікно: наступні 7-10 днів</div>
-                </div>
-                <div class="recommend-badge">ПРОДАТИ</div>
-              </div>
-              <div class="recommend-body">
-                <div class="rec-insight" id="farm-insight">CBOT-ф'ючерси показують пік перед осіннім тиском пропозиції. Ваш врожай 2024 — 180 т соняшнику. При ₴18,400/т — оптимальна реалізація цього тижня.</div>
-                <div class="rec-metrics">
-                  <div class="rec-metric"><div class="rec-metric-val" id="farm-rev">₴3.31M</div><div class="rec-metric-lbl">Потенційний виторг</div></div>
-                  <div class="rec-metric"><div class="rec-metric-val">+₴380K</div><div class="rec-metric-lbl">Vs продаж у жовтні</div></div>
-                  <div class="rec-metric"><div class="rec-metric-val">7 днів</div><div class="rec-metric-lbl">Рекомендоване вікно</div></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="recommend-card">
-              <div class="recommend-header rh-plant">
-                <div>
-                  <div style="font-size:14px;font-weight:700;">🌿 Сіяти ріпак у 2025</div>
-                  <div style="font-size:11px;opacity:0.8;margin-top:2px;">Замінити частину пшениці</div>
-                </div>
-                <div class="recommend-badge">ПЛАНУВАТИ</div>
-              </div>
-              <div class="recommend-body">
-                <div class="rec-insight">Ріпак +3.7% сьогодні. Прогноз ф'ючерсів на лютий 2026: ₴24,800/т. Ваша сівозміна: пшениця 60% → рекомендуємо замінити 80 га на ріпак. Додаткова маржа: +₴210,000.</div>
-                <div class="rec-metrics">
-                  <div class="rec-metric"><div class="rec-metric-val">80 га</div><div class="rec-metric-lbl">Рекомендована площа</div></div>
-                  <div class="rec-metric"><div class="rec-metric-val">+₴210K</div><div class="rec-metric-lbl">Додаткова маржа</div></div>
-                  <div class="rec-metric"><div class="rec-metric-val">Лют 2026</div><div class="rec-metric-lbl">Прогноз піку</div></div>
+                  <div class="fc-name" id="fc-name">Олексій Марченко · Одеса</div>
+                  <div class="fc-desc" id="fc-desc">Найвищий потенціал зростання · Потребує підтримки з Белайт Актив</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="chart-area">
-            <div class="chart-title">📈 Ціна соняшнику — USBE (₴/т)</div>
-            <svg class="chart-svg" viewBox="0 0 310 80" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#FF8F00" stop-opacity="0.3"/>
-                  <stop offset="100%" stop-color="#FF8F00" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path d="M10,60 L50,55 L90,50 L130,45 L170,42 L210,35 L250,22 L290,18" stroke="#FF8F00" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
-              <path d="M10,60 L50,55 L90,50 L130,45 L170,42 L210,35 L250,22 L290,18 L290,75 L10,75 Z" fill="url(#cg)"/>
-              <circle cx="290" cy="18" r="4" fill="#FF8F00"/>
-              <text x="265" y="14" fill="#E65100" font-size="9" font-weight="700">₴18,400</text>
-              <text x="5" y="74" fill="#8e8e93" font-size="8">Берез</text>
-              <text x="85" y="74" fill="#8e8e93" font-size="8">Трав</text>
-              <text x="165" y="74" fill="#8e8e93" font-size="8">Лип</text>
-              <text x="248" y="74" fill="#8e8e93" font-size="8">Вер</text>
-              <line x1="290" y1="18" x2="290" y2="70" stroke="#FF8F00" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
-            </svg>
+          <div class="vendor-thinking" id="vendor-thinking">
+            <div class="thinking-dots">
+              <div class="thinking-dot" style="background:#7B1FA2"></div>
+              <div class="thinking-dot" style="background:#7B1FA2;animation-delay:0.2s"></div>
+              <div class="thinking-dot" style="background:#7B1FA2;animation-delay:0.4s"></div>
+            </div>
+            <div class="thinking-label" id="vendor-thinking-step">Збираю дані продажів...</div>
           </div>
 
-          <button class="btn-full-report" onclick="showToast('📊','Звіт готовий','PDF надіслано на email консультанта')">
-            📊 Повний PDF звіт
+          <button class="btn-gen-report" onclick="generateVendorReport()">
+            📊 Згенерувати повний PDF звіт
           </button>
+
+          <div style="height:14px;"></div>
         </div>
         <div class="bottom-nav">
           <button class="nav-item" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
@@ -1113,14 +1193,14 @@ body {
     <div class="tip-label">Block A</div>
     <div class="tip-text">Оберіть культуру → AI аналізує → Додати в кошик</div>
   </div>
-  <div class="tip tip-b">
-    <div class="tip-label">Block B</div>
-    <div class="tip-text">Змінити господарство → переглянути рекомендації</div>
+  <div class="tip tip-b" style="--tip-color:#CE93D8">
+    <div class="tip-label" style="color:#CE93D8">Block E</div>
+    <div class="tip-text">Обрати вендора → переглянути звіт → PDF</div>
   </div>
 </div>
 
 <script>
-const screens = ['screen-home','screen-catalog','screen-c','screen-a','screen-b'];
+const screens = ['screen-home','screen-catalog','screen-c','screen-a','screen-e'];
 let history = ['screen-home'];
 
 function navTo(id) {
@@ -1295,19 +1375,107 @@ function addToCart(name) {
   showToast('🛒', 'Додано до кошика', name + ' · 1 л');
 }
 
-// ── Block B ─────────────────────────────────────────
-const farmData = {
-  '1': { insight:'CBOT-ф\'ючерси показують пік перед осіннім тиском пропозиції. Ваш врожай 2024 — 180 т соняшнику. При ₴18,400/т — оптимальна реалізація цього тижня.', rev:'₴3.31M' },
-  '2': { insight:'800 га господарство. Кукурудза 400 га (прогноз 2,800 т) + пшениця 400 га. Рекомендуємо форвардний контракт на кукурудзу: ₴7,100/т до 1 грудня. Поточний спот ₴6,850.', rev:'₴19.9M' },
-  '3': { insight:'1,200 га. Соняшник 500 га = 1,250 т. Ріпак 200 га = 520 т. Комбінована стратегія: соняшник продати зараз, ріпак — після Нового року. Оптимальний виторг: +₴680,000 vs продажу всього зараз.', rev:'₴51.4M' },
+// ── Block E ─────────────────────────────────────────
+const vendorData = {
+  basf: {
+    title:'BASF Ukraine · Травень 2026',
+    sales:'₴4.2M', salesChg:'↑ +18%', consult:'47', consultChg:'↑ +6', problems:'3', probChg:'↓ -12%',
+    insight:'Луміген показує рекордні продажі +18% — драйвер зростання Харківська та Полтавська обл. Белайт Актив стагнує в Одеській обл: 3 консультанти не провели жодного демо за 30 днів. Рекомендуємо фокусну сесію цього тижня.',
+    regions:'<span class="region-chip chip-green">✅ Харків +34%</span><span class="region-chip chip-green">✅ Полтава +22%</span><span class="region-chip chip-gray">➡ Київ 0%</span><span class="region-chip chip-red">⚠ Одеса -15%</span><span class="region-chip chip-red">⚠ Миколаїв -8%</span>',
+    alertTitle:'⚠ Проблема: Одеська обл', alertText:'Белайт Актив: продажі -15% vs квітень. 3 консультанти (Марченко, Гриценко, Бойко) не активні 28+ днів. AI рекомендує провести індивідуальні дзвінки.',
+    fcName:'Олексій Марченко · Одеса', fcDesc:'Найвищий потенціал зростання · Потребує підтримки з Белайт Актив',
+    p1:'Луміген', p1v:'₴1.8M', p1w:'90%',
+    p2:'Белайт Актив', p2v:'₴1.2M', p2w:'65%',
+    p3:'Стомп Аква', p3v:'₴780K', p3w:'42%',
+    p4:'Регент 200', p4v:'₴420K', p4w:'22%',
+  },
+  syngenta: {
+    title:'Syngenta Ukraine · Травень 2026',
+    sales:'₴6.8M', salesChg:'↑ +9%', consult:'63', consultChg:'↑ +4', problems:'1', probChg:'↓ -5%',
+    insight:'Амістар Екстра — топ продукт мережі з NPS 92. Найкращі результати у Вінницькій та Черкаській областях. Єдина проблемна зона — Запорізька обл, де конкурент BASF знижує ціни агресивно. Рекомендуємо цінову акцію для 2 консультантів.',
+    regions:'<span class="region-chip chip-green">✅ Вінниця +41%</span><span class="region-chip chip-green">✅ Черкаси +28%</span><span class="region-chip chip-green">✅ Київ +15%</span><span class="region-chip chip-red">⚠ Запоріжжя -19%</span>',
+    alertTitle:'⚠ Конкурентний тиск: Запоріжжя', alertText:'BASF знизив ціну на аналог Амістару на 12%. Консультант Коваленко втратив 2 клієнти. AI рекомендує надати персональну знижку 8% + безкоштовний демо-набір.',
+    fcName:'Наталія Коваленко · Запоріжжя', fcDesc:'Під конкурентним тиском · Потребує цінової підтримки',
+    p1:'Амістар Екстра', p1v:'₴2.9M', p1w:'90%',
+    p2:'НК Брио КЛ', p2v:'₴2.1M', p2w:'72%',
+    p3:'Актара 25 WG', p3v:'₴1.1M', p3w:'48%',
+    p4:'Дерозал', p4v:'₴700K', p4w:'28%',
+  },
+  bayer: {
+    title:'Bayer CropScience · Травень 2026',
+    sales:'₴3.1M', salesChg:'↓ -4%', consult:'38', consultChg:'↓ -3', problems:'5', probChg:'↑ +2',
+    insight:'Фалькон 460 падає в продажах через дефіцит на складі (лише 12% залишку). Луна 75 WG показує зростання +22% але охоплює лише 8 консультантів. AI рекомендує: терміново поповнити склад Фалькон та розширити охоплення Луна на 15+ консультантів.',
+    regions:'<span class="region-chip chip-green">✅ Дніпро +22%</span><span class="region-chip chip-red">⚠ Харків -31%</span><span class="region-chip chip-red">⚠ Полтава -18%</span><span class="region-chip chip-red">⚠ Суми -22%</span><span class="region-chip chip-red">⚠ Чернігів -14%</span>',
+    alertTitle:'🚨 Критично: Дефіцит складу', alertText:'Фалькон 460 EC — залишок 12% (180 л). При поточному темпі продажів запас вичерпається за 8 днів. Замовлення ще не підтверджене постачальником.',
+    fcName:'Ігор Сидоренко · Харків', fcDesc:'Топ-продавець Луна 75 WG · Може взяти Фалькон на себе',
+    p1:'Луна 75 WG', p1v:'₴1.4M', p1w:'90%',
+    p2:'Фалькон 460', p2v:'₴980K', p2w:'55%',
+    p3:'Конфідор', p3v:'₴520K', p3w:'38%',
+    p4:'Байєр Актив', p4v:'₴200K', p4w:'14%',
+  },
+  yara: {
+    title:'Yara Ukraine · Травень 2026',
+    sales:'₴8.4M', salesChg:'↑ +31%', consult:'71', consultChg:'↑ +12', problems:'2', probChg:'↓ -8%',
+    insight:'YaraBela AXAN — абсолютний лідер сезону, +31% vs минулого травня. Зростання зумовлене дефіцитом аміачної селітри на ринку. YaraMila Complex відстає в Закарпатті та Львові: низька обізнаність консультантів. Рекомендуємо тренінг для 8 консультантів заходу.',
+    regions:'<span class="region-chip chip-green">✅ Вінниця +52%</span><span class="region-chip chip-green">✅ Полтава +44%</span><span class="region-chip chip-green">✅ Харків +38%</span><span class="region-chip chip-red">⚠ Львів -11%</span><span class="region-chip chip-red">⚠ Закарпаття -17%</span>',
+    alertTitle:'📚 Навчання: Захід України', alertText:'YaraMila Complex: 8 консультантів у Львівській та Закарпатській обл не пройшли сертифікацію. AI рекомендує провести вебінар наступного вівторка — прогноз +₴240K виторгу за 30 днів.',
+    fcName:'Марія Павленко · Львів', fcDesc:'Готова до сертифікації · Найкращий потенціал регіону',
+    p1:'YaraBela AXAN', p1v:'₴4.2M', p1w:'90%',
+    p2:'YaraMila Complex', p2v:'₴2.6M', p2w:'68%',
+    p3:'YaraLiva Calcinit', p3v:'₴1.1M', p3w:'42%',
+    p4:'YaraVita Cereals', p4v:'₴500K', p4w:'20%',
+  },
 };
 
-function updateFarm(val) {
-  const d = farmData[val];
-  if (d) {
-    document.getElementById('farm-insight').textContent = d.insight;
-    document.getElementById('farm-rev').textContent = d.rev;
-  }
+const vendorThinkingSteps = [
+  'Збираю дані продажів...','Аналізую активність консультантів...','Виявляю проблемні регіони...','Генерую персоналізований звіт...'
+];
+
+function updateVendor(val) {
+  const d = vendorData[val];
+  if (!d) return;
+  document.getElementById('v-report-title').textContent = d.title;
+  document.getElementById('v-sales').textContent = d.sales;
+  document.getElementById('v-sales-chg').textContent = d.salesChg;
+  document.getElementById('v-sales-chg').className = 'vkpi-change ' + (d.salesChg.includes('+') ? 'up' : 'down');
+  document.getElementById('v-consult').textContent = d.consult;
+  document.getElementById('v-consult-chg').textContent = d.consultChg;
+  document.getElementById('v-problem').textContent = d.problems;
+  document.getElementById('v-prob-chg').textContent = d.probChg;
+  document.getElementById('v-insight').textContent = d.insight;
+  document.getElementById('v-regions').innerHTML = d.regions;
+  document.getElementById('v-alert').querySelector('.alert-title').textContent = d.alertTitle;
+  document.getElementById('v-alert-text').textContent = d.alertText;
+  document.getElementById('fc-name').textContent = d.fcName;
+  document.getElementById('fc-desc').textContent = d.fcDesc;
+  document.getElementById('p1-name').textContent = d.p1;
+  document.getElementById('p1-val').textContent = d.p1v;
+  document.getElementById('p1-bar').style.width = d.p1w;
+  document.getElementById('p2-name').textContent = d.p2;
+  document.getElementById('p2-val').textContent = d.p2v;
+  document.getElementById('p2-bar').style.width = d.p2w;
+  document.getElementById('p3-name').textContent = d.p3;
+  document.getElementById('p3-val').textContent = d.p3v;
+  document.getElementById('p3-bar').style.width = d.p3w;
+  document.getElementById('p4-name').textContent = d.p4;
+  document.getElementById('p4-val').textContent = d.p4v;
+  document.getElementById('p4-bar').style.width = d.p4w;
+}
+
+function generateVendorReport() {
+  const thinking = document.getElementById('vendor-thinking');
+  thinking.classList.add('visible');
+  let step = 0;
+  const iv = setInterval(() => {
+    step++;
+    if (step < vendorThinkingSteps.length) {
+      document.getElementById('vendor-thinking-step').textContent = vendorThinkingSteps[step];
+    } else {
+      clearInterval(iv);
+      thinking.classList.remove('visible');
+      showToast('📊','PDF звіт готовий','Надіслано вендору та менеджеру');
+    }
+  }, 700);
 }
 
 // ── Live clock ──────────────────────────────────────
