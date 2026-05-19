@@ -405,6 +405,58 @@ body {
 .scan-result-conf { font-size: 11px; color: #8e8e93; }
 .scan-close-btn { width: calc(100% - 32px); margin: 12px 16px 0; background: #f2f2f7; border: none; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 600; color: #1a1a1a; cursor: pointer; }
 
+/* ── Camera scan full-screen ── */
+#scan-sheet-overlay { align-items: stretch; background: black; }
+.cam-modal { display: flex; flex-direction: column; width: 100%; height: 100%; background: #0a0a0a; }
+.cam-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px; background: black; flex-shrink: 0; }
+.cam-topbar-title { color: white; font-size: 16px; font-weight: 700; }
+.cam-close { background: rgba(255,255,255,0.15); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.cam-viewfinder { position: relative; flex: 1; overflow: hidden; background: #111; min-height: 0; }
+.cam-viewfinder video, .cam-viewfinder .cam-captured { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cam-captured { display: none; }
+.cam-captured.visible { display: block; }
+.cam-flash { position: absolute; inset: 0; background: white; opacity: 0; pointer-events: none; transition: opacity 0.05s; z-index: 10; }
+.cam-flash.pop { opacity: 1; }
+/* corner brackets */
+.cam-corners { position: absolute; inset: 20px; pointer-events: none; z-index: 5; }
+.cam-corners::before, .cam-corners::after,
+.cam-corners span::before, .cam-corners span::after {
+  content: ''; position: absolute; width: 24px; height: 24px; border-color: white; border-style: solid; opacity: 0.85;
+}
+.cam-corners::before { top: 0; left: 0; border-width: 2px 0 0 2px; border-radius: 2px 0 0 0; }
+.cam-corners::after { top: 0; right: 0; border-width: 2px 2px 0 0; border-radius: 0 2px 0 0; }
+.cam-corners span::before { bottom: 0; left: 0; border-width: 0 0 2px 2px; border-radius: 0 0 0 2px; }
+.cam-corners span::after { bottom: 0; right: 0; border-width: 0 2px 2px 0; border-radius: 0 0 2px 0; }
+.cam-scan-line { position: absolute; left: 20px; right: 20px; height: 2px; background: linear-gradient(90deg,transparent,#00E676,transparent); z-index: 6; animation: scanLine 2s linear infinite; top: 20px; }
+@keyframes scanLine { 0%{top:20px;opacity:1} 90%{top:calc(100% - 20px);opacity:1} 100%{top:20px;opacity:0} }
+.cam-hint { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; color: rgba(255,255,255,0.7); font-size: 12px; z-index: 6; }
+.cam-diagnosis-badge { position: absolute; top: 12px; left: 12px; right: 12px; background: rgba(0,0,0,0.72); backdrop-filter: blur(10px); border-radius: 12px; padding: 10px 14px; display: none; z-index: 8; }
+.cam-diagnosis-badge.visible { display: flex; align-items: center; gap: 10px; }
+.cam-diagnosis-name { color: white; font-size: 13px; font-weight: 700; }
+.cam-diagnosis-conf { color: #69F0AE; font-size: 11px; margin-top: 2px; }
+/* bottom strip */
+.cam-bottom { background: #111; flex-shrink: 0; padding: 12px 0 0; }
+.cam-samples-label { color: rgba(255,255,255,0.5); font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 0 16px 8px; }
+.cam-samples-row { display: flex; gap: 10px; padding: 0 16px 12px; overflow-x: auto; }
+.cam-sample { flex-shrink: 0; cursor: pointer; }
+.cam-sample img { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; border: 2.5px solid transparent; display: block; transition: all 0.2s; }
+.cam-sample.selected img { border-color: #00E676; box-shadow: 0 0 0 2px rgba(0,230,118,0.3); }
+.cam-sample-label { font-size: 9px; color: rgba(255,255,255,0.55); text-align: center; margin-top: 4px; }
+.cam-results { padding: 0 14px 14px; }
+.cam-scan-progress { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: none; }
+.cam-scan-progress.visible { display: block; }
+.cam-scan-progress-label { color: #69F0AE; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+.cam-scan-progress-bg { background: rgba(255,255,255,0.1); border-radius: 4px; height: 3px; }
+.cam-scan-progress-fill { height: 3px; border-radius: 4px; background: linear-gradient(90deg,#00E676,#2B5CE6); width: 0%; transition: width 0.4s; }
+.cam-sku-card { background: rgba(255,255,255,0.08); border-radius: 14px; padding: 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; cursor: pointer; }
+.cam-sku-icon { font-size: 26px; flex-shrink: 0; }
+.cam-sku-info { flex: 1; }
+.cam-sku-name { color: white; font-size: 13px; font-weight: 700; }
+.cam-sku-desc { color: rgba(255,255,255,0.5); font-size: 11px; margin-top: 2px; }
+.cam-sku-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.cam-sku-price { color: #69F0AE; font-size: 13px; font-weight: 800; }
+.cam-btn-add { background: #00C853; border: none; border-radius: 20px; color: white; font-size: 12px; font-weight: 700; padding: 6px 14px; cursor: pointer; font-family: inherit; white-space: nowrap; }
+
 /* ── Send sheet ── */
 .send-channel { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #f2f2f7; cursor: pointer; }
 .send-channel:last-of-type { border-bottom: none; }
@@ -850,54 +902,77 @@ body {
           </div>
         </div>
 
-      <!-- ══ Global Scan Sheet ══ -->
-      <div class="scan-sheet-overlay" id="scan-sheet-overlay" onclick="if(event.target===this)closeCatalogScan()">
-        <div class="scan-sheet">
-          <div class="scan-sheet-handle"></div>
-          <div class="scan-sheet-title">📷 AI Сканування культури</div>
-          <div class="scan-sheet-subtitle">Оберіть фото — отримайте продукти з каталогу миттєво</div>
-          <div class="scan-sheet-samples">
-            <div class="scan-sheet-sample" id="cs1" onclick="selectCatalogSample('s1','cs1')">
-              <img src="images/s1-corn.jpg" alt="Кукурудза"/>
-              <div class="scan-sheet-sample-label">Кукурудза</div>
-            </div>
-            <div class="scan-sheet-sample" id="cs2" onclick="selectCatalogSample('s2','cs2')">
-              <img src="images/s2-sunflower.jpg" alt="Соняшник"/>
-              <div class="scan-sheet-sample-label">Соняшник</div>
-            </div>
-            <div class="scan-sheet-sample" id="cs3" onclick="selectCatalogSample('s3','cs3')">
-              <img src="images/s3-wheat.jpg" alt="Пшениця"/>
-              <div class="scan-sheet-sample-label">Пшениця</div>
-            </div>
-            <div class="scan-sheet-sample" id="cs4" onclick="selectCatalogSample('s4','cs4')">
-              <img src="images/s4-rapeseed.jpg" alt="Ріпак"/>
-              <div class="scan-sheet-sample-label">Ріпак</div>
-            </div>
+      <!-- ══ Global Camera Scan ══ -->
+      <div class="scan-sheet-overlay" id="scan-sheet-overlay">
+        <div class="cam-modal">
+          <!-- top bar -->
+          <div class="cam-topbar">
+            <button class="cam-close" onclick="closeCatalogScan()">✕</button>
+            <span class="cam-topbar-title">📷 AI Сканування</span>
+            <div style="width:32px"></div>
           </div>
-          <div class="scan-sheet-progress" id="cs-progress">
-            <div class="scan-progress-label" id="cs-progress-label">Аналізую фото...</div>
-            <div class="scan-progress-bar-bg"><div class="scan-progress-bar" id="cs-progress-bar"></div></div>
-          </div>
-          <div class="scan-results" id="cs-results">
-            <div class="scan-result-header">
-              <span id="cs-result-icon" style="font-size:20px">🌽</span>
+
+          <!-- viewfinder -->
+          <div class="cam-viewfinder" id="cam-viewfinder">
+            <video id="cam-video" autoplay playsinline muted></video>
+            <img class="cam-captured" id="cam-captured" src="" alt=""/>
+            <div class="cam-flash" id="cam-flash"></div>
+            <div class="cam-corners"><span></span></div>
+            <div class="cam-scan-line" id="cam-scan-line"></div>
+            <div class="cam-hint" id="cam-hint">Направте камеру на культуру або оберіть приклад</div>
+            <!-- diagnosis overlay on photo -->
+            <div class="cam-diagnosis-badge" id="cam-diag-badge">
+              <span id="cam-diag-icon" style="font-size:22px">🌽</span>
               <div>
-                <div class="scan-result-title" id="cs-result-title">—</div>
-                <div class="scan-result-conf">Впевненість: <span id="cs-result-conf">—</span> · <span class="scan-result-badge">✅ Знайдено в каталозі</span></div>
+                <div class="cam-diagnosis-name" id="cam-diag-name">—</div>
+                <div class="cam-diagnosis-conf" id="cam-diag-conf">Впевненість: —</div>
               </div>
             </div>
-            <div class="sku-card" onclick="addCsSku(1)" style="margin-bottom:8px">
-              <div class="sku-icon">🧪</div>
-              <div class="sku-info"><div class="sku-name" id="cs-sku1-name">—</div><div class="sku-desc" id="cs-sku1-desc">—</div></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="sku-price" id="cs-sku1-price">—</div><button class="btn-add-cart" onclick="event.stopPropagation();addCsSku(1)">+ Кошик</button></div>
+          </div>
+
+          <!-- bottom strip -->
+          <div class="cam-bottom">
+            <div class="cam-samples-label">Приклади полів</div>
+            <div class="cam-samples-row">
+              <div class="cam-sample" id="cs1" onclick="selectCatalogSample('s1','cs1')">
+                <img src="images/s1-corn.jpg" alt="Кукурудза"/>
+                <div class="cam-sample-label">Кукурудза</div>
+              </div>
+              <div class="cam-sample" id="cs2" onclick="selectCatalogSample('s2','cs2')">
+                <img src="images/s2-sunflower.jpg" alt="Соняшник"/>
+                <div class="cam-sample-label">Соняшник</div>
+              </div>
+              <div class="cam-sample" id="cs3" onclick="selectCatalogSample('s3','cs3')">
+                <img src="images/s3-wheat.jpg" alt="Пшениця"/>
+                <div class="cam-sample-label">Пшениця</div>
+              </div>
+              <div class="cam-sample" id="cs4" onclick="selectCatalogSample('s4','cs4')">
+                <img src="images/s4-rapeseed.jpg" alt="Ріпак"/>
+                <div class="cam-sample-label">Ріпак</div>
+              </div>
             </div>
-            <div class="sku-card" onclick="addCsSku(2)">
-              <div class="sku-icon">💊</div>
-              <div class="sku-info"><div class="sku-name" id="cs-sku2-name">—</div><div class="sku-desc" id="cs-sku2-desc">—</div></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><div class="sku-price" id="cs-sku2-price">—</div><button class="btn-add-cart" onclick="event.stopPropagation();addCsSku(2)">+ Кошик</button></div>
+
+            <div class="cam-results">
+              <!-- progress -->
+              <div class="cam-scan-progress" id="cs-progress">
+                <div class="cam-scan-progress-label" id="cs-progress-label">Аналізую фото...</div>
+                <div class="cam-scan-progress-bg"><div class="cam-scan-progress-fill" id="cs-progress-bar"></div></div>
+              </div>
+              <!-- sku results -->
+              <div id="cs-results" style="display:none">
+                <div class="cam-sku-card" onclick="addCsSku(1)">
+                  <div class="cam-sku-icon">🧪</div>
+                  <div class="cam-sku-info"><div class="cam-sku-name" id="cs-sku1-name">—</div><div class="cam-sku-desc" id="cs-sku1-desc">—</div></div>
+                  <div class="cam-sku-right"><div class="cam-sku-price" id="cs-sku1-price">—</div><button class="cam-btn-add" onclick="event.stopPropagation();addCsSku(1)">+ Кошик</button></div>
+                </div>
+                <div class="cam-sku-card" onclick="addCsSku(2)">
+                  <div class="cam-sku-icon">💊</div>
+                  <div class="cam-sku-info"><div class="cam-sku-name" id="cs-sku2-name">—</div><div class="cam-sku-desc" id="cs-sku2-desc">—</div></div>
+                  <div class="cam-sku-right"><div class="cam-sku-price" id="cs-sku2-price">—</div><button class="cam-btn-add" onclick="event.stopPropagation();addCsSku(2)">+ Кошик</button></div>
+                </div>
+              </div>
             </div>
           </div>
-          <button class="scan-close-btn" onclick="closeCatalogScan()">Закрити</button>
         </div>
       </div>
 
@@ -1206,23 +1281,72 @@ function addSearchItem(i, q) {
 // ── Catalog scan sheet ──────────────────────────────────
 let csScanData = null;
 
+let camStream = null;
+
 function openCatalogScan() {
-  document.getElementById('scan-sheet-overlay').classList.add('open');
-  document.querySelectorAll('.scan-sheet-sample').forEach(s => s.classList.remove('selected'));
+  // reset state
+  document.querySelectorAll('.cam-sample').forEach(s => s.classList.remove('selected'));
   document.getElementById('cs-progress').classList.remove('visible');
-  document.getElementById('cs-results').classList.remove('visible');
+  document.getElementById('cs-results').style.display = 'none';
   document.getElementById('cs-progress-bar').style.width = '0%';
+  document.getElementById('cam-captured').classList.remove('visible');
+  document.getElementById('cam-diag-badge').classList.remove('visible');
+  document.getElementById('cam-hint').style.display = 'block';
+  document.getElementById('cam-scan-line').style.display = 'block';
+  document.getElementById('scan-sheet-overlay').classList.add('open');
+
+  // start live camera
+  const video = document.getElementById('cam-video');
+  video.style.display = 'block';
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false })
+      .then(stream => {
+        camStream = stream;
+        video.srcObject = stream;
+      })
+      .catch(() => {
+        // camera denied — just show dark viewfinder, samples still work
+        video.style.display = 'none';
+      });
+  } else {
+    video.style.display = 'none';
+  }
 }
 
 function closeCatalogScan() {
   document.getElementById('scan-sheet-overlay').classList.remove('open');
+  // stop camera stream
+  if (camStream) {
+    camStream.getTracks().forEach(t => t.stop());
+    camStream = null;
+  }
+  const video = document.getElementById('cam-video');
+  video.srcObject = null;
 }
 
 function selectCatalogSample(dataId, elId) {
-  document.querySelectorAll('.scan-sheet-sample').forEach(s => s.classList.remove('selected'));
+  document.querySelectorAll('.cam-sample').forEach(s => s.classList.remove('selected'));
   document.getElementById(elId).classList.add('selected');
-  document.getElementById('cs-results').classList.remove('visible');
+  document.getElementById('cs-results').style.display = 'none';
+  document.getElementById('cs-progress').classList.remove('visible');
 
+  // flash capture effect
+  const flash = document.getElementById('cam-flash');
+  flash.classList.add('pop');
+  setTimeout(() => flash.classList.remove('pop'), 120);
+
+  // freeze camera, show the sample photo in viewfinder
+  const video = document.getElementById('cam-video');
+  video.style.display = 'none';
+  if (camStream) { camStream.getTracks().forEach(t => t.stop()); camStream = null; }
+
+  const captured = document.getElementById('cam-captured');
+  captured.src = sampleImages[dataId];
+  captured.classList.add('visible');
+  document.getElementById('cam-hint').style.display = 'none';
+  document.getElementById('cam-scan-line').style.display = 'block';
+
+  // run progress
   const prog = document.getElementById('cs-progress');
   const bar = document.getElementById('cs-progress-bar');
   const label = document.getElementById('cs-progress-label');
@@ -1239,18 +1363,22 @@ function selectCatalogSample(dataId, elId) {
       clearInterval(tick);
       setTimeout(() => {
         prog.classList.remove('visible');
+        document.getElementById('cam-scan-line').style.display = 'none';
         const d = sampleData[dataId];
         csScanData = d;
-        document.getElementById('cs-result-icon').textContent = d.icon;
-        document.getElementById('cs-result-title').textContent = d.title;
-        document.getElementById('cs-result-conf').textContent = d.conf + '%';
+        // show diagnosis badge on photo
+        document.getElementById('cam-diag-icon').textContent = d.icon;
+        document.getElementById('cam-diag-name').textContent = d.title;
+        document.getElementById('cam-diag-conf').textContent = 'Впевненість: ' + d.conf + '%';
+        document.getElementById('cam-diag-badge').classList.add('visible');
+        // show sku results
         document.getElementById('cs-sku1-name').textContent = d.sku1n;
         document.getElementById('cs-sku1-desc').textContent = d.sku1d;
         document.getElementById('cs-sku1-price').textContent = d.sku1p;
         document.getElementById('cs-sku2-name').textContent = d.sku2n;
         document.getElementById('cs-sku2-desc').textContent = d.sku2d;
         document.getElementById('cs-sku2-price').textContent = d.sku2p;
-        document.getElementById('cs-results').classList.add('visible');
+        document.getElementById('cs-results').style.display = 'block';
       }, 300);
     }
   }, 500);
