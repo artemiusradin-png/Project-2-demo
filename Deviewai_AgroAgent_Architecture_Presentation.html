@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>deviewai × AgroPlatforma — Agro Agent · Presentation</title>
+<style>
+  :root{
+    --ink:#10131a; --mut:#5b6472; --line:#e3e6ec; --accent:#3b5bfd;
+    --client:#f7f9ff; --good:#0a7c45; --flow:#a8631a; --insight:#127a8a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#eceef2;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;color:var(--ink)}
+  .deck{height:100vh;overflow:hidden}
+  .slide{width:100vw;height:100vh;display:none;flex-direction:column;
+    padding:6vh 8vw 8vh;background:#fff;position:relative;overflow:hidden}
+  .slide.active{display:flex;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .hd{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid var(--accent);padding-bottom:1.1vh;margin-bottom:4.5vh;flex-shrink:0}
+  .brand{font-size:clamp(15px,1.5vw,19px);font-weight:800;letter-spacing:-.3px}
+  .brand b{color:var(--accent)}
+  .brand .sub{display:block;font-size:clamp(10px,.95vw,12px);font-weight:600;color:var(--mut);margin-top:3px;letter-spacing:.2px}
+  .hd .meta{font-size:clamp(9px,.85vw,11px);color:var(--mut);text-align:right;line-height:1.5}
+  .kick{font-size:clamp(11px,1vw,13px);font-weight:800;letter-spacing:2.5px;
+    text-transform:uppercase;color:var(--accent);margin-bottom:2.2vh}
+  h1{font-size:clamp(30px,4.4vw,60px);font-weight:800;letter-spacing:-1.4px;line-height:1.07}
+  h2{font-size:clamp(23px,3vw,42px);font-weight:800;letter-spacing:-.7px;line-height:1.14;margin-bottom:3.4vh}
+  h2 .hl{color:var(--accent)}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+  .sub{font-size:clamp(15px,1.55vw,21px);color:var(--mut);line-height:1.55;max-width:64ch}
+  ul{list-style:none}
+  li{font-size:clamp(14px,1.55vw,21px);padding:1.5vh 0;border-bottom:1px solid var(--line);
+    display:flex;gap:15px;align-items:flex-start;line-height:1.42}
+  li .ic{color:var(--accent);font-weight:800;flex-shrink:0;font-size:clamp(13px,1.3vw,18px);margin-top:2px}
+  li b{font-weight:700;color:var(--ink)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:2.4vw}
+  .card{background:var(--client);border:1px solid var(--line);border-radius:11px;
+    padding:2.6vh 1.8vw;border-left:4px solid var(--accent)}
+  .card.flow{border-left-color:var(--flow)} .card.insight{border-left-color:var(--insight)}
+  .card .ct{font-size:clamp(10px,.95vw,12px);font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--mut);margin-bottom:1vh}
+  .card .cn{font-size:clamp(17px,1.9vw,25px);font-weight:800;letter-spacing:-.4px;margin-bottom:1.1vh}
+  .card .cn.a{color:var(--accent)} .card .cn.c{color:var(--flow)} .card .cn.e{color:var(--insight)}
+  .card .cv{font-size:clamp(13px,1.35vw,17px);line-height:1.48;color:var(--ink)}
+  .card .cv b{font-weight:700}
+  .quote{display:flex;gap:18px;align-items:center;background:var(--accent);color:#fff;
+    border-radius:11px;padding:2.6vh 2vw;margin-top:1vh}
+  .quote .big{font-size:clamp(22px,2.6vw,36px);font-weight:800;letter-spacing:-.6px;white-space:nowrap}
+  .quote .qt{font-size:clamp(13px,1.4vw,18px);line-height:1.5;opacity:.97}
+  .quote .qt b{font-weight:800}
+  .dgm{background:var(--client);border:1px solid var(--line);border-radius:11px;
+    padding:3vh 2.4vw;font:clamp(11px,1.15vw,16px)/1.5 "SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    color:var(--ink);white-space:pre;overflow:auto}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw;margin-top:1vh}
+  .kpi{background:var(--client);border:1px solid var(--line);border-radius:9px;padding:2.2vh 1.5vw}
+  .kpi .k{font-size:clamp(9px,.9vw,11px);letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  .kpi .v{font-size:clamp(18px,2vw,28px);font-weight:800;margin-top:.8vh;letter-spacing:-.4px}
+  .kpi .v small{font-size:clamp(10px,1vw,13px);font-weight:600;color:var(--mut)}
+  .pill{display:inline-block;font-size:clamp(10px,1vw,13px);font-weight:800;letter-spacing:.4px;
+    text-transform:uppercase;padding:.5vh 1vw;border-radius:99px;border:1px solid var(--line)}
+  .pill.v1{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .pill.p2{background:var(--client);color:var(--accent)}
+  .ft{position:absolute;bottom:3vh;left:8vw;right:8vw;display:flex;justify-content:space-between;
+    font-size:clamp(9px,.85vw,11px);color:var(--mut);border-top:1px solid var(--line);padding-top:1vh}
+  .cover{justify-content:center}
+  .cover .body{flex:none}
+  .nav{position:fixed;bottom:2.4vh;left:8vw;display:flex;gap:9px;z-index:30}
+  .nav button{background:#fff;border:1px solid var(--line);color:var(--ink);width:36px;height:36px;
+    border-radius:9px;font-size:16px;cursor:pointer;font-weight:700;transition:.15s}
+  .nav button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .pgn{position:fixed;bottom:3.2vh;right:8vw;font-size:11px;color:var(--mut);font-weight:700;z-index:30}
+  .hint{position:fixed;bottom:3.2vh;left:50%;transform:translateX(-50%);font-size:10.5px;
+    color:var(--mut);opacity:.6;z-index:30}
+  @media print{
+    html,body{background:#fff}.deck{height:auto;overflow:visible}
+    .slide{display:flex !important;page-break-after:always;height:100vh}
+    .nav,.hint,.pgn{display:none}
+    @page{size:landscape;margin:0}
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 COVER -->
+  <section class="slide active cover">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+        <span class="sub">&laquo;Agro Agent&raquo; — Solution Architecture</span></div>
+      <div class="meta">Prepared for: Agro-Arena / AgroPlatforma<br>2026-05-20 · Rev C · CONFIDENTIAL</div>
+    </div>
+    <div class="body">
+      <div class="kick">AI that works inside your operations</div>
+      <h1>Agro Agent<br><span style="color:var(--accent)">Three agents. One loop.</span></h1>
+      <p class="sub" style="margin-top:3vh">An AI layer inside the platform you already run. We propose the three agents with the highest <b>customer</b> efficiency — Agro-Vision, Agro-Flow, Agro-Insight — built on one shared foundation.</p>
+    </div>
+    <div class="ft"><span><b>deviewai</b> — AI integration, Claude-augmented delivery</span><span>Presentation · Rev C</span></div>
+  </section>
+
+  <!-- 2 CHALLENGE -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">The Challenge</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick">The Challenge</div>
+      <h2>Expertise doesn't <span class="hl">scale</span> — and time kills the deal</h2>
+      <ul>
+        <li><span class="ic">01</span><span><b>Diagnosis is experience-dependent.</b> Junior consultants call senior agronomists and wait. Misdiagnosis means the wrong product and lost trust.</span></li>
+        <li><span class="ic">02</span><span><b>Product selection is fragmented.</b> Matching a treatment to what's approved, in stock and field-compatible spans multiple systems.</span></li>
+        <li><span class="ic">03</span><span><b>The operations desk is a ceiling.</b> Every quote and order is manual — growth needs more headcount, not less.</span></li>
+        <li><span class="ic">04</span><span><b>Vendor insight is dark.</b> Suppliers can't see where their products win or lose, in time to act.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>2 / 11</span></div>
+  </section>
+
+  <!-- 3 THE THREE -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">The Offer</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick">The Offer · Highest customer efficiency</div>
+      <h2>Three agents, chosen for <span class="hl">value ÷ effort</span></h2>
+      <div class="grid3">
+        <div class="card"><div class="ct">Field Intelligence · A</div><div class="cn a">Agro-Vision</div><div class="cv">Photo → diagnosis → in-stock, approved <b>prescription</b> in seconds.</div></div>
+        <div class="card flow"><div class="ct">Operational · C</div><div class="cn c">Agro-Flow</div><div class="cv">A prescription becomes an automated, margin-aware <b>quote</b> in Salesforce.</div></div>
+        <div class="card insight"><div class="ct">Vendor · E</div><div class="cn e">Agro-Insight</div><div class="cv">Live, trustworthy <b>vendor analytics</b> from the data A and C generate.</div></div>
+      </div>
+      <p class="sub" style="margin-top:3.4vh">Not three features — one self-reinforcing loop on a single shared foundation.</p>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>3 / 11</span></div>
+  </section>
+
+  <!-- 4 LIVE DEMO -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">Live Demo</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick">Live Demo · Interactive prototype</div>
+      <h2>The three agents — <span class="hl">already clickable</span></h2>
+      <div class="grid3">
+        <div class="card">
+          <div class="ct">Block A · Agro-Vision</div>
+          <div class="cn a">📷 Photo diagnosis</div>
+          <div class="cv">Діагностика культур за фото — crop / pest / disease ID with confidence and a ranked prescription from the catalog.</div>
+        </div>
+        <div class="card flow">
+          <div class="ct">Block C · Smart Operator <span style="font-weight:600;opacity:.7">(Agro-Flow)</span></div>
+          <div class="cn c">📋 Auto-quote</div>
+          <div class="cv">Авто-генерація КП за 2 хвилини — prescription becomes a draft Salesforce quote with analog and cross-sell.</div>
+        </div>
+        <div class="card insight">
+          <div class="ct">Block E · Vendor Analytics <span style="font-weight:600;opacity:.7">(Agro-Insight)</span></div>
+          <div class="cn e">📊 Live reports</div>
+          <div class="cv">AI звіти для вендорів live — vendor-scoped analytics + narrative reports from A+C data.</div>
+        </div>
+      </div>
+      <p class="sub" style="margin-top:3.4vh">The demo demonstrates <b>exactly the three agents</b> in our offer — A, C, E — on a Flutter-styled iPhone shell with end-to-end click-through flows.</p>
+      <div style="display:flex;gap:14px;margin-top:2.6vh;align-items:center;flex-wrap:wrap">
+        <a href="agro-demo/Demo-Portal_v1.html" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:1.3vh 1.6vw;background:var(--accent);color:#fff;border-radius:11px;font-weight:700;font-size:clamp(13px,1.35vw,17px);text-decoration:none;letter-spacing:-.2px">▶ Open the demo</a>
+        <span style="font-size:clamp(11px,1.05vw,14px);color:var(--mut)">In the deck: open this link in a side window for live walkthrough during the call. The demo screens use the original block names; <b>Agro-Flow</b> = Smart Operator, <b>Agro-Insight</b> = Vendor Analytics.</span>
+      </div>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>4 / 11</span></div>
+  </section>
+
+  <!-- 5 FLYWHEEL -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">The Flywheel</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick">Why these three</div>
+      <h2>A → C → E is a <span class="hl">data flywheel</span></h2>
+      <div class="dgm">  A diagnoses ──▶ emits prescription + outcome events
+       ▲                          │
+       │                          ▼
+  better Rx              C turns Rx into quotes / orders
+  (right products,                │  emits transaction events
+   right inventory)               ▼
+       │              E aggregates A + C + Salesforce → vendor intelligence
+       └──────── better vendor terms / inventory ◀────────┘</div>
+      <p class="sub" style="margin-top:3vh">Each agent makes the next more valuable. <b>B (Markets)</b> and <b>D (Mentor)</b> sit outside this loop — deferred to later phases, not dropped.</p>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>5 / 11</span></div>
+  </section>
+
+  <!-- 6 AGRO-VISION -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">Agro-Vision · Block A</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick">Field Intelligence <span style="color:var(--ink)">·</span> <span class="pill v1" style="margin-left:8px">v1</span></div>
+      <h2 style="color:var(--accent)">Agro-Vision</h2>
+      <div class="quote">
+        <div class="big">Photo → Rx</div>
+        <div class="qt"><b>The flagship and the foundation.</b> A leaf diagnosis is verifiable on the spot — the fastest way to build the trust the customer wants most.</div>
+      </div>
+      <ul style="margin-top:1vh">
+        <li><span class="ic">▸</span><span>Claude multimodal vision → crop + problem, with a confidence gate before any prescription is shown.</span></li>
+        <li><span class="ic">▸</span><span>RAG over the 20k catalog, filtered by Ukraine approval, live stock and farmland context.</span></li>
+        <li><span class="ic">▸</span><span>EXIF/GPS stripped before the LLM · no identity sent · photos auto-delete in 24 h.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>6 / 11</span></div>
+  </section>
+
+  <!-- 7 AGRO-FLOW -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">Agro-Flow · Block C</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick" style="color:var(--flow)">Operational Intelligence <span style="color:var(--ink)">·</span> <span class="pill p2" style="margin-left:8px">Phase 2</span></div>
+      <h2 style="color:var(--flow)">Agro-Flow</h2>
+      <div class="quote" style="background:var(--flow)">
+        <div class="big">Rx → Quote</div>
+        <div class="qt"><b>Grow without growing the operations desk.</b> A prescription becomes an auto-built Salesforce quote — a human approves before it is binding.</div>
+      </div>
+      <ul style="margin-top:1vh">
+        <li><span class="ic" style="color:var(--flow)">▸</span><span><b>≈ 30% net-new</b> — rides Agro-Vision's Salesforce connectors and catalog vector index.</span></li>
+        <li><span class="ic" style="color:var(--flow)">▸</span><span>Analog substitution + cross-sell; deterministic rules (margin floor, pack size, regulatory).</span></li>
+        <li><span class="ic" style="color:var(--flow)">▸</span><span>Verifiable against the system of record — the LLM ranks; it never computes the numbers.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>7 / 11</span></div>
+  </section>
+
+  <!-- 8 AGRO-INSIGHT -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">Agro-Insight · Block E</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick" style="color:var(--insight)">Vendor Intelligence <span style="color:var(--ink)">·</span> <span class="pill p2" style="margin-left:8px">Phase 2</span></div>
+      <h2 style="color:var(--insight)">Agro-Insight</h2>
+      <div class="quote" style="background:var(--insight)">
+        <div class="big">Data → Answers</div>
+        <div class="qt"><b>Live answers for every supplier.</b> Personalised analytics and narrative reports — for the non-technical vendor rep.</div>
+      </div>
+      <ul style="margin-top:1vh">
+        <li><span class="ic" style="color:var(--insight)">▸</span><span><b>≈ 20% net-new, zero new external dependencies</b> — read-only over data A and C already produce.</span></li>
+        <li><span class="ic" style="color:var(--insight)">▸</span><span>Numbers computed in SQL; the LLM only narrates — it cannot fabricate a figure.</span></li>
+        <li><span class="ic" style="color:var(--insight)">▸</span><span>Strict tenant isolation · lowest-risk agent · no liability surface.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>8 / 11</span></div>
+  </section>
+
+  <!-- 9 WHY NOT B -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">The Reasoning</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick">Chosen for the customer, not for us</div>
+      <h2>Why not <span class="hl">Agro-Markets</span> first?</h2>
+      <div class="grid2">
+        <div class="card insight"><div class="ct">The trap</div><div class="cv">B is the most exciting to pitch — "what to plant, when to sell." But a market prediction is <b>unfalsifiable until a season passes</b>.</div></div>
+        <div class="card"><div class="ct">The principle</div><div class="cv">The customer's #1 goal is to <b>build trust in the AI</b>. You earn that with answers that prove themselves <b>today</b> — a leaf diagnosis, a reconcilable quote.</div></div>
+      </div>
+      <p class="sub" style="margin-top:3vh">B needs new external integrations and can't be validated with a held-out test set. It belongs in <b>Phase 2</b>, after the flywheel is proven — high value, wrong order.</p>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>9 / 11</span></div>
+  </section>
+
+  <!-- 10 FOUNDATION / EFFICIENCY -->
+  <section class="slide">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">One Foundation</span></div>
+      <div class="meta">2026-05-20 · Rev C</div>
+    </div>
+    <div class="body">
+      <div class="kick">Build once · extend cheaply</div>
+      <h2>One substrate, three <span class="hl">increments</span></h2>
+      <div class="dgm">┌──── SHARED SUBSTRATE (built once in v1) ─────────────────────┐
+│ FastAPI · Claude (Vertex AI) · PostgreSQL+pgvector           │
+│ Salesforce connector · Firebase Auth · Audit/Event log       │
+└───────────────────────────────────────────────────────────────┘
+     ▲ A ≈ foundation     ▲ C ≈ 30% new     ▲ E ≈ 20% new</div>
+      <div class="kpis">
+        <div class="kpi"><div class="k">Agro-Vision · A</div><div class="v">Foundation <small>flagship + trust</small></div></div>
+        <div class="kpi"><div class="k">Agro-Flow · C</div><div class="v">≈30% <small>net-new build</small></div></div>
+        <div class="kpi"><div class="k">Agro-Insight · E</div><div class="v">≈20% <small>net-new build</small></div></div>
+      </div>
+    </div>
+    <div class="ft"><span><b>deviewai</b></span><span>10 / 11</span></div>
+  </section>
+
+  <!-- 11 CLOSING -->
+  <section class="slide cover">
+    <div class="hd">
+      <div class="brand"><b>deviewai</b> &times; AgroPlatforma<span class="sub">The Bottom Line</span></div>
+      <div class="meta">2026-05-20 · Rev C · CONFIDENTIAL</div>
+    </div>
+    <div class="body">
+      <div class="kick">The bottom line</div>
+      <h1>Conservative by design.<br><span style="color:var(--accent)">Defensible by default.</span></h1>
+      <p class="sub" style="margin-top:3vh">Managed services, one database, a linear pipeline, security and auditability built in. Agro-Vision funds the foundation; Agro-Flow and Agro-Insight are contained increments on a proven substrate — three agents, one self-reinforcing loop.</p>
+    </div>
+    <div class="ft"><span><b>deviewai</b> — AI that works inside your operations</span><span>Companion: Technical Architecture · Rev D</span></div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button onclick="go(-1)" aria-label="Previous">‹</button>
+  <button onclick="go(1)" aria-label="Next">›</button>
+</div>
+<div class="hint">← → · Space · F = fullscreen</div>
+<div class="pgn" id="pgn">1 / 11</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,x)=>s.classList.toggle('active',x===i));
+    document.getElementById('pgn').textContent=(i+1)+' / '+slides.length;
+  }
+  function go(d){show(i+d)}
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1)}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1)}
+    else if(e.key==='Home'){show(0)}
+    else if(e.key==='End'){show(slides.length-1)}
+    else if(e.key.toLowerCase()==='f'){
+      if(!document.fullscreenElement)document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+  let sx=0;
+  document.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>50)go(dx<0?1:-1);
+  },{passive:true});
+</script>
+</body>
+</html>

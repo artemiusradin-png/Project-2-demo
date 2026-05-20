@@ -76,63 +76,71 @@
   <header>
     <div class="brand">
       <b>deviewai</b> &times; AgroPlatforma
-      <span class="sub">&laquo;Agro Agent&raquo; — AI Integration · Costing &amp; Pricing</span>
+      <span class="sub">&laquo;Agro Agent&raquo; — Phased Program · Costing &amp; Pricing</span>
     </div>
     <div class="meta">
       Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
-      Date: 2026&#8209;05&#8209;18 · Rev A<br>
+      Date: 2026&#8209;05&#8209;20 · Rev C<br>
       <span class="conf">CONFIDENTIAL</span>
     </div>
   </header>
 
   <div class="scope">
-    <b>Scope.</b> An AI feature layer integrated into the <b>existing</b> Flutter app &amp; Salesforce
-    backend — not a rebuild. <b>v1 = AI foundation + flagship "Agro-Vision"</b>
-    (photo → crop/pest/disease diagnosis → product "prescription" from the catalog),
-    delivered as a fixed-scope, metric-based pilot. Foundation is built once; later AI
-    features attach to it at a fraction of the cost.
+    <b>Scope.</b> An AI feature layer for the <b>existing</b> Flutter app &amp; Salesforce
+    backend — not a rebuild. Delivered as a <b>three-phase program: A → C → E</b>. Each phase
+    ships independently with a fixed scope, fixed price and a measurable gate; the next phase
+    attaches to the foundation built in Phase 1, at a fraction of its cost.
   </div>
 
   <section class="zone-client">
-    <h2>Client-Facing Proposal</h2>
+    <h2>Client-Facing Proposal — Phased Program</h2>
     <table>
       <thead>
-        <tr><th>Tier</th><th>What's included</th><th class="num">Investment</th><th class="num">Timeline</th></tr>
+        <tr><th>Phase</th><th>What's included</th><th class="num">Investment</th><th class="num">Timeline</th></tr>
       </thead>
       <tbody>
+        <tr class="rec">
+          <td><span class="tier-star">★ Phase 1 · Agro-Vision</span><br><span class="note">Foundation + flagship · v1</span></td>
+          <td>Shared AI foundation (orchestration · pgvector · Claude · Salesforce connector · auth · event log) + Agro-Vision (photo → diagnosis → catalog prescription) + conversational advisor + production hardening + accuracy eval set</td>
+          <td class="num">$38k – $46k</td><td class="num">~12 wks</td>
+        </tr>
         <tr>
-          <td><b>Lean v1</b></td>
-          <td>AI foundation + Agro-Vision (multimodal-LLM vision + catalog retrieval)</td>
-          <td class="num">$75k – $85k</td><td class="num">~10–12 wks</td>
+          <td><b>Phase 2 · Agro-Flow</b><br><span class="note">Operational · attaches to Phase 1</span></td>
+          <td>Quote Builder (Rx → Salesforce Quote/SO) · analog &amp; cross-sell ranker · deterministic rules engine (margin · pack · regulatory) · scoped draft-only SF write · consultant approval flow</td>
+          <td class="num">$20k – $26k</td><td class="num">~5–7 wks</td>
+        </tr>
+        <tr>
+          <td><b>Phase 3 · Agro-Insight</b><br><span class="note">Vendor analytics · attaches to Phase 1+2</span></td>
+          <td>ELT job · vendor-scoped analytics data mart · narrative report generator (Claude narrates SQL aggregates) · read-only dashboard API · tenant isolation</td>
+          <td class="num">$14k – $18k</td><td class="num">~4–6 wks</td>
         </tr>
         <tr class="rec">
-          <td><span class="tier-star">★ Standard v1</span><br><span class="note">Recommended</span></td>
-          <td>Lean + conversational agronomist advisor + production hardening &amp; eval set</td>
-          <td class="num">$95k – $115k</td><td class="num">~12 wks</td>
-        </tr>
-        <tr>
-          <td><b>v1 Plus</b></td>
-          <td>Standard + smart natural-language catalog search</td>
-          <td class="num">$135k – $155k</td><td class="num">~16 wks</td>
+          <td><b>Full Program · A+C+E</b><br><span class="note">All three, committed sequentially</span></td>
+          <td>The complete data flywheel — Phases 1 → 2 → 3 with each gated on the prior phase shipping its acceptance metric</td>
+          <td class="num">$76k – $86k</td><td class="num">~21–25 wks</td>
         </tr>
       </tbody>
     </table>
 
     <div class="quote">
-      <div class="big">$105,000</div>
+      <div class="big">$42,000 → $22,000 → $16,000</div>
       <div class="q-txt">
-        <b>Recommended quote — Standard v1, fixed price, ~12 weeks.</b><br>
-        Tied to an agreed success metric (e.g. prescription accuracy ≥ threshold on a
-        held-out test set). Payment: <b>30%</b> on signature · <b>40%</b> at mid-milestone · <b>30%</b> on delivery.
+        <b>Recommended quotes — fixed-price per phase, gated.</b><br>
+        Phase 1 anchors the program; each subsequent phase is a separate go / no-go after the
+        prior one ships. Per-phase payment: <b>30%</b> on signature · <b>40%</b> at mid-milestone · <b>30%</b> on phase delivery.
+        <b>Full-program commit-upfront discount:</b> $76k (≈ 5% off the sum) when all three phases are signed together.
       </div>
     </div>
-    <div class="anchor">▸ ≈ 42% of the $250k already invested in the app — the headline AI capability for under half the original build cost.</div>
+    <div class="anchor">▸ Phase 1 ≈ 17% of the $250k already invested; the full A→C→E loop at ≈ 32% — for the complete AI flywheel.</div>
 
     <h2>Assumptions &amp; Exclusions</h2>
     <ul class="note">
-      <li>Assumes Salesforce exposes catalog / stock / farmland / soil data via usable REST APIs. If not, data-access work is <b>+$15k – $30k</b> (separate line).</li>
+      <li>Assumes Salesforce exposes catalog / stock / farmland / soil data via usable REST APIs. If not, data-access work is <b>+$15k – $30k</b> (separate line, Phase 1).</li>
       <li>Production LLM / vision API usage is <b>billed to the client</b> (usage-based; vision is token-heavy at 40k-user scale). Estimates indicative only.</li>
-      <li>Post-v1 maintenance &amp; model-ops retainer: <b>15–25% of build / year</b> — optional, separate SOW. Additional AI features quoted incrementally.</li>
+      <li>Each phase is gated on a measurable acceptance metric. Phase 1: prescription accuracy ≥ 85% on a blind agronomist-panel test set. Phase 2: quote-build cycle time vs. baseline. Phase 3: data-mart freshness + tenant-isolation audit pass.</li>
+      <li>Phase-2 dependency: deterministic rules catalog (margin floors · pack sizes · regulatory compatibility) owned and sourced by the client before Phase 2 build start.</li>
+      <li>Phase-3 dependency: vendor data-sharing contracts in place before data-mart design.</li>
+      <li>Post-program maintenance &amp; model-ops retainer: <b>15–25% of build / year</b> — optional, separate SOW. Additional AI features (Blocks B, D) quoted incrementally.</li>
     </ul>
   </section>
 
@@ -143,36 +151,40 @@
   </div>
 
   <section class="zone-int">
-    <h2>Internal Cost Model — Standard v1 (3 months)</h2>
+    <h2>Internal Cost Model — Per-Phase Breakdown</h2>
     <table>
       <thead>
-        <tr><th>Cost line</th><th>Basis (Ukraine payouts, USD)</th><th class="num">Cost</th></tr>
+        <tr><th>Cost line</th><th>Basis (Ukraine payouts, USD)</th><th class="num">Phase 1 · A</th><th class="num">Phase 2 · C</th><th class="num">Phase 3 · E</th></tr>
       </thead>
       <tbody>
-        <tr><td>Salesforce developer (UA, mid-senior, contract)</td><td>~$5,000/mo × 2.5 mo</td><td class="num">$12,500</td></tr>
-        <tr><td>ML / CV specialist (UA, senior)</td><td>Part-time advisory (LLM-vision, not custom model)</td><td class="num">$6,000</td></tr>
-        <tr><td>LLM / vision API — dev &amp; testing</td><td>3 months</td><td class="num">$2,000</td></tr>
-        <tr><td>Infra / hosting (orchestrator, vector DB, staging)</td><td>~$400/mo × 3</td><td class="num">$1,200</td></tr>
-        <tr><td>Tooling / subscriptions (Claude, monitoring, SF sandbox)</td><td>~$600/mo × 3</td><td class="num">$1,800</td></tr>
-        <tr><td>Contingency</td><td>15%</td><td class="num">~$3,500</td></tr>
-        <tr class="total"><td>Total cash out-of-pocket</td><td>2 Flutter founders not costed → margin</td><td class="num">≈ $27k–$32k</td></tr>
+        <tr><td>Salesforce developer (UA, mid-senior, contract)</td><td>~$5k/mo × phase weeks</td><td class="num">$12,500</td><td class="num">$7,500</td><td class="num">$3,000</td></tr>
+        <tr><td>ML / LLM advisor (UA, senior)</td><td>Part-time advisory; minimal in C/E (no vision in C/E)</td><td class="num">$6,000</td><td class="num">$1,500</td><td class="num">$1,000</td></tr>
+        <tr><td>Backend / data engineer (UA)</td><td>P3: ELT · data mart · dashboard API</td><td class="num">—</td><td class="num">—</td><td class="num">$5,000</td></tr>
+        <tr><td>LLM / vision API — dev &amp; testing</td><td>Phase duration</td><td class="num">$2,000</td><td class="num">$500</td><td class="num">$500</td></tr>
+        <tr><td>Infra / hosting (incremental in C, E — substrate already runs)</td><td>~$400/mo × phase weeks</td><td class="num">$1,200</td><td class="num">$600</td><td class="num">$500</td></tr>
+        <tr><td>Tooling / subscriptions (Claude, monitoring, SF sandbox)</td><td>~$600/mo × phase weeks</td><td class="num">$1,800</td><td class="num">$900</td><td class="num">$750</td></tr>
+        <tr><td>Contingency</td><td>15%</td><td class="num">~$3,500</td><td class="num">~$1,700</td><td class="num">~$1,500</td></tr>
+        <tr class="total"><td>Total cash out-of-pocket per phase</td><td>2 Flutter founders not costed → margin</td><td class="num">≈ $27k–$32k</td><td class="num">≈ $13k–$17k</td><td class="num">≈ $11k–$13k</td></tr>
       </tbody>
     </table>
 
     <div class="kpis">
-      <div class="kpi"><div class="k">Gross margin @ $105k</div><div class="v">≈ $73k <small>/ 3 mo</small></div></div>
-      <div class="kpi"><div class="k">Per founder</div><div class="v">≈ $12k <small>/ mo + profit</small></div></div>
-      <div class="kpi"><div class="k">Negotiation floor</div><div class="v">$70k <small>(margin → ~$40k)</small></div></div>
+      <div class="kpi"><div class="k">Gross margin · full program @ $80k</div><div class="v">≈ $25k <small>/ ~22 wks</small></div></div>
+      <div class="kpi"><div class="k">Per founder · full program</div><div class="v">≈ $12k <small>across the run</small></div></div>
+      <div class="kpi"><div class="k">Negotiation floors (per phase)</div><div class="v">$30k · $15k · $10k <small>combined floor ≈ $55k</small></div></div>
     </div>
 
-    <div class="floor">▸ Hold ≥ $95k. Below $70k the deal stops being worth the founder time + delivery risk.</div>
-    <div class="lever">▸ Cost lever: keep ML <b>part-time</b> via multimodal-LLM vision (not a custom-trained CV model) — saves ≈ $12k internally, ships faster, easier to demo. Escalate to custom CV only if test-set accuracy falls short.</div>
-    <div class="lever">▸ Cash-flow: the 30% signature payment must land before the Salesforce contractor's first payout — don't float it personally.</div>
+    <div class="floor">▸ MARGIN PROFILE AT REV C IS THIN. Phase 1 margin ≈ $10–15k on $42k revenue; Phase 2 ≈ $5–9k; Phase 3 ≈ $3–5k. Total program margin ≈ $25k. Any scope creep eats the margin directly — hold scope hard and bill change requests separately.</div>
+    <div class="floor">▸ Hold per-phase floors: Phase 1 ≥ $38k · Phase 2 ≥ $18k · Phase 3 ≥ $13k. Below the floors the founder time + delivery risk stops being worth it.</div>
+    <div class="lever">▸ Sequencing lever: the phased structure IS the sales mechanism — Phase 1 proves accuracy, Phase 2 proves operational value before Phase 3 ROI is even discussed. Each gate is a re-close opportunity, not a risk.</div>
+    <div class="lever">▸ Reuse lever: Phases 2 &amp; 3 ride Phase 1's substrate — no rebuild of connectors, vector index, auth, event log. ~70% (C) / ~80% (E) of code is reused. This is the architectural basis for the price drop.</div>
+    <div class="lever">▸ Discount lever: full-program commit-upfront pricing ($76k) trades $4k for a signed multi-phase commitment — useful when the client wants budget certainty. Hold $78k as the soft floor for the bundle.</div>
+    <div class="lever">▸ Cash-flow: as before — the 30% signature payment for each phase must land before that phase's SF contractor payout starts. Don't float personally between phases.</div>
   </section>
 
   <footer>
     <span>deviewai — AI integration, Claude-augmented delivery</span>
-    <span>Internal working document · not a binding offer</span>
+    <span>Internal working document · not a binding offer · Rev C</span>
   </footer>
 
 </div>

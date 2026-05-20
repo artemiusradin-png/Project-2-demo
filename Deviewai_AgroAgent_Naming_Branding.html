@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>deviewai × AgroPlatforma — Agro Agent · Naming &amp; Brand System</title>
+<style>
+  :root{
+    --ink:#10131a; --mut:#5b6472; --line:#e3e6ec; --accent:#3b5bfd;
+    --client:#f7f9ff; --internal:#fff5f5; --internal-line:#e7b3b3; --internal-ink:#a11;
+    --good:#0a7c45;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#eceef2;color:var(--ink);
+    font:13px/1.42 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .page{width:210mm;min-height:297mm;margin:14px auto;background:#fff;
+    padding:15mm 15mm 12mm;box-shadow:0 4px 24px rgba(20,25,40,.12);position:relative}
+  header{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid var(--accent);padding-bottom:9px;margin-bottom:11px}
+  .brand{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .brand b{color:var(--accent)}
+  .brand .sub{display:block;font-size:11px;font-weight:600;color:var(--mut);margin-top:2px;letter-spacing:.2px}
+  .meta{text-align:right;font-size:10.5px;color:var(--mut);line-height:1.6}
+  .meta .conf{display:inline-block;margin-top:3px;padding:1px 7px;border:1px solid var(--line);
+    border-radius:99px;font-weight:700;color:var(--ink);letter-spacing:.4px}
+  .scope{background:var(--client);border:1px solid var(--line);border-radius:8px;
+    padding:9px 12px;margin-bottom:13px;font-size:12px}
+  .scope b{color:var(--accent)}
+  h2{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);
+    margin:14px 0 7px;font-weight:800}
+  h2.mut{color:var(--mut)}
+  table{width:100%;border-collapse:collapse;margin-bottom:11px}
+  th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  .nm{font-weight:800;color:var(--ink);white-space:nowrap}
+  .nm .dot{display:inline-block;width:8px;height:8px;border-radius:99px;margin-right:7px;vertical-align:middle}
+  .ph{font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    padding:1px 7px;border-radius:99px;border:1px solid var(--line);white-space:nowrap}
+  .ph.v1{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .ph.p2{background:var(--client);color:var(--accent)}
+  .ph.p3{background:#fff;color:var(--mut)}
+  .quote{display:flex;gap:14px;align-items:center;background:var(--accent);color:#fff;
+    border-radius:9px;padding:12px 16px;margin:6px 0 13px}
+  .quote .big{font-size:21px;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+  .quote .q-txt{font-size:11.5px;line-height:1.5;opacity:.96}
+  .quote .q-txt b{font-weight:800}
+  .anchor{font-size:11px;color:var(--good);font-weight:700;margin:-2px 0 12px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:8px}
+  .agent{border:1px solid var(--line);border-radius:9px;padding:11px 13px;position:relative;overflow:hidden}
+  .agent::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+  .agent .a-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
+  .agent .a-nm{font-size:16px;font-weight:800;letter-spacing:-.3px}
+  .agent .a-cat{font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--mut);margin-top:2px}
+  .agent .a-tag{font-size:12px;font-weight:700;color:var(--accent);margin:6px 0 5px;font-style:italic}
+  .agent .a-txt{font-size:11px;color:var(--ink);line-height:1.5}
+  .agent .a-txt b{font-weight:700}
+  .note{font-size:10.5px;color:var(--mut);line-height:1.55}
+  .note li{margin:0 0 3px 16px}
+  .divider{display:flex;align-items:center;gap:9px;margin:14px 0 11px}
+  .divider .ln{flex:1;height:1px;background:var(--line)}
+  .divider .lbl{font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--accent);
+    border:1px solid var(--line);background:var(--client);padding:3px 10px;border-radius:99px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:6px 0 11px}
+  .kpi{background:var(--client);border:1px solid var(--line);border-radius:7px;padding:8px 10px}
+  .kpi .k{font-size:9px;letter-spacing:.4px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  .kpi .v{font-size:14px;font-weight:800;margin-top:3px;letter-spacing:-.2px}
+  .swatch{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 10px}
+  .sw{flex:1;min-width:90px;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+  .sw .chip{height:30px}
+  .sw .lab{font-size:9px;padding:5px 7px;color:var(--mut);font-weight:700;letter-spacing:.3px}
+  .sw .lab b{display:block;color:var(--ink);font-size:10.5px;margin-bottom:1px}
+  footer{margin-top:14px;border-top:1px solid var(--line);padding-top:7px;
+    font-size:9.5px;color:var(--mut);display:flex;justify-content:space-between}
+  @media print{
+    html,body{background:#fff}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:11mm;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ░░░ PAGE 1 — SYSTEM ░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">
+      <b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — AI Suite · Naming &amp; Brand System</span>
+    </div>
+    <div class="meta">
+      Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;19 · Rev A<br>
+      <span class="conf">CONFIDENTIAL</span>
+    </div>
+  </header>
+
+  <div class="scope">
+    <b>Purpose.</b> A naming and brand architecture for the multi-agent AI suite. One umbrella
+    — <b>Agro&nbsp;Agent</b> — with a coherent family of five named agents. The naming logic is
+    deliberate: a shared <b>Agro-</b> prefix ties the suite to AgroPlatforma and Agro-Arena,
+    and each agent owns a single, plain-language capability word. Names are EN/UA-friendly and
+    survive transliteration to Cyrillic.
+  </div>
+
+  <h2>The Umbrella — Agro Agent</h2>
+  <p style="font-size:12px;margin-bottom:9px">
+    <b>Agro Agent™</b> is the suite brand: the AI layer that lives <i>inside</i> AgroPlatforma.
+    Not a chatbot bolted on — a set of focused agents, each owning one job, sharing one
+    foundation. Suite line: <b style="color:var(--accent)">&ldquo;Five agents. One field-to-deal loop.&rdquo;</b>
+  </p>
+
+  <div class="quote">
+    <div class="big">Agro-Vision</div>
+    <div class="q-txt">
+      <b>The flagship — and the v1 product.</b><br>
+      Photo → diagnosis → prescription from the catalog, in seconds. The agent that proves
+      the suite and builds the trust the other four inherit.
+    </div>
+  </div>
+  <div class="anchor">▸ v1 ships Agro-Vision + the shared foundation. Agents B–E attach to it at a fraction of the cost.</div>
+
+  <h2>The Family at a Glance</h2>
+  <table>
+    <thead>
+      <tr><th>Agent</th><th>Category</th><th>One-line promise</th><th>Phase</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="nm"><span class="dot" style="background:#3b5bfd"></span>Agro-Vision</td>
+        <td>Field Intelligence</td>
+        <td>Photo to prescription in five seconds.</td>
+        <td><span class="ph v1">v1 · Now</span></td>
+      </tr>
+      <tr>
+        <td class="nm"><span class="dot" style="background:#0a7c45"></span>Agro-Markets</td>
+        <td>Commercial Intelligence</td>
+        <td>What to plant. When to sell.</td>
+        <td><span class="ph p2">Phase 2</span></td>
+      </tr>
+      <tr>
+        <td class="nm"><span class="dot" style="background:#a8631a"></span>Agro-Flow</td>
+        <td>Operational Intelligence</td>
+        <td>Quotes and orders, without the desk.</td>
+        <td><span class="ph p2">Phase 2</span></td>
+      </tr>
+      <tr>
+        <td class="nm"><span class="dot" style="background:#6a3bb5"></span>Agro-Mentor</td>
+        <td>Network Intelligence</td>
+        <td>Every consultant at top-agronomist level.</td>
+        <td><span class="ph p3">Phase 3</span></td>
+      </tr>
+      <tr>
+        <td class="nm"><span class="dot" style="background:#127a8a"></span>Agro-Insight</td>
+        <td>Vendor Intelligence</td>
+        <td>Live answers for every supplier.</td>
+        <td><span class="ph p3">Phase 3</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Naming Logic</h2>
+  <ul class="note">
+    <li><b>Agro-</b> prefix — locks every agent to the AgroPlatforma / Agro-Arena parent brand; instantly legible to a Ukrainian agronomist.</li>
+    <li><b>Single capability word</b> — Vision, Markets, Flow, Mentor, Insight. No invented words, no acronyms; each name <i>is</i> the value proposition.</li>
+    <li><b>Cyrillic-safe</b> — Агро-Віжн, Агро-Маркетс, Агро-Флоу, Агро-Ментор, Агро-Інсайт all read cleanly.</li>
+    <li><b>Hierarchy</b> — &ldquo;Agro Agent&rdquo; is the suite; the five are agents within it, never standalone competing brands.</li>
+  </ul>
+
+  <footer>
+    <span><b>deviewai</b> — AI that works inside your operations</span>
+    <span>Naming &amp; Brand System · Page 1 / 2</span>
+  </footer>
+</div>
+
+<!-- ░░░ PAGE 2 — AGENT IDENTITIES ░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">
+      <b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Agent Identities</span>
+    </div>
+    <div class="meta">
+      Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;19 · Rev A<br>
+      <span class="conf">CONFIDENTIAL</span>
+    </div>
+  </header>
+
+  <h2>Agent Identities</h2>
+  <div class="grid2">
+
+    <div class="agent" style="--accent:#3b5bfd">
+      <div class="a-top">
+        <div>
+          <div class="a-nm">Agro-Vision</div>
+          <div class="a-cat">Field Intelligence · Block A</div>
+        </div>
+        <span class="ph v1">v1</span>
+      </div>
+      <div class="a-tag">&ldquo;Photo to prescription in five seconds.&rdquo;</div>
+      <div class="a-txt">The eye in the field. Identifies crop, pest, weed or disease from a photo and returns a ranked, in-stock, Ukraine-approved <b>prescription</b> with agronomist commentary. The trust-builder for the whole suite.</div>
+    </div>
+
+    <div class="agent" style="--accent:#0a7c45">
+      <div class="a-top">
+        <div>
+          <div class="a-nm">Agro-Markets</div>
+          <div class="a-cat">Commercial Intelligence · Block B</div>
+        </div>
+        <span class="ph p2">P2</span>
+      </div>
+      <div class="a-tag">&ldquo;What to plant. When to sell.&rdquo;</div>
+      <div class="a-txt">The trading brain. Reads past harvests, rotation and local + global price trends to advise what to sow next season and when to move grain. Turns a catalog into a plan.</div>
+    </div>
+
+    <div class="agent" style="--accent:#a8631a">
+      <div class="a-top">
+        <div>
+          <div class="a-nm">Agro-Flow</div>
+          <div class="a-cat">Operational Intelligence · Block C</div>
+        </div>
+        <span class="ph p2">P2</span>
+      </div>
+      <div class="a-tag">&ldquo;Quotes and orders, without the desk.&rdquo;</div>
+      <div class="a-txt">The tireless operator. Auto-builds quotes in Salesforce, finds analogues for up- and cross-sell, automates order entry. Lets the business grow without growing the operations team.</div>
+    </div>
+
+    <div class="agent" style="--accent:#6a3bb5">
+      <div class="a-top">
+        <div>
+          <div class="a-nm">Agro-Mentor</div>
+          <div class="a-cat">Network Intelligence · Block D</div>
+        </div>
+        <span class="ph p3">P3</span>
+      </div>
+      <div class="a-tag">&ldquo;Every consultant at top-agronomist level.&rdquo;</div>
+      <div class="a-txt">The coach. Runs the task marketplace and a gamified learning track — matching jobs to a consultant's rating and teaching from their own past mistakes and vendor material.</div>
+    </div>
+
+    <div class="agent" style="--accent:#127a8a">
+      <div class="a-top">
+        <div>
+          <div class="a-nm">Agro-Insight</div>
+          <div class="a-cat">Vendor Intelligence · Block E</div>
+        </div>
+        <span class="ph p3">P3</span>
+      </div>
+      <div class="a-tag">&ldquo;Live answers for every supplier.&rdquo;</div>
+      <div class="a-txt">The analyst. Personalised, live reports and dashboards for vendors — regional performance, focus consultants, problem hotspots — designed for the not-very-digital supplier rep.</div>
+    </div>
+
+    <div class="agent" style="--accent:#5b6472;border-style:dashed">
+      <div class="a-top">
+        <div>
+          <div class="a-nm" style="color:var(--mut)">Agro Agent</div>
+          <div class="a-cat">The Suite · Umbrella</div>
+        </div>
+      </div>
+      <div class="a-tag" style="color:var(--mut)">&ldquo;Five agents. One field-to-deal loop.&rdquo;</div>
+      <div class="a-txt">The parent brand. Always &ldquo;<b>Agro Agent</b>&rdquo; for the system; agents are referred to as &ldquo;Agro-Vision&rdquo; etc. Never pluralise the agents into rival products.</div>
+    </div>
+
+  </div>
+
+  <div class="divider"><span class="ln"></span><span class="lbl">BRAND SYSTEM</span><span class="ln"></span></div>
+
+  <h2 class="mut">Colour Coding</h2>
+  <p style="font-size:11px;color:var(--mut);margin-bottom:7px">Each agent owns one accent within the deviewai palette. Agro-Vision keeps the core brand blue (it <i>is</i> the suite's face); the rest are differentiators, never louder than the parent.</p>
+  <div class="swatch">
+    <div class="sw"><div class="chip" style="background:#3b5bfd"></div><div class="lab"><b>Agro-Vision</b>#3B5BFD</div></div>
+    <div class="sw"><div class="chip" style="background:#0a7c45"></div><div class="lab"><b>Agro-Markets</b>#0A7C45</div></div>
+    <div class="sw"><div class="chip" style="background:#a8631a"></div><div class="lab"><b>Agro-Flow</b>#A8631A</div></div>
+    <div class="sw"><div class="chip" style="background:#6a3bb5"></div><div class="lab"><b>Agro-Mentor</b>#6A3BB5</div></div>
+    <div class="sw"><div class="chip" style="background:#127a8a"></div><div class="lab"><b>Agro-Insight</b>#127A8A</div></div>
+  </div>
+
+  <h2 class="mut">Voice &amp; Usage Rules</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="k">Tone</div><div class="v" style="font-size:12px">Plain · expert · calm</div></div>
+    <div class="kpi"><div class="k">Lockup</div><div class="v" style="font-size:12px">Agro&#8209;[Word]</div></div>
+    <div class="kpi"><div class="k">Suite ref</div><div class="v" style="font-size:12px">&ldquo;Agro Agent&rdquo;</div></div>
+    <div class="kpi"><div class="k">Never</div><div class="v" style="font-size:12px">&ldquo;the AI&rdquo; / bot</div></div>
+  </div>
+  <ul class="note">
+    <li>Always hyphenate the agents: <b>Agro-Vision</b>, not &ldquo;AgroVision&rdquo; or &ldquo;Agro Vision&rdquo;.</li>
+    <li>The suite is two words, no hyphen: <b>Agro Agent</b>.</li>
+    <li>Lead with the promise, not the technology — &ldquo;diagnosis in five seconds&rdquo; beats &ldquo;multimodal LLM&rdquo;.</li>
+    <li>Each agent speaks as a specialist colleague, never a generic assistant.</li>
+  </ul>
+
+  <footer>
+    <span><b>deviewai</b> — AI that works inside your operations</span>
+    <span>Naming &amp; Brand System · Page 2 / 2 · End</span>
+  </footer>
+</div>
+
+</body>
+</html>

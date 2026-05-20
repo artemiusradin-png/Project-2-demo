@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>deviewai × AgroPlatforma — Agro Agent · Engagement Packet</title>
+<style>
+  :root{
+    --ink:#10131a; --mut:#5b6472; --line:#e3e6ec; --accent:#3b5bfd;
+    --client:#f7f9ff; --internal:#fff5f5; --internal-line:#e7b3b3; --internal-ink:#a11;
+    --good:#0a7c45;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#eceef2;color:var(--ink);
+    font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .page{width:210mm;min-height:297mm;margin:14px auto;background:#fff;
+    padding:15mm 15mm 12mm;box-shadow:0 4px 24px rgba(20,25,40,.12);position:relative}
+  header{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid var(--accent);padding-bottom:9px;margin-bottom:12px}
+  .brand{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .brand b{color:var(--accent)}
+  .brand .sub{display:block;font-size:11px;font-weight:600;color:var(--mut);margin-top:2px;letter-spacing:.2px}
+  .meta{text-align:right;font-size:10.5px;color:var(--mut);line-height:1.6}
+  .meta .conf{display:inline-block;margin-top:3px;padding:1px 7px;border:1px solid var(--line);
+    border-radius:99px;font-weight:700;color:var(--ink);letter-spacing:.4px}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.5px;margin:4px 0 4px}
+  h1 .sb{display:block;font-size:12px;font-weight:600;color:var(--mut);margin-top:5px;letter-spacing:.2px}
+  h2{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);
+    margin:15px 0 8px;font-weight:800}
+  p{margin:0 0 8px;font-size:12.5px}
+  .scope{background:var(--client);border:1px solid var(--line);border-radius:8px;
+    padding:10px 13px;margin-bottom:13px;font-size:12px}
+  .scope b{color:var(--accent)}
+  .docs{display:grid;grid-template-columns:1fr;gap:8px;margin:5px 0 11px}
+  .doc{display:grid;grid-template-columns:34px 1fr auto;gap:11px;align-items:flex-start;
+    border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;
+    padding:10px 13px;background:#fff;text-decoration:none;color:var(--ink);transition:.15s}
+  .doc:hover{background:var(--client)}
+  .doc .n{font-size:20px;font-weight:800;color:var(--accent);letter-spacing:-.5px;line-height:1}
+  .doc .nm{font-size:14px;font-weight:800;letter-spacing:-.2px;margin-bottom:3px}
+  .doc .nm .role{font-size:10px;font-weight:700;color:var(--mut);letter-spacing:.5px;text-transform:uppercase;margin-left:7px}
+  .doc .dx{font-size:11.5px;color:var(--ink);line-height:1.45;margin-bottom:3px}
+  .doc .meta-row{font-size:10px;color:var(--mut);font-weight:600;letter-spacing:.2px}
+  .doc .meta-row b{color:var(--ink);font-weight:700}
+  .doc .badge{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+    padding:2px 8px;border-radius:99px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+  .doc .badge.rev{background:var(--client);color:var(--accent);border-color:#bdcafb}
+  .doc .badge.draft{background:#fff8e1;color:#7a5a05;border-color:#e7d39a}
+  .doc .badge.final{background:#eaf5ee;color:var(--good);border-color:#b7dbc1}
+  .audience{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    padding:2px 7px;border-radius:4px;margin-right:6px;border:1px solid;white-space:nowrap}
+  .audience.client{background:var(--client);color:var(--accent);border-color:#bdcafb}
+  .audience.internal{background:var(--internal);color:var(--internal-ink);border-color:var(--internal-line)}
+  .anchor{font-size:11px;color:var(--good);font-weight:700;margin:-2px 0 11px}
+  .divider{display:flex;align-items:center;gap:9px;margin:14px 0 11px}
+  .divider .ln{flex:1;height:1px;background:var(--line)}
+  .divider .lbl{font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--accent);
+    border:1px solid var(--line);background:var(--client);padding:3px 10px;border-radius:99px}
+  .warn{background:var(--internal);border:1px solid var(--internal-line);border-radius:8px;
+    padding:9px 13px;margin:5px 0 11px;font-size:11.5px}
+  .warn b{color:var(--internal-ink)}
+  ul{margin:0 0 9px 18px;font-size:12px}li{margin:0 0 3px}
+  table{width:100%;border-collapse:collapse;margin:4px 0 10px;font-size:11.5px}
+  th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  footer{margin-top:13px;border-top:1px solid var(--line);padding-top:7px;
+    font-size:9.5px;color:var(--mut);display:flex;justify-content:space-between;
+    position:absolute;bottom:9mm;left:15mm;right:15mm}
+  @media print{
+    html,body{background:#fff}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:13mm;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    .doc{break-inside:avoid}
+    footer{position:static;margin-top:18px}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ░░ PAGE 1 — COVER + READING ORDER ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Engagement Packet</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Packet Rev A<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h1>Agro Agent — Engagement Packet
+    <span class="sb">Six client-facing documents, ordered for the engagement decision. One internal companion is listed separately for your reference.</span></h1>
+
+  <div class="scope">
+    <b>What this is.</b> The complete set of materials produced for the Agro Agent engagement —
+    the story, the offer, the depth, the brand, the credentials, and what we need from you next.
+    Each item is a standalone document. They are designed to be read in this order, but can be
+    sent or printed independently. All six are in the deviewai house style and print clean to A4.
+  </div>
+
+  <h2>Reading order — six client-facing documents</h2>
+  <div class="docs">
+
+    <a class="doc" href="Deviewai_AgroAgent_Architecture_Presentation.html">
+      <div class="n">01</div>
+      <div>
+        <div class="nm">Architecture Presentation <span class="role">The story</span></div>
+        <div class="dx">An 11-slide deck for a client meeting: the challenge, the offer (three agents — Agro-Vision, Agro-Flow, Agro-Insight), <b>a live interactive demo of all three</b>, the flywheel, the technical foundation, and the close. Designed for a 15–20 minute walkthrough.</div>
+        <div class="meta-row"><span class="audience client">Client</span><b>11 slides</b> · navigable in browser (← → · F = fullscreen) · prints landscape · slide 4 links to the live demo</div>
+      </div>
+      <div><span class="badge rev">Rev C</span></div>
+    </a>
+
+    <a class="doc" href="Deviewai_AgroAgent_Pricing_OnePager.html">
+      <div class="n">02</div>
+      <div>
+        <div class="nm">Pricing One-Pager <span class="role">The offer</span></div>
+        <div class="dx"><b>Phased program pricing</b> — Phase 1 Agro-Vision ($38k–$46k · ~12 wks) → Phase 2 Agro-Flow ($20k–$26k · ~5–7 wks) → Phase 3 Agro-Insight ($14k–$18k · ~4–6 wks). Full program $76k–$86k, with a commit-upfront bundle at $76k. Per-phase gates and assumptions.</div>
+        <div class="meta-row"><span class="audience client">Client</span><b>1 page</b> · A4 print-ready · phased A→C→E</div>
+      </div>
+      <div><span class="badge rev">Rev C</span></div>
+    </a>
+
+    <a class="doc" href="Deviewai_AgroAgent_Architecture_Technical.html">
+      <div class="n">03</div>
+      <div>
+        <div class="nm">Technical Architecture <span class="role">The depth</span></div>
+        <div class="dx">Engineering reference for the technical buyer — agent set, shared foundation (FastAPI · pgvector · GCP · Claude), <b>full-picture end-to-end topology</b>, per-agent designs (A · C · E) with pipeline diagrams, <b>AI functioning &amp; anti-hallucination layers</b> (9 defences across runtime · audit · human-in-the-loop · validation), cross-agent concerns and the risk register. No prose; just specs.</div>
+        <div class="meta-row"><span class="audience client">Client</span><b>7 pages</b> · A4 print-ready</div>
+      </div>
+      <div><span class="badge rev">Rev E</span></div>
+    </a>
+
+    <a class="doc" href="Deviewai_AgroAgent_Naming_Branding.html">
+      <div class="n">04</div>
+      <div>
+        <div class="nm">Naming &amp; Brand System <span class="role">The identity</span></div>
+        <div class="dx">The suite name and the five agent identities — Agro-Vision · Agro-Markets · Agro-Flow · Agro-Mentor · Agro-Insight — with naming logic, colour coding and voice rules.</div>
+        <div class="meta-row"><span class="audience client">Client</span><b>2 pages</b> · A4 print-ready</div>
+      </div>
+      <div><span class="badge rev">Rev A</span></div>
+    </a>
+
+    <a class="doc" href="Deviewai_AgroAgent_Team_Experience.html">
+      <div class="n">05</div>
+      <div>
+        <div class="nm">Team Experience &amp; Integration Approach <span class="role">Credentials</span></div>
+        <div class="dx">Response to brief Q4. Past proof · team composition · Flutter↔AI integration approach. Includes the v1 offline-scope decision framed honestly. <b>5 client references seeded</b> (Grand Finance · KK Credit · Wah Wei Credit · Every Success Credit · Rich Eagle Capital) — consumer-credit sector with closest-analog bridge to AgroPlatforma.</div>
+        <div class="meta-row"><span class="audience client">Client</span><b>2 pages</b> · <b style="color:#7a5a05">DRAFT — references seeded; metric unit, scope, outcomes, year, contacts &amp; team members still to fill</b></div>
+      </div>
+      <div><span class="badge draft">Draft · Rev B</span></div>
+    </a>
+
+    <a class="doc" href="Deviewai_AgroAgent_Open_Questions.html">
+      <div class="n">06</div>
+      <div>
+        <div class="nm">Open Questions to AgroPlatforma <span class="role">What we need from you</span></div>
+        <div class="dx">10 consolidated items: <b>Decisions you own</b> (D1–D6) and <b>Drafts to confirm</b> (C1–C4), grouped by tier (Build start · Milestone 2 · Pre-pilot). Only D1 and D2 are true build-start blockers.</div>
+        <div class="meta-row"><span class="audience client">Client</span><b>2 pages</b> · A4 print-ready</div>
+      </div>
+      <div><span class="badge rev">Rev A</span></div>
+    </a>
+
+  </div>
+
+  <div class="anchor">▸ Total packet for the client: 6 documents · ~22 pages of A4 · 1 navigable slide deck.</div>
+
+  <footer><span><b>deviewai</b> — AI that works inside your operations</span><span>Packet · Rev A · 1 / 2</span></footer>
+</div>
+
+<!-- ░░ PAGE 2 — INTERNAL COMPANION + STATUS + HOW TO SEND ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Packet Index &amp; Status</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Packet Rev A<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <div class="divider"><span class="ln"></span><span class="lbl">INTERNAL COMPANION — DO NOT SEND TO CLIENT</span><span class="ln"></span></div>
+
+  <div class="docs">
+    <a class="doc" href="Deviewai_AgroAgent_Flywheel_TalkTrack.html" style="border-left-color:var(--internal-ink)">
+      <div class="n" style="color:var(--internal-ink)">07</div>
+      <div>
+        <div class="nm">Flywheel Talk-Track <span class="role">Presenter cue sheet</span></div>
+        <div class="dx">The script for the data-flywheel conversation in a client call — the open verbatim, the 3-beat arc, the gated Beat 3 with honest caveat, objection pre-empts, and the <i>say / don't-say</i> discipline. Holds back the E→A loop until the buyer asks.</div>
+        <div class="meta-row"><span class="audience internal">Internal</span><b>2 pages</b> · for the presenter only · contains positioning rules not for client eyes</div>
+      </div>
+      <div><span class="badge rev" style="background:var(--internal);color:var(--internal-ink);border-color:var(--internal-line)">Rev A</span></div>
+    </a>
+  </div>
+
+  <div class="warn"><b>Do not include the Talk-Track in client deliveries.</b> It encodes positioning discipline and language to avoid — useful for the presenter, harmful if seen by the buyer.</div>
+
+  <h2>Status &amp; Versions at a glance</h2>
+  <table>
+    <thead><tr><th style="width:35px">#</th><th>Document</th><th>Audience</th><th>Pages</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td>Architecture Presentation</td><td>Client</td><td>11 slides</td><td><span class="badge rev">Rev C</span></td></tr>
+      <tr><td>02</td><td>Pricing One-Pager</td><td>Client</td><td>1</td><td><span class="badge rev">Rev C</span></td></tr>
+      <tr><td>03</td><td>Technical Architecture</td><td>Client</td><td>7</td><td><span class="badge rev">Rev E</span></td></tr>
+      <tr><td>04</td><td>Naming &amp; Brand System</td><td>Client</td><td>2</td><td><span class="badge rev">Rev A</span></td></tr>
+      <tr><td>05</td><td>Team Experience</td><td>Client</td><td>2</td><td><span class="badge draft">Draft · Rev B — partial</span></td></tr>
+      <tr><td>06</td><td>Open Questions to Client</td><td>Client</td><td>2</td><td><span class="badge rev">Rev A</span></td></tr>
+      <tr><td>07</td><td>Flywheel Talk-Track</td><td><span style="color:var(--internal-ink);font-weight:700">Internal</span></td><td>2</td><td><span class="badge rev">Rev A</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Before sending — pre-flight</h2>
+  <ul>
+    <li><b>Complete doc 05 (Team Experience).</b> Fill the yellow <i>▸ TO FILL</i> blocks: 2–4 project references with verifiable outcomes, named team members. <b>Mary's rule: specifics or omit.</b></li>
+    <li><b>Confirm doc 02 (Pricing) is current.</b> Standard v1 quote of $105k, ~12 weeks, payment 30/40/30.</li>
+    <li><b>Re-read doc 06 (Open Questions).</b> Decisions D1 (RAG corpus ownership) and D2 (Flutter app constraints) are the build-start blockers — flag them in your cover note.</li>
+    <li><b>Strip the internal companion.</b> Doc 07 (Talk-Track) stays with you. Do not attach it.</li>
+  </ul>
+
+  <h2>How to send</h2>
+  <ul>
+    <li><b>As HTML:</b> zip the six client docs from the project root and send. Each opens in any modern browser; no build step needed.</li>
+    <li><b>As PDF:</b> open each doc, print → Save as PDF. Page sizes and breaks are already configured (A4 for documents, landscape for the deck). Combine into one PDF in this order if desired.</li>
+    <li><b>For the call:</b> open doc 01 (Presentation) in fullscreen (F); keep doc 07 (Talk-Track) on a second screen or printout.</li>
+  </ul>
+
+  <div class="anchor">▸ Companion BMAD artifacts (source of truth, kept internally): <code style="background:#eef1f8;padding:1px 5px;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace">_bmad-output/planning-artifacts/</code> — brief, PRD, architecture and decision logs.</div>
+
+  <footer><span><b>deviewai</b> — AI that works inside your operations</span><span>Packet · Rev A · 2 / 2 · End</span></footer>
+</div>
+
+</body>
+</html>

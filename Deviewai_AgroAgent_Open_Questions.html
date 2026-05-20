@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>deviewai × AgroPlatforma — Agro Agent · Open Questions to Client</title>
+<style>
+  :root{
+    --ink:#10131a; --mut:#5b6472; --line:#e3e6ec; --accent:#3b5bfd;
+    --client:#f7f9ff; --internal:#fff5f5; --internal-line:#e7b3b3; --internal-ink:#a11;
+    --good:#0a7c45;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#eceef2;color:var(--ink);
+    font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .page{width:210mm;min-height:297mm;margin:14px auto;background:#fff;
+    padding:15mm 15mm 12mm;box-shadow:0 4px 24px rgba(20,25,40,.12);position:relative}
+  header{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid var(--accent);padding-bottom:9px;margin-bottom:12px}
+  .brand{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .brand b{color:var(--accent)}
+  .brand .sub{display:block;font-size:11px;font-weight:600;color:var(--mut);margin-top:2px;letter-spacing:.2px}
+  .meta{text-align:right;font-size:10.5px;color:var(--mut);line-height:1.6}
+  .meta .conf{display:inline-block;margin-top:3px;padding:1px 7px;border:1px solid var(--line);
+    border-radius:99px;font-weight:700;color:var(--ink);letter-spacing:.4px}
+  h1{font-size:22px;font-weight:800;letter-spacing:-.5px;margin:3px 0 3px}
+  h1 .sb{display:block;font-size:11.5px;font-weight:600;color:var(--mut);margin-top:4px;letter-spacing:.2px}
+  h2{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);
+    margin:15px 0 7px;font-weight:800;display:flex;align-items:center;gap:9px}
+  h2 .tier{display:inline-block;background:var(--accent);color:#fff;font-size:9.5px;
+    font-weight:800;letter-spacing:.6px;padding:2px 9px;border-radius:99px;text-transform:uppercase}
+  h2 .tier.t2{background:var(--client);color:var(--accent);border:1px solid var(--accent)}
+  h2 .tier.t3{background:#fff;color:var(--mut);border:1px solid var(--line)}
+  h2 .tier.d{background:var(--client);color:var(--accent)}
+  p{margin:0 0 8px;font-size:12.5px}
+  .scope{background:var(--client);border:1px solid var(--line);border-radius:8px;
+    padding:9px 12px;margin-bottom:13px;font-size:12px}
+  .scope b{color:var(--accent)}
+  table{width:100%;border-collapse:collapse;margin:5px 0 11px;font-size:12px}
+  th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  .qid{font-weight:800;color:var(--accent);white-space:nowrap}
+  .owner{font-size:11px;color:var(--mut)}
+  .owner b{color:var(--ink);font-weight:700;display:block}
+  .ask{font-size:11.5px;color:var(--ink)}
+  .ask b{font-weight:700}
+  .draft{background:var(--client);border-left:3px solid var(--accent);padding:5px 8px;
+    border-radius:4px;font-size:11px;margin-top:4px;color:var(--ink)}
+  .draft b{color:var(--accent);font-weight:800;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;display:block;margin-bottom:2px}
+  .blocks{display:inline-block;background:#fdecec;color:var(--internal-ink);font-size:9.5px;
+    font-weight:800;letter-spacing:.4px;padding:1px 7px;border-radius:99px;border:1px solid var(--internal-line);text-transform:uppercase;white-space:nowrap}
+  .blocks.ok{background:#eaf5ee;color:var(--good);border-color:#b7dbc1}
+  .blocks.mid{background:var(--client);color:var(--accent);border-color:#bdcafb}
+  .anchor{font-size:11px;color:var(--good);font-weight:700;margin:-2px 0 11px}
+  .warn{background:var(--internal);border:1px solid var(--internal-line);border-radius:8px;
+    padding:9px 12px;margin:5px 0 11px;font-size:11.5px}
+  .warn b{color:var(--internal-ink)}
+  .divider{display:flex;align-items:center;gap:9px;margin:14px 0 11px}
+  .divider .ln{flex:1;height:1px;background:var(--line)}
+  .divider .lbl{font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--accent);
+    border:1px solid var(--line);background:var(--client);padding:3px 10px;border-radius:99px}
+  footer{margin-top:13px;border-top:1px solid var(--line);padding-top:7px;
+    font-size:9.5px;color:var(--mut);display:flex;justify-content:space-between;
+    position:absolute;bottom:9mm;left:15mm;right:15mm}
+  @media print{
+    html,body{background:#fff}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:13mm;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    footer{position:static;margin-top:18px}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ░░ PAGE 1 — DECISIONS YOU OWN ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Open Questions to Client</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev A<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h1>Open Questions to AgroPlatforma
+    <span class="sb">Consolidated open items, ordered by calendar-cost to the build. Each item names a client-side owner and either asks a decision or proposes a default for sign-off.</span></h1>
+
+  <div class="scope">
+    <b>How to use this.</b> Items split into <b>Decisions you own</b> (we cannot answer for you;
+    your sign-off shapes the build) and <b>Drafts to confirm</b> (we propose a default; you
+    sign off or amend). Tier badges show what stage each one blocks. The two
+    <span class="blocks">START</span> items are the highest calendar cost if they wait.
+  </div>
+
+  <h2><span class="tier">Build start · Blocker</span></h2>
+
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:24%">Item</th><th>Question / draft</th><th>Owner · Blocks</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">D1</td>
+        <td><b>RAG corpus ownership</b><br><span class="owner">Agronomic knowledge base for Agro-Vision</span></td>
+        <td class="ask">
+          Who owns and maintains the Ukrainian agronomic knowledge corpus that Agro-Vision retrieves over (problem signs, thresholds, treatment guidance)? Source materials — internal SOP, vendor manuals, public extension service, third-party? Update cadence and editorial sign-off?
+          <div class="draft"><b>Why this is first</b>Garbage in = garbage out. Without it, ingestion, chunking and the accuracy SLA cannot be designed. Wait cost ≈ 3–4 weeks.</div>
+        </td>
+        <td class="owner"><b>Legal / IP + Agronomy lead</b><span class="blocks">START</span></td>
+      </tr>
+      <tr>
+        <td class="qid">D2</td>
+        <td><b>Existing Flutter app constraints</b><br><span class="owner">Module / nav / state architecture</span></td>
+        <td class="ask">
+          Current Flutter app: state-management pattern (Provider / Riverpod / Bloc?), navigation framework, how new feature modules are added, minimum supported iOS/Android versions, device specs assumed. Any in-flight refactor we should land around?
+          <div class="draft"><b>What we need</b>Repo access (read) or a 30-min walkthrough with the existing Flutter lead.</div>
+        </td>
+        <td class="owner"><b>AgroPlatforma Product Owner / Flutter lead</b><span class="blocks">START</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="tier t2">Milestone 2 · Phase 2 (C, E)</span></h2>
+
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:24%">Item</th><th>Question / draft</th><th>Owner · Blocks</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">D3</td>
+        <td><b>Rules catalog ownership</b><br><span class="owner">Margin floors, pack sizes, regulatory compatibility</span></td>
+        <td class="ask">
+          Agro-Flow's deterministic rules engine needs an authoritative catalog: margin floors per category, pack-size constraints, product-to-crop regulatory compatibility, cross-sell affinity rules. Who sources and signs off these rules? How are updates published to the engine?
+        </td>
+        <td class="owner"><b>Commercial + Compliance leads</b><span class="blocks mid">C · build</span></td>
+      </tr>
+      <tr>
+        <td class="qid">D4</td>
+        <td><b>Vendor data-sharing scope</b><br><span class="owner">Contractual basis for Agro-Insight</span></td>
+        <td class="ask">
+          Which vendors agree to receive analytical reports, and under what data-sharing terms? Are aggregated regional/consultant metrics in scope, or vendor-of-record SKUs only? Tenant-isolation contracts in place per vendor?
+        </td>
+        <td class="owner"><b>Commercial / Legal lead</b><span class="blocks mid">E · design</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="tier t3">Pre-pilot · Before launch</span></h2>
+
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:24%">Item</th><th>Question / draft</th><th>Owner · Blocks</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">D5</td>
+        <td><b>Pilot rollout structure</b><br><span class="owner">All consultants vs. phased by region</span></td>
+        <td class="ask">
+          Pilot launch: all active consultants at once, or phased — by region (Poltava → Vinnytsia → …), by vendor cluster, or by consultant tier? First-pilot cohort size and target?
+        </td>
+        <td class="owner"><b>Project Sponsor / Ops</b><span class="blocks ok">Launch</span></td>
+      </tr>
+      <tr>
+        <td class="qid">D6</td>
+        <td><b>Accuracy-panel staffing</b><br><span class="owner">Blind senior-agronomist test set</span></td>
+        <td class="ask">
+          Independent agronomist panel for the ≥85% launch gate: who staffs it (internal to Agro-Arena? external?), panel size, sample count per crop / problem, gating cadence. We will propose a default if not specified.
+          <div class="draft"><b>Our default proposal</b>3–5 senior agronomists, independent of consultants using the tool, blind-scoring ≥50 samples per top-8 crops.</div>
+        </td>
+        <td class="owner"><b>Agronomy lead</b><span class="blocks ok">Launch gate</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>deviewai</b></span><span>Open Questions · Rev A · 1 / 2</span></footer>
+</div>
+
+<!-- ░░ PAGE 2 — DRAFTS TO CONFIRM + WHAT WE'RE NOT ASKING ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Open Questions to Client</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev A<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h2><span class="tier d">Drafts to confirm</span></h2>
+  <p>We have proposed a default; we need a sign-off or an amendment. Each blocks a specific design decision if left unanswered, but not the build start.</p>
+
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:24%">Item</th><th>Our proposal · please confirm or amend</th><th>Owner · Blocks</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">C1</td>
+        <td><b>LLM cost envelope</b><br><span class="owner">Per-request &amp; monthly cap @ 40k scale</span></td>
+        <td class="ask">
+          We will model expected LLM cost per Agro-Vision request and present a recommended monthly cap with the v1 design. <b>Please nominate the budgetary ceiling and the alert threshold</b> — and the named owner on your side for cost-monitoring sign-off. We do not need a target number; we need the cap.
+          <div class="draft"><b>Default if unset</b>Alert at 80% of a per-month USD ceiling that we model from the architecture and present in week 2.</div>
+        </td>
+        <td class="owner"><b>CTO / CFO</b><span class="blocks mid">Sprint 1</span></td>
+      </tr>
+      <tr>
+        <td class="qid">C2</td>
+        <td><b>Catalog sync window</b><br><span class="owner">Salesforce catalog &amp; vector index refresh</span></td>
+        <td class="ask">
+          We propose hourly catalog refresh + on-demand re-index on material change events, with live stock queried per request. Acceptable, or is a different staleness window required for regulatory or commercial reasons?
+        </td>
+        <td class="owner"><b>Agro-Arena Salesforce admin</b><span class="blocks mid">Sprint 2</span></td>
+      </tr>
+      <tr>
+        <td class="qid">C3</td>
+        <td><b>Approved-chemical registry</b><br><span class="owner">Source of truth for Ukraine regulatory filter</span></td>
+        <td class="ask">
+          Our default: the Salesforce product catalog carries the &ldquo;approved in Ukraine&rdquo; flag, and is treated as the source of truth. Is there a separate authoritative registry that should be cross-referenced (state ministry feed, vendor compliance database)? If yes — owner and access method?
+        </td>
+        <td class="owner"><b>Regulatory / Compliance lead</b><span class="blocks mid">Data pipeline</span></td>
+      </tr>
+      <tr>
+        <td class="qid">C4</td>
+        <td><b>PII &amp; data residency</b><br><span class="owner">Confirmation of our security posture</span></td>
+        <td class="ask">
+          We treat all 40k-client identity data (names, accounts, financials) as out-of-scope for the LLM, with photos EXIF-stripped before any external call and auto-deleted after 24 h. Salesforce data accessed via scoped service accounts only. Confirm this satisfies your data-handling requirements; flag any Ukraine-specific residency or wartime-infrastructure constraints we must encode.
+        </td>
+        <td class="owner"><b>Legal / DPO</b><span class="blocks mid">Architecture sign-off</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider"><span class="ln"></span><span class="lbl">WHAT WE ARE <em>NOT</em> ASKING</span><span class="ln"></span></div>
+  <p style="font-size:12px">Items we treat as our job to answer or as already implied by the brief — surfaced here for transparency so nothing falls through the cracks.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Why not asked</th></tr></thead>
+    <tbody>
+      <tr><td>Technology stack &amp; toolset choice</td><td>Answered in the Technical Architecture (Claude via Vertex AI, FastAPI, pgvector, GCP). Not the client's question to answer.</td></tr>
+      <tr><td>Agentforce vs. custom LLM approach</td><td>Decided: custom LLM. Agentforce rejected on capability grounds (no vision).</td></tr>
+      <tr><td>Data-security model</td><td>Designed. C4 above asks only for sign-off, not a fresh requirement.</td></tr>
+      <tr><td>Bare &ldquo;Catalog SLA with Agro-Arena&rdquo;</td><td>Already implied by the brief; folded into C2 as a concrete sync-window proposal.</td></tr>
+      <tr><td>Existing Flutter app general architecture</td><td>Not asked broadly — we want the specific module/nav/state constraints in D2.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn"><b>Calendar-cost summary.</b> Of all items above, only <b>D1 (RAG corpus)</b> and <b>D2 (Flutter constraints)</b> meaningfully block the build start. Every other item can ride a milestone if D1 and D2 are unblocked in the next 1–2 weeks. Pull those two threads first.</div>
+
+  <div class="anchor">▸ Companion docs: Technical Architecture (Rev C) · Team Experience (Rev A) · Flywheel Talk-Track (Rev A).</div>
+
+  <footer><span><b>deviewai</b></span><span>Open Questions · Rev A · 2 / 2 · End</span></footer>
+</div>
+
+</body>
+</html>

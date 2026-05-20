@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>deviewai × AgroPlatforma — Agro Agent · Technical Architecture</title>
+<style>
+  :root{
+    --ink:#10131a; --mut:#5b6472; --line:#e3e6ec; --accent:#3b5bfd;
+    --client:#f7f9ff; --internal:#fff5f5; --internal-line:#e7b3b3; --internal-ink:#a11;
+    --good:#0a7c45;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#eceef2;color:var(--ink);
+    font:13px/1.42 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .page{width:210mm;min-height:297mm;margin:14px auto;background:#fff;
+    padding:15mm 15mm 12mm;box-shadow:0 4px 24px rgba(20,25,40,.12);position:relative}
+  header{display:flex;justify-content:space-between;align-items:flex-start;
+    border-bottom:2px solid var(--accent);padding-bottom:9px;margin-bottom:11px}
+  .brand{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .brand b{color:var(--accent)}
+  .brand .sub{display:block;font-size:11px;font-weight:600;color:var(--mut);margin-top:2px;letter-spacing:.2px}
+  .meta{text-align:right;font-size:10.5px;color:var(--mut);line-height:1.6}
+  .meta .conf{display:inline-block;margin-top:3px;padding:1px 7px;border:1px solid var(--line);
+    border-radius:99px;font-weight:700;color:var(--ink);letter-spacing:.4px}
+  .scope{background:var(--client);border:1px solid var(--line);border-radius:8px;
+    padding:9px 12px;margin-bottom:13px;font-size:12px}
+  .scope b{color:var(--accent)}
+  h1{font-size:23px;font-weight:800;letter-spacing:-.5px;margin:4px 0 3px}
+  h1 .sb{display:block;font-size:12px;font-weight:600;color:var(--mut);margin-top:4px;letter-spacing:.2px}
+  h2{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);
+    margin:15px 0 7px;font-weight:800}
+  h2.mut{color:var(--mut)}
+  h3{font-size:13px;font-weight:800;margin:11px 0 5px;color:var(--ink)}
+  p{margin:0 0 8px}
+  ul{margin:0 0 9px 17px}li{margin:0 0 3px}
+  strong{font-weight:700}
+  table{width:100%;border-collapse:collapse;margin:4px 0 11px}
+  th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  tr.rec td{background:var(--client)}
+  .quote{display:flex;gap:14px;align-items:center;background:var(--accent);color:#fff;
+    border-radius:9px;padding:12px 16px;margin:5px 0 12px}
+  .quote .big{font-size:21px;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+  .quote .q-txt{font-size:11.5px;line-height:1.5;opacity:.96}
+  .quote .q-txt b{font-weight:800}
+  .anchor{font-size:11px;color:var(--good);font-weight:700;margin:-2px 0 11px}
+  .note{font-size:10.5px;color:var(--mut);line-height:1.55}
+  .note li{margin:0 0 3px 15px}
+  .divider{display:flex;align-items:center;gap:9px;margin:14px 0 11px}
+  .divider .ln{flex:1;height:1px;background:var(--line)}
+  .divider .lbl{font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--accent);
+    border:1px solid var(--line);background:var(--client);padding:3px 10px;border-radius:99px}
+  .dgm{background:var(--client);border:1px solid var(--line);border-radius:8px;
+    padding:12px 14px;margin:5px 0 12px;
+    font:10.5px/1.42 "SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    color:var(--ink);white-space:pre;overflow-x:auto}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:5px 0 11px}
+  .kpi{background:var(--client);border:1px solid var(--line);border-radius:7px;padding:8px 10px}
+  .kpi .k{font-size:9px;letter-spacing:.4px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  .kpi .v{font-size:15px;font-weight:800;margin-top:3px;letter-spacing:-.2px}
+  .kpi .v small{font-size:9.5px;font-weight:600;color:var(--mut)}
+  .toc{columns:2;column-gap:26px;font-size:11.5px;margin-bottom:4px}
+  .toc a{color:var(--ink);text-decoration:none;display:block;padding:4px 0;border-bottom:1px dotted var(--line)}
+  .toc .n{color:var(--accent);font-weight:800;margin-right:7px}
+  code{background:#eef1f8;color:#0e1530;padding:1px 5px;border-radius:4px;
+    font:11px ui-monospace,Menlo,Consolas,monospace}
+  .tag-a{color:var(--accent);font-weight:800}
+  .tag-c{color:#a8631a;font-weight:800}
+  .tag-e{color:#127a8a;font-weight:800}
+  .pill{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+    padding:1px 7px;border-radius:99px;border:1px solid var(--line)}
+  .pill.v1{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .pill.p2{background:var(--client);color:var(--accent)}
+  footer{margin-top:13px;border-top:1px solid var(--line);padding-top:7px;
+    font-size:9.5px;color:var(--mut);display:flex;justify-content:space-between;
+    position:absolute;bottom:9mm;left:15mm;right:15mm}
+  @media print{
+    html,body{background:#fff}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:13mm;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    footer{position:static;margin-top:18px}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ░░ PAGE 1 — SCOPE + FOUNDATION ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Technical Architecture</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev E<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h1>Agro Agent — Technical Architecture
+    <span class="sb">Shared AI foundation + per-agent design — Agro-Vision (v1), Agro-Flow, Agro-Insight</span></h1>
+
+  <div class="scope">
+    <b>Scope.</b> New AI tier on the existing Flutter app + Salesforce backend. Not a rebuild.
+    v1 = shared foundation + Agro-Vision. Agro-Flow and Agro-Insight reuse the same substrate.
+  </div>
+
+  <h2>01 · Agent Set</h2>
+  <table>
+    <thead><tr><th>Agent</th><th>Function</th><th>Phase</th><th>Build vs. foundation</th></tr></thead>
+    <tbody>
+      <tr class="rec"><td><span class="tag-a">A · Agro-Vision</span></td><td>Photo → crop/problem diagnosis → catalog prescription</td><td><span class="pill v1">v1</span></td><td>≈100% net-new (is the foundation)</td></tr>
+      <tr class="rec"><td><span class="tag-c">C · Agro-Flow</span></td><td>Prescription → Salesforce quote/order; analog + cross-sell</td><td><span class="pill p2">P2</span></td><td>≈30% net-new (reuses A)</td></tr>
+      <tr class="rec"><td><span class="tag-e">E · Agro-Insight</span></td><td>A+C+SF data → vendor analytics &amp; narrative reports</td><td><span class="pill p2">P2</span></td><td>≈20% net-new (read-only)</td></tr>
+      <tr><td>B · Agro-Markets</td><td>Crop planning / price trends</td><td>Deferred</td><td>New external integrations; not foundation-reusing</td></tr>
+      <tr><td>D · Agro-Mentor</td><td>Task marketplace / consultant training</td><td>Deferred</td><td>Workflow build; minimal AI</td></tr>
+    </tbody>
+  </table>
+
+  <h2>02 · Shared Foundation</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Decision</th><th>Spec</th></tr></thead>
+    <tbody>
+      <tr><td>Backend</td><td>FastAPI · Python 3.12</td><td>Async; auto-OpenAPI consumed by Flutter</td></tr>
+      <tr><td>Data / vector</td><td>PostgreSQL 17 + pgvector</td><td>HNSW; &lt;20 ms @ 20k; SQL metadata filter; pooling (PgBouncer / Cloud SQL) day-one</td></tr>
+      <tr><td>Cloud</td><td>GCP · Cloud Run · Cloud SQL · Vertex AI</td><td>Containerised; autoscale; 35 s gateway timeout</td></tr>
+      <tr><td>LLM</td><td>Anthropic SDK (direct) · Claude via Vertex AI</td><td>No orchestration framework</td></tr>
+      <tr><td>Auth</td><td>Firebase Auth + JWT middleware</td><td>Validated per request; refresh retry/backoff</td></tr>
+      <tr><td>Salesforce</td><td>Scoped service-account Connected App</td><td>Per-agent permission set, least privilege</td></tr>
+      <tr><td>Storage</td><td>Cloud Storage</td><td>Signed-URL upload, 24 h TTL auto-delete</td></tr>
+      <tr><td>Event log</td><td>Append-only table, PostgreSQL</td><td>Single shared instance; A/C write, E reads</td></tr>
+      <tr><td>CI/CD</td><td>GitHub Actions → Docker → Cloud Run</td><td>Dev · Staging · Prod</td></tr>
+      <tr><td>Migrations</td><td>Alembic</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="dgm">┌──────── SHARED SUBSTRATE (v1) ────────────────────────────────────┐
+│ FastAPI · Anthropic SDK (Claude/Vertex) · PostgreSQL+pgvector    │
+│ Salesforce connector (scoped) · Firebase Auth · Cloud Storage    │
+│ Cloud Run · append-only Audit/Event log                          │
+└───────────────────────────────────────────────────────────────────┘
+  ┌──────────┐  events  ┌──────────┐  events  ┌───────────┐
+  │ A Vision │ ───────▶ │ C Flow   │ ───────▶ │ E Insight │
+  └──────────┘          └──────────┘          └───────────┘</div>
+
+  <footer><span><b>deviewai</b></span><span>Technical Architecture · Rev E · 1 / 7</span></footer>
+</div>
+
+<!-- ░░ PAGE 2 — FULL-PICTURE TOPOLOGY ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Full-Picture Topology</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev E<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h2>03 · End-to-End Architecture</h2>
+  <p>All tiers, all three agents, on one diagram. Solid arrows are synchronous calls; the audit/event log is the cross-agent backbone (A and C write; E reads).</p>
+
+  <div class="dgm">╔══ CLIENT · Flutter app (existing) — iOS · Android · (Flutter web for E) ══════╗
+║                                                                              ║
+║  Camera ── Diagnosis Card ── Advisor chat ── Quote approval ── Vendor dash.  ║
+║                                                                              ║
+║  Firebase Auth (JWT)  ·  OpenAPI-generated Dart client  ·  Pact tests in CI  ║
+╚════════│═════════════════════════════════════════════════════│═══════════════╝
+         │ signed-URL upload                                    │ REST + JWT
+         ▼                                                      ▼
+  ┌──────────────┐  ┌──────────────────────────────────────────────────────────┐
+  │ Cloud Storage│  │ AI ORCHESTRATION BACKEND · FastAPI on Cloud Run          │
+  │ photos · 24h │  │ JWT middleware · rate limiter · per-stage latency log    │
+  │ TTL          │  │ ┌──────────────────────────────────────────────────────┐ │
+  │              │◀═│ │ A · Agro-Vision    C · Agro-Flow    E · Agro-Insight │ │
+  │ EXIF/GPS     │  │ │ ──────────────     ─────────────    ─────────────── │ │
+  │  stripped    │  │ │ photo prep         quote builder    ELT job         │ │
+  │  before LLM  │  │ │  (Pillow)           Rx → SF Quote    (Scheduler →   │ │
+  │              │  │ │ LLM adapter         analog/x-sell    Cloud Run job) │ │
+  └──────────────┘  │ │  (Claude)           ↑ pgvector       data-mart      │ │
+                    │ │ confidence            reuse          queries (SQL)  │ │
+                    │ │  pre-flight         rules engine     narrative gen  │ │
+                    │ │ RAG · pgvector       margin · pack    Claude        │ │
+                    │ │  query               regulatory       narrates SQL  │ │
+                    │ │ assemble Rx         approval flow    dashboard API  │ │
+                    │ │  + commentary       ─────────────     (tenant-      │ │
+                    │ │ ──────────────                         scoped read) │ │
+                    │ │   │                    │                  │         │ │
+                    │ │   ▼ read SF            ▼ read + draft-    ▼ read SF │ │
+                    │ │ Salesforce              write SF           sales    │ │
+                    │ │ connector  (3 scoped service-account permission sets)│ │
+                    │ │   │                    │                  │         │ │
+                    │ │   ▼ write events       ▼ write events     ▼ read   │ │
+                    │ │ Audit / Event log writer  (one append-only table)  │ │
+                    │ └────────────────────────────────────────────────────┘ │
+                    └────────────┬────────────────────────────┬───────────────┘
+                       R / W     │                  invoke    │
+                                 ▼                            ▼
+       ┌────────────────────────────────────┐   ┌──────────────────────────┐
+       │ PostgreSQL 17 + pgvector           │   │ Vertex AI Model Garden   │
+       │ Cloud SQL · PgBouncer pool         │   │ Claude (multimodal)      │
+       │                                    │   │   A : vision + RAG       │
+       │ • vector index (catalog HNSW)      │   │   C : analog ranker      │
+       │ • catalog cache (hourly refresh)   │   │   E : narrative reports  │
+       │ • farmland cache (daily)           │   └──────────────────────────┘
+       │ • chat sessions (TTL-bounded)      │
+       │ • Audit / Event log (append-only)  │
+       │     A writes · C writes · E reads  │
+       │ • analytics data mart (mat. views) │
+       └────────────────┬───────────────────┘
+                        │  scoped service-account R/W (per-agent)
+                        ▼
+       ┌────────────────────────────────────────────────────────────────────┐
+       │  SALESFORCE · Source of Truth                                      │
+       │  Catalog (20k SKU) · Accounts · Farmlands · Soils · Stock · Quote  │
+       │  Connected App scopes:  A read  ·  C read + draft-only write  · E read │
+       └────────────────────────────────────────────────────────────────────┘
+
+  Cross-cutting · GCP Secret Manager · Cloud Logging · Cloud Monitoring
+              · GitHub Actions CI/CD (Dev → Staging → Prod)
+              · Mandatory CI gates: EXIF-strip · signed-URL-expiry ·
+                cache-stale-read · p99 &lt; 25 s load test</div>
+
+  <table>
+    <thead><tr><th>Notation</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>══</code> double border</td><td>Tier / domain boundary (Client · Backend · Salesforce)</td></tr>
+      <tr><td><code>──</code> single border</td><td>Component or service</td></tr>
+      <tr><td>Solid arrow</td><td>Synchronous call (REST · SQL · LLM invocation)</td></tr>
+      <tr><td>Event log</td><td>Cross-agent backbone — A and C write; E reads. One append-only table in PostgreSQL.</td></tr>
+      <tr><td>3 SF scopes</td><td>Per-agent Salesforce permissions; least privilege; only C writes (draft-only).</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>deviewai</b></span><span>Technical Architecture · Rev E · 2 / 7</span></footer>
+</div>
+
+<!-- ░░ PAGE 3 — AGRO-VISION ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Agro-Vision</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev E<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h2>04 · <span class="tag-a">Agro-Vision</span> — Field Intelligence <span class="pill v1">v1</span></h2>
+  <p>Crop photo → crop + problem diagnosis → ranked Ukraine-approved, in-stock prescription. Read-only against Salesforce.</p>
+
+  <div class="dgm">Flutter capture ─signed URL─▶ Cloud Storage (24 h TTL)
+        │
+        ▼
+  ┌────────────────────────────────────────────────────┐
+  │ Photo prep    EXIF/GPS strip + compress (Pillow)    │
+  │ LLM adapter   Claude multimodal: crop + problem     │
+  │ Confidence    pre-flight gate; low → Advisor        │
+  │ RAG           pgvector / 20k catalog + filters      │
+  │ Live stock    Salesforce REST (real-time, no cache) │
+  │ Assemble      ranked Rx + agronomic commentary      │
+  └───────────────┬────────────────────────────────────┘
+                  ▼
+  Audit/Event log: diagnosis · prescription · confidence · override</div>
+
+  <table>
+    <thead><tr><th>Aspect</th><th>Spec</th></tr></thead>
+    <tbody>
+      <tr><td>Latency</td><td>≤30 s end-to-end; 35 s gateway; partial result if stock query fails</td></tr>
+      <tr><td>Security</td><td>EXIF/GPS stripped pre-LLM (CI-gated); no identity to LLM; photo 24 h TTL</td></tr>
+      <tr><td>Confidence gate</td><td>Validated before prescription surfaced; below threshold → Conversational Advisor</td></tr>
+      <tr><td>Accuracy gate</td><td>≥85% held-out set, independent blind agronomist panel, pre-launch; field-outcome tracking post-launch</td></tr>
+      <tr><td>SF access</td><td>Read-only; live stock per request, catalog/farmland cached</td></tr>
+      <tr><td>Emits</td><td><code>diagnosis</code> · <code>prescription</code> · <code>confidence</code> · <code>consultant_override</code></td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>deviewai</b></span><span>Technical Architecture · Rev E · 3 / 7</span></footer>
+</div>
+
+<!-- ░░ PAGE 4 — AGRO-FLOW ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Agro-Flow</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev E<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h2>05 · <span class="tag-c">Agro-Flow</span> — Operational Intelligence <span class="pill p2">Phase 2</span></h2>
+  <p>Prescription or manual request → draft Salesforce quote with analog substitution + cross-sell. Human approval before binding.</p>
+
+  <div class="dgm">A prescription / manual request ─event─▶
+  ┌────────────────────────────────────────────────────┐
+  │ Quote Builder                                       │
+  │  • Rx lines → SF Quote / Selling Opportunity        │
+  │  • Analog + cross-sell ── pgvector (reuses A index) │
+  │  • Rules: margin floor · pack size · regulatory ·   │
+  │    stock                                            │
+  └───────────────┬────────────────────────────────────┘
+        DRAFT write (scoped, draft-only)
+                  ▼
+  Salesforce Quote/SO ──▶ Consultant/Supervisor approval ──▶ binding
+                  ▼
+  Audit/Event log: accepted vs. overridden ──▶ E</div>
+
+  <table>
+    <thead><tr><th>Aspect</th><th>Spec</th></tr></thead>
+    <tbody>
+      <tr><td>Reuse</td><td>A's SF connector, catalog vector index, orchestration, auth, audit</td></tr>
+      <tr><td>Net-new</td><td>Quote Builder · Rules layer · scoped write path · approval UI (≈30%)</td></tr>
+      <tr><td>SF access</td><td>Draft-only write to Quote/SO; separate scoped permission from A; no auto-binding</td></tr>
+      <tr><td>Determinism</td><td>Totals / analog / rules computed in code, reconcilable against SF; LLM ranks only</td></tr>
+      <tr><td>Latency</td><td>Async-tolerant; background job acceptable</td></tr>
+      <tr><td>Dependency</td><td>Rules catalog (margin floors, pack sizes, regulatory) sourced + owned before build</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>deviewai</b></span><span>Technical Architecture · Rev E · 4 / 7</span></footer>
+</div>
+
+<!-- ░░ PAGE 5 — AGRO-INSIGHT ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Agro-Insight</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev E<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h2>06 · <span class="tag-e">Agro-Insight</span> — Vendor Intelligence <span class="pill p2">Phase 2</span></h2>
+  <p>A+C events + Salesforce sales → vendor-scoped analytics + narrative reports. Read-only.</p>
+
+  <div class="dgm">A events ┐
+  C events ├─▶ ELT (Cloud Scheduler → Cloud Run job)
+  SF sales ┘            │
+                        ▼
+        ┌──────────────────────────────────────────┐
+        │ Analytics Data Mart (PostgreSQL)         │
+        │  vendor-scoped materialized views        │
+        │  region · product · consultant · time    │
+        │  metrics computed in SQL                 │
+        └──────────────┬───────────────────────────┘
+            ┌───────────┴────────────┐
+            ▼                         ▼
+   Narrative Report Gen      Dashboard API (read-only,
+   (Claude narrates SQL       tenant-scoped) → vendor
+    aggregates only)          dashboard</div>
+
+  <table>
+    <thead><tr><th>Aspect</th><th>Spec</th></tr></thead>
+    <tbody>
+      <tr><td>Reuse</td><td>PostgreSQL, Claude adapter, auth, monitoring</td></tr>
+      <tr><td>Net-new</td><td>Data-mart schema · ELT jobs · tenant-scoped read API · narrative prompts (≈20%)</td></tr>
+      <tr><td>External deps</td><td>None</td></tr>
+      <tr><td>Metric integrity</td><td>All numbers computed in SQL; LLM narrates RAG-grounded aggregates, never generates figures</td></tr>
+      <tr><td>Tenant isolation</td><td>Row-level scope at data-mart + API; scope from authenticated principal, not request body</td></tr>
+      <tr><td>Risk surface</td><td>Read-only reporting; no vision, no real-time, no crop-affecting output</td></tr>
+      <tr><td>Dependency</td><td>Vendor data-sharing scope agreed contractually before data-mart design</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>deviewai</b></span><span>Technical Architecture · Rev E · 5 / 7</span></footer>
+</div>
+
+<!-- ░░ PAGE 6 — AI FUNCTIONING ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — AI Functioning</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev E<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h2>07 · AI Functioning — How the Engine Stays Honest</h2>
+  <p>Engine: <strong>Claude (multimodal)</strong> invoked via Vertex AI. Around it we layer constraints so the model output is never user-facing on its own. RAG is necessary but not sufficient; each layer below defends against a distinct failure mode.</p>
+
+  <div class="dgm">┌── ENGINE ─────────────────────────────────────────────────────────────────┐
+│  Claude (Vertex AI Model Garden) · multimodal · prompt + image            │
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  │ output candidate
+                                  ▼
+┌── RUNTIME DEFENCES · applied on every request ────────────────────────────┐
+│ 1 · RAG over catalog            only real SKUs can be cited                │
+│ 2 · Confidence pre-flight gate  refuses below threshold (&lt; 70%)            │
+│ 3 · Hard regulatory filter      approved_in_ua = TRUE  (SQL WHERE clause)  │
+│ 4 · Live Salesforce stock query real availability, never cached            │
+│ 5 · Deterministic SQL for nums  LLM narrates; numbers computed in SQL      │
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  ▼
+┌── PER-REQUEST AUDIT ──────────────────────────────────────────────────────┐
+│ 6 · Reasoning-chain audit log   symptom → diagnosis → rule → SKU + conf    │
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  ▼
+┌── HUMAN-IN-THE-LOOP ──────────────────────────────────────────────────────┐
+│ 7 · Consultant / supervisor override   human approves before C binding     │
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  ▼
+                          User-facing answer
+                                  │
+       ┌──────────────────────────┴──────────────────────────┐
+       ▼                                                     ▼
+┌── PRE-LAUNCH VALIDATION ─────────┐    ┌── POST-LAUNCH VALIDATION ─────────┐
+│ 8 · Blind agronomist panel       │    │ 9 · Field-outcome tracking        │
+│    ≥ 85% on held-out test set    │    │    real disease progression /     │
+│    (independent of consultants)  │    │    yield outcomes, first season   │
+└──────────────────────────────────┘    └───────────────────────────────────┘</div>
+
+  <table>
+    <thead><tr><th style="width:30%">Layer</th><th>Defends against</th><th style="width:24%">Where</th></tr></thead>
+    <tbody>
+      <tr><td>1 · RAG over catalog</td><td>Fabricated products / SKUs that do not exist in the catalog</td><td>A · pgvector retrieval</td></tr>
+      <tr><td>2 · Confidence pre-flight gate</td><td>Confident-wrong diagnoses below trust threshold</td><td>A · pipeline gate</td></tr>
+      <tr><td>3 · Hard regulatory filter</td><td>Recommending products not approved for use in Ukraine</td><td>SQL <code>WHERE approved_in_ua = TRUE</code> on the catalog query</td></tr>
+      <tr><td>4 · Live Salesforce stock query</td><td>Recommending out-of-stock products</td><td>A · live SF REST per request, never cached</td></tr>
+      <tr><td>5 · Deterministic SQL for numbers</td><td>Hallucinated metrics in vendor reports (margins, conversions, totals)</td><td>E · data-mart materialised views; LLM only narrates</td></tr>
+      <tr><td>6 · Reasoning-chain audit log</td><td>Wrong answers being unaccountable / unexplainable</td><td>PostgreSQL append-only audit table; every prescription logs symptom → diagnosis → rule → SKU + confidence</td></tr>
+      <tr><td>7 · Consultant / supervisor override</td><td>Model "winning" against a human expert in the field</td><td>C · approval flow before any quote is binding; overrides logged</td></tr>
+      <tr><td>8 · Blind agronomist panel (pre-launch)</td><td>The system being subtly wrong on average</td><td>Eval framework · ≥ 85% gate before production launch</td></tr>
+      <tr><td>9 · Field-outcome tracking (post-launch)</td><td>Long-tail drift; seasonal blind spots; v2 retraining inputs</td><td>Continuous; validates the panel score against reality over the first season</td></tr>
+    </tbody>
+  </table>
+
+  <div class="anchor">▸ One-liner: the AI never gets the last word — the data does.</div>
+
+  <footer><span><b>deviewai</b></span><span>Technical Architecture · Rev E · 6 / 7</span></footer>
+</div>
+
+<!-- ░░ PAGE 7 — CROSS-AGENT + RISK ░░ -->
+<div class="page">
+  <header>
+    <div class="brand"><b>deviewai</b> &times; AgroPlatforma
+      <span class="sub">&laquo;Agro Agent&raquo; — Cross-Agent &amp; Risk</span></div>
+    <div class="meta">Prepared for: Agro&#8209;Arena / AgroPlatforma<br>
+      Date: 2026&#8209;05&#8209;20 · Rev E<br><span class="conf">CONFIDENTIAL</span></div>
+  </header>
+
+  <h2>08 · Cross-Agent</h2>
+  <table>
+    <thead><tr><th>Concern</th><th>Design</th></tr></thead>
+    <tbody>
+      <tr><td>Event flow</td><td>A emits diagnosis/Rx events → C consumes, emits transaction events → E aggregates A+C+SF. One append-only log, one PostgreSQL instance, no message broker.</td></tr>
+      <tr><td>SF write isolation</td><td>Only C writes (draft-only). A, E read-only. Three scoped permission sets.</td></tr>
+      <tr><td>Failure isolation</td><td>No agent in another's critical path. C down → A still diagnoses; E ELT fails → A, C unaffected.</td></tr>
+      <tr><td>v1 feedback boundary</td><td>A-feedback (retraining / relevance learning) is not automatic in v1. Loop closes via human action (agronomist review → catalog/inventory update). Automatic feedback deferred post-v1.</td></tr>
+      <tr><td>Phasing</td><td>A ships v1 (foundation). C, E attach post-v1 as contained increments.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>09 · Risk &amp; Open Items</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Type</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>RAG corpus ownership — agronomic knowledge base (A)</td><td>Risk</td><td>Open — staffing decision; top success determinant</td></tr>
+      <tr><td>Rules catalog — margin/pack/regulatory (C)</td><td>Dependency</td><td>Source + own before C build</td></tr>
+      <tr><td>Vendor data-sharing scope (E)</td><td>Dependency</td><td>Contractual agreement before data-mart design</td></tr>
+      <tr><td>Catalog freshness / staleness window</td><td>Dependency</td><td>Hourly refresh assumed; confirm with Agro-Arena</td></tr>
+      <tr><td>Existing Flutter module/nav/state constraints</td><td>Open</td><td>Assumed existing patterns; constraints unconfirmed</td></tr>
+      <tr><td>LLM cost / request @ 40k scale</td><td>Open</td><td>Target envelope unset; monitored as counter-metric</td></tr>
+      <tr><td>Automatic A-feedback (retraining)</td><td>Scope</td><td>Deferred post-v1 by design</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>deviewai</b></span><span>Technical Architecture · Rev E · 7 / 7 · End</span></footer>
+</div>
+
+</body>
+</html>
