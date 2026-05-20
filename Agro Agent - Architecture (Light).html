@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEVIEW × AGROPLATFORMA — Agro Agent · Архітектура</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3eee2;          /* deviewai meta-theme-color, used as light bg */
+    --paper-2:#ece6d4;
+    --ink:#0a0a09;
+    --ink-2:#26241f;
+    --mut:#6b6657;
+    --mut-2:#a8a293;
+    --hair:#cdc6b3;
+    --hair-2:#dcd5c0;
+    --tone:#b04527;           /* single warm accent, sparing */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#0a0a09;
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+    -webkit-font-smoothing:antialiased;color:var(--ink);
+    font-feature-settings:"ss01","cv11";font-weight:400}
+  .deck{height:100vh;overflow:hidden}
+  .slide{width:100vw;height:100vh;display:none;flex-direction:column;
+    padding:4.5vh 5vw 7vh;background:var(--paper);position:relative;overflow:hidden}
+  .slide.active{display:flex;animation:fade .4s cubic-bezier(.2,.7,.2,1)}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  /* ── pixel-city skyline background, generated in JS ──────────── */
+  .slide .pixelcity{position:absolute;left:0;right:0;bottom:0;height:62%;
+    background-image:var(--pixelcity);background-position:bottom center;
+    background-size:cover;background-repeat:no-repeat;
+    opacity:.42;pointer-events:none;z-index:0;
+    mask-image:linear-gradient(to top,#000 38%,transparent 100%);
+    -webkit-mask-image:linear-gradient(to top,#000 38%,transparent 100%)}
+  .slide.faint .pixelcity{opacity:.16}
+  .slide.no-city .pixelcity{display:none}
+
+  /* every contentful layer above the city */
+  .topnav, .seclabel, .body, .ft, .scroll{position:relative;z-index:2}
+
+  /* ── top chrome (matches site nav) ───────────────────────────── */
+  .topnav{display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:3.4vh;flex-shrink:0}
+  .brand{font-family:"Inter Tight",sans-serif;font-weight:500;
+    font-size:clamp(13px,1.05vw,15.5px);letter-spacing:.55em;color:var(--ink);
+    text-transform:uppercase;padding-right:.4em}
+  .nav-r{display:flex;gap:2.6vw;align-items:center;font-family:"Inter Tight",sans-serif;
+    font-size:clamp(9.5px,.85vw,11.5px);letter-spacing:.22em;text-transform:uppercase;
+    color:var(--mut);font-weight:500}
+  .nav-r .crumb.active{color:var(--ink)}
+  .nav-r .lang{border:1px solid var(--ink);border-radius:99px;padding:5px 12px;
+    font-size:10px;letter-spacing:.18em;display:inline-flex;gap:10px;align-items:center;color:var(--mut)}
+  .nav-r .lang .on{color:var(--ink);font-weight:600}
+
+  /* ── editorial section label (WHY THIS IS DIFFERENT pattern) ── */
+  .seclabel{display:flex;align-items:flex-end;justify-content:space-between;
+    padding-bottom:1.4vh;margin-bottom:5vh;border-bottom:1px solid var(--ink);flex-shrink:0}
+  .seclabel .lab{font-family:"Inter Tight",sans-serif;font-size:clamp(10.5px,.95vw,12.5px);
+    font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--ink)}
+  .seclabel .meta{font-family:"JetBrains Mono",monospace;font-size:clamp(9px,.8vw,11px);
+    color:var(--mut);letter-spacing:.06em}
+  .seclabel .meta b{color:var(--ink);font-weight:500}
+
+  /* ── display type — NO italics, weight contrast and tone instead ── */
+  h1{font-family:"Inter Tight",sans-serif;font-weight:600;
+    font-size:clamp(46px,6.6vw,108px);letter-spacing:-.03em;line-height:.94;
+    color:var(--ink);text-transform:uppercase}
+  h1 .lt{font-weight:400;color:var(--mut)}
+  h1 .ul{display:inline-block;border-bottom:3px solid var(--tone);padding-bottom:.06em}
+  h1 .accent{color:var(--tone)}
+  h2{font-family:"Inter Tight",sans-serif;font-weight:600;
+    font-size:clamp(30px,4.4vw,68px);letter-spacing:-.025em;line-height:.98;
+    color:var(--ink);text-transform:uppercase;margin-bottom:4vh}
+  h2 .lt{font-weight:400;color:var(--mut)}
+  h2 .ul{display:inline-block;border-bottom:2px solid var(--tone);padding-bottom:.06em}
+  h2 .accent{color:var(--tone)}
+
+  /* ── body lead ──────────────────────────────────────────────── */
+  .body{flex:1;display:flex;flex-direction:column;min-height:0}
+  .lead{font-family:"Inter",sans-serif;font-weight:400;
+    font-size:clamp(14px,1.42vw,19px);color:var(--ink-2);line-height:1.55;max-width:62ch}
+  .lead.lg{font-size:clamp(15px,1.55vw,22px);color:var(--ink);font-weight:400}
+  .lead b{font-weight:600;color:var(--ink)}
+
+  /* ── small caps eyebrow ─────────────────────────────────────── */
+  .kick{font-family:"Inter Tight",sans-serif;font-size:clamp(10.5px,.95vw,12.5px);
+    font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--mut);
+    margin-bottom:2vh;display:inline-block}
+  .kick.ink{color:var(--ink)}
+
+  /* ── cover layout (no right meta column) ───────────────────── */
+  .cover .body{justify-content:flex-end;padding-bottom:2vh}
+  .cover .body .head{margin-bottom:auto;padding-top:2vh}
+  .cover .body .head .label{font-family:"Inter Tight",sans-serif;font-size:clamp(10.5px,.95vw,12.5px);
+    font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--mut)}
+  .cover h1{margin-top:1.2vh}
+  .cover .lead{margin-top:4.4vh;max-width:56ch}
+
+  /* outline button like INQUIRE on the site */
+  .inq{display:inline-flex;align-items:center;gap:14px;margin-top:4vh;
+    padding:14px 32px;border:1px solid var(--ink);font-family:"Inter Tight",sans-serif;
+    font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink);
+    font-weight:500;background:transparent;cursor:default;transition:.2s;width:max-content}
+  .inq::after{content:"→";font-family:"JetBrains Mono",monospace;letter-spacing:0}
+
+  /* ── numbered editorial list ───────────────────────────────── */
+  .nums{list-style:none}
+  .nums li{display:grid;grid-template-columns:74px 1fr;gap:30px;
+    padding:2.2vh 0;border-top:1px solid var(--hair);align-items:start}
+  .nums li:last-child{border-bottom:1px solid var(--hair)}
+  .nums li .n{font-family:"JetBrains Mono",monospace;font-size:clamp(10px,.9vw,12px);
+    font-weight:500;color:var(--mut);letter-spacing:.1em;padding-top:6px}
+  .nums li .t{font-size:clamp(14px,1.45vw,19px);line-height:1.5;color:var(--ink-2);font-weight:400}
+  .nums li .t b{font-weight:600;color:var(--ink)}
+
+  /* ── triplet (three columns) ──────────────────────────────── */
+  .triplet{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--hair)}
+  .triplet .col{padding:3vh 1.5vw 3vh;border-right:1px solid var(--hair);
+    display:flex;flex-direction:column;gap:1.6vh;min-height:30vh}
+  .triplet .col:last-child{border-right:none}
+  .triplet .col .lab{font-family:"Inter Tight",sans-serif;font-size:10.5px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--mut);font-weight:500}
+  .triplet .col .nm{font-family:"Inter Tight",sans-serif;font-weight:600;
+    font-size:clamp(22px,2.5vw,36px);letter-spacing:-.022em;line-height:1.02;
+    color:var(--ink);text-transform:uppercase;margin-top:.4vh}
+  .triplet .col .cv{font-size:clamp(13px,1.3vw,16.5px);line-height:1.5;color:var(--ink-2);
+    font-weight:400;margin-top:auto}
+  .triplet .col .cv b{font-weight:600;color:var(--ink)}
+
+  /* ── mono diagram ─────────────────────────────────────────── */
+  .dgm{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+    padding:3vh 1.6vw;font-family:"JetBrains Mono",monospace;
+    font-size:clamp(10px,1vw,14px);line-height:1.55;color:var(--ink-2);
+    white-space:pre;overflow:auto;background:rgba(255,253,247,.65)}
+
+  /* ── kpi stack ────────────────────────────────────────────── */
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid var(--hair);margin-top:3vh}
+  .kpi{padding:2.4vh 1.4vw;border-right:1px solid var(--hair)}
+  .kpi:last-child{border-right:none}
+  .kpi .k{font-family:"Inter Tight",sans-serif;font-size:11px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--mut);font-weight:500}
+  .kpi .v{font-family:"Inter Tight",sans-serif;font-size:clamp(22px,2.6vw,38px);
+    font-weight:600;margin-top:1.2vh;letter-spacing:-.025em;color:var(--ink);
+    line-height:1;text-transform:uppercase}
+  .kpi .v small{font-family:"Inter",sans-serif;font-size:clamp(11px,1vw,13px);
+    font-weight:400;color:var(--mut);display:block;margin-top:.5vh;
+    letter-spacing:0;text-transform:none;line-height:1.3}
+
+  /* ── pill tag ─────────────────────────────────────────────── */
+  .pill{display:inline-block;font-family:"Inter Tight",sans-serif;
+    font-size:10.5px;font-weight:500;letter-spacing:.22em;
+    text-transform:uppercase;padding:5px 12px;border:1px solid var(--ink);
+    color:var(--ink);border-radius:99px;margin-left:14px;vertical-align:middle}
+  .pill.solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .pill.mut{border-color:var(--mut);color:var(--mut)}
+
+  /* ── editorial stripe (replaces quote block) ──────────────── */
+  .stripe{display:grid;grid-template-columns:auto 1fr;gap:3vw;align-items:center;
+    padding:3vh 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    margin-top:1.2vh}
+  .stripe .big{font-family:"Inter Tight",sans-serif;font-weight:600;
+    font-size:clamp(22px,2.9vw,46px);letter-spacing:-.025em;color:var(--ink);
+    text-transform:uppercase;line-height:1;white-space:nowrap}
+  .stripe .big .ar{color:var(--mut);font-weight:400;margin:0 .15em}
+  .stripe .qt{font-size:clamp(13px,1.35vw,17px);line-height:1.55;color:var(--ink-2);
+    font-weight:400;max-width:62ch}
+  .stripe .qt b{font-weight:600;color:var(--ink)}
+
+  /* ── compare cards ────────────────────────────────────────── */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--hair);
+    margin-top:1.2vh}
+  .compare > div{padding:3vh 1.8vw 3vh;border-right:1px solid var(--hair);
+    display:flex;flex-direction:column;gap:1.4vh}
+  .compare > div:last-child{border-right:none}
+  .compare > div .lab{font-family:"Inter Tight",sans-serif;font-size:11px;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--mut);font-weight:500;
+    display:inline-flex;align-items:center;gap:8px}
+  .compare > div .lab::before{content:"—";color:var(--mut)}
+  .compare > div.plus .lab::before{content:"+";color:var(--ink)}
+  .compare > div.minus .lab::before{content:"—";color:var(--tone)}
+  .compare > div .txt{font-size:clamp(14px,1.4vw,18px);line-height:1.55;color:var(--ink-2)}
+  .compare > div .txt b{color:var(--ink);font-weight:600}
+
+  /* ── footer ────────────────────────────────────────────────── */
+  .ft{position:absolute;bottom:2.2vh;left:5vw;right:5vw;display:flex;
+    justify-content:space-between;align-items:center;
+    font-family:"JetBrains Mono",monospace;font-size:10px;
+    color:var(--mut);border-top:1px solid var(--hair);padding-top:1.1vh;letter-spacing:.08em;z-index:3}
+  .ft b{color:var(--ink);font-weight:500;letter-spacing:.42em}
+
+  .scroll{position:absolute;right:5vw;bottom:6.5vh;font-family:"Inter Tight",sans-serif;
+    font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--mut);font-weight:500;z-index:3}
+
+  /* ── demo wrap ─────────────────────────────────────────────── */
+  .demo-wrap{flex:1;min-height:0;display:flex;justify-content:center;align-items:stretch;
+    overflow:hidden;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    background:var(--ink);position:relative}
+  .demo-wrap iframe{width:100%;height:100%;border:none}
+
+  /* ── nav ───────────────────────────────────────────────────── */
+  .nav{position:fixed;bottom:2vh;left:5vw;display:flex;gap:7px;z-index:30}
+  .nav button{background:transparent;border:1px solid var(--ink);color:var(--ink);
+    width:36px;height:36px;font-family:"Inter Tight",sans-serif;font-size:14px;
+    cursor:pointer;font-weight:500;transition:all .15s ease;border-radius:99px;
+    display:inline-flex;align-items:center;justify-content:center}
+  .nav button:hover{background:var(--ink);color:var(--paper)}
+  .pgn{position:fixed;bottom:2.6vh;right:5vw;
+    font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--mut);
+    font-weight:500;z-index:30;letter-spacing:.12em}
+  .pgn b{color:var(--ink);font-weight:600}
+  .hint{position:fixed;bottom:2.6vh;left:50%;transform:translateX(-50%);
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--mut);
+    opacity:.7;z-index:30;letter-spacing:.18em;text-transform:uppercase}
+
+  @media print{
+    html,body{background:#fff}
+    .deck{height:auto;overflow:visible}
+    .slide{display:flex !important;page-break-after:always;height:100vh}
+    .nav,.hint,.pgn{display:none}
+    @page{size:landscape;margin:0}
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- ─── 1 · COVER ─────────────────────────────────────────────── -->
+  <section class="slide active cover" data-screen-label="01 Cover">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb active">AGRO AGENT</span>
+        <span class="crumb">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="head">
+        <div class="label">DEVIEW × AGROPLATFORMA</div>
+      </div>
+      <div>
+        <h1>
+          AGRO AGENT.<br>
+          ТРИ&nbsp;АГЕНТИ.<br>
+          ОДИН&nbsp;<span class="ul">ЦИКЛ</span>.
+        </h1>
+        <p class="lead">
+          AI-рівень всередині платформи, яку ви вже використовуєте.
+          Три агенти з найвищим співвідношенням <b>цінність ÷ зусилля</b> —
+          Agro-Vision&nbsp;&amp;&nbsp;Expert, Smart Operator&nbsp;&amp;&nbsp;Sales, Vendor Analytic —
+          на одному спільному фундаменті.
+        </p>
+        <div class="inq">Демонстрація</div>
+      </div>
+    </div>
+
+    <div class="scroll">2026-05-20 · REV C</div>
+    <div class="ft">
+      <span><b>DEVIEW</b> &nbsp;&nbsp; AI&nbsp;CONSULTING · DATA ENGINEERING</span>
+      <span>HONG KONG · STUTTGART · VANCOUVER · EDINBURGH</span>
+    </div>
+  </section>
+
+  <!-- ─── 2 · CHALLENGE ─────────────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="02 Challenge">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Виклик · Чому зараз</div>
+      <div class="meta">02 / 11 · <b>AGRO AGENT</b></div>
+    </div>
+    <div class="body">
+      <h2>Експертиза не <span class="ul">масштабується</span>.<br><span class="lt">Час вбиває угоду.</span></h2>
+      <ul class="nums">
+        <li><span class="n">01</span><span class="t"><b>Діагностика залежить від досвіду.</b> Молодші консультанти дзвонять старшим агрономам і чекають. Помилковий діагноз — хибний продукт і втрата довіри.</span></li>
+        <li><span class="n">02</span><span class="t"><b>Підбір продуктів фрагментований.</b> Знайти препарат, що дозволений, є на складі й підходить для поля — пошук у кількох системах.</span></li>
+        <li><span class="n">03</span><span class="t"><b>Операційний відділ — вузьке місце.</b> Кожна КП та замовлення — вручну. Щоб рости, потрібно більше людей замість меншої бюрократії.</span></li>
+        <li><span class="n">04</span><span class="t"><b>Аналітика вендорів — сліпа зона.</b> Постачальники не бачать вчасно, де їхні продукти працюють, а де — ні.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>02 / 11</span></div>
+  </section>
+
+  <!-- ─── 3 · THE THREE ─────────────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="03 The Three">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Пропозиція · Найвища ефективність для клієнта</div>
+      <div class="meta">03 / 11 · <b>AGRO AGENT</b></div>
+    </div>
+    <div class="body">
+      <h2>Три агенти, обрані за <span class="ul">цінність ÷ зусилля</span></h2>
+
+      <div class="triplet">
+        <div class="col">
+          <div class="lab">01 · Блок А · Польовий інтелект</div>
+          <div class="nm">Agro-Vision<br>&amp; Expert</div>
+          <div class="cv">Фото&nbsp;→&nbsp;діагноз&nbsp;→&nbsp;наявний, дозволений <b>рецепт</b> за секунди.</div>
+        </div>
+        <div class="col">
+          <div class="lab">02 · Блок В · Операційна досконалість</div>
+          <div class="nm">Smart Operator<br>&amp; Sales</div>
+          <div class="cv">Рецепт автоматично стає <b>комерційною пропозицією</b> у Salesforce з контролем маржинальності.</div>
+        </div>
+        <div class="col">
+          <div class="lab">03 · Блок Д · Аналітика для вендорів</div>
+          <div class="nm">Vendor<br>Analytic</div>
+          <div class="cv">Актуальна, достовірна <b>аналітика для вендорів</b> на основі даних А та В.</div>
+        </div>
+      </div>
+
+      <p class="lead" style="margin-top:3.4vh;font-size:clamp(13px,1.35vw,17px)">
+        Не три окремі функції — <b>єдиний замкнений цикл</b> на спільному фундаменті.
+      </p>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>03 / 11</span></div>
+  </section>
+
+  <!-- ─── 4 · LIVE DEMO ─────────────────────────────────────────── -->
+  <section class="slide no-city" style="padding:2vh 3vw 2vh" data-screen-label="04 Demo">
+    <div class="pixelcity"></div>
+    <div class="topnav" style="margin-bottom:1vh">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb">АРХІТЕКТУРА</span>
+        <span class="crumb active">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="body" style="gap:0;flex:1;min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1vh;flex-shrink:0">
+        <span style="font-family:'Inter Tight',sans-serif;font-size:clamp(10px,.9vw,12px);font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--mut)">Демо · Інтерактивний прототип</span>
+        <span style="font-family:'Inter Tight',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--mut);font-weight:500">Блок&nbsp;А &nbsp;·&nbsp; Блок&nbsp;В &nbsp;·&nbsp; Блок&nbsp;Д</span>
+      </div>
+      <div class="demo-wrap" style="flex:1;min-height:0">
+        <iframe src="agro-demo/Demo-Portal_v1.html" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="ft" style="bottom:1vh;left:3vw;right:3vw"><span><b>DEVIEW</b></span><span>04 / 11</span></div>
+  </section>
+
+  <!-- ─── 5 · FLYWHEEL ──────────────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="05 Flywheel">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb active">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Чому саме ці три · Маховик даних</div>
+      <div class="meta">05 / 11 · <b>AGRO AGENT</b></div>
+    </div>
+    <div class="body">
+      <h2>Expert → Operator → Analytic.<br><span class="lt">Це</span> <span class="ul">маховик даних</span>.</h2>
+      <div class="dgm">  Agro-Vision &amp; Expert діагностує ──▶ генерує рецепти + події результатів
+       ▲                                        │
+       │                                        ▼
+  кращі рецепти          Smart Operator &amp; Sales перетворює рецепти на пропозиції / замовлення
+  (правильні продукти,                          │  генерує транзакційні події
+   правильні залишки)                           ▼
+       │              Vendor Analytic агрегує все + Salesforce → аналітика для вендорів
+       └──────── кращі умови від вендорів / залишки ◀────────┘</div>
+      <p class="lead" style="margin-top:3vh;max-width:84ch">
+        Кожен агент робить наступного ціннішим. <b>Блок Б (Trading Agent)</b> та <b>Блок Г (Market &amp; Mentor)</b>
+        — поза цим циклом, відкладені на наступні фази; не скасовані.
+      </p>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>05 / 11</span></div>
+  </section>
+
+  <!-- ─── 6 · AGRO-VISION ──────────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="06 Vision">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb active">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Блок А · Польовий інтелект</div>
+      <div class="meta">06 / 11 · <b>v1</b></div>
+    </div>
+    <div class="body">
+      <h2>Agro-Vision &amp; Expert <span class="pill solid">v1</span></h2>
+      <div class="stripe">
+        <div class="big">Фото<span class="ar">→</span>Рецепт</div>
+        <div class="qt"><b>Флагман і фундамент.</b> Діагноз прямо в полі — найшвидший спосіб здобути довіру, яка потрібна клієнту найбільше.</div>
+      </div>
+      <ul class="nums" style="margin-top:1vh">
+        <li><span class="n">01</span><span class="t">Мультимодальний аналіз <b>Claude</b> → визначення культури та проблеми з порогом впевненості перед видачею рецепту.</span></li>
+        <li><span class="n">02</span><span class="t"><b>RAG по каталогу 20 тис. SKU</b> — тільки зареєстровані в Україні препарати, з перевіркою залишків на складі та врахуванням контексту поля.</span></li>
+        <li><span class="n">03</span><span class="t"><b>EXIF/GPS видаляються до LLM</b> · жодних ідентифікаторів · фото автовидаляються через 24 год.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>06 / 11</span></div>
+  </section>
+
+  <!-- ─── 7 · SMART OPERATOR ───────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="07 Operator">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb active">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Блок В · Операційна досконалість</div>
+      <div class="meta">07 / 11 · <b>Фаза 2</b></div>
+    </div>
+    <div class="body">
+      <h2>Smart Operator &amp; Sales <span class="pill mut">Фаза 2</span></h2>
+      <div class="stripe">
+        <div class="big">Рецепт<span class="ar">→</span>Пропозиція</div>
+        <div class="qt"><b>Масштабуйтесь без збільшення штату.</b> Рецепт автоматично стає КП у Salesforce — оператор лише підтверджує перед відправкою.</div>
+      </div>
+      <ul class="nums" style="margin-top:1vh">
+        <li><span class="n">01</span><span class="t"><b>≈ 30% нового коду</b> — використовує конектори Salesforce та векторний індекс каталогу від Agro-Vision&nbsp;&amp;&nbsp;Expert.</span></li>
+        <li><span class="n">02</span><span class="t">Заміна аналогами + крос-продажі; <b>детерміністичні правила</b> (поріг маржі, розмір упаковки, регуляторні вимоги).</span></li>
+        <li><span class="n">03</span><span class="t">Звіряється з обліковою системою — <b>LLM ранжує, але ніколи не рахує цифри сам</b>.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>07 / 11</span></div>
+  </section>
+
+  <!-- ─── 8 · VENDOR ANALYTIC ──────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="08 Analytic">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb active">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Блок Д · Аналітика для вендорів</div>
+      <div class="meta">08 / 11 · <b>Фаза 2</b></div>
+    </div>
+    <div class="body">
+      <h2>Vendor Analytic <span class="pill mut">Фаза 2</span></h2>
+      <div class="stripe">
+        <div class="big">Дані<span class="ar">→</span>Відповіді</div>
+        <div class="qt"><b>Актуальні відповіді для кожного постачальника.</b> Персоналізована аналітика та наративні звіти — для нетехнічного представника вендора.</div>
+      </div>
+      <ul class="nums" style="margin-top:1vh">
+        <li><span class="n">01</span><span class="t"><b>≈ 20% нового коду, нуль нових зовнішніх залежностей</b> — тільки читання даних, які вже генерують Expert та Operator.</span></li>
+        <li><span class="n">02</span><span class="t">Цифри рахує SQL; <b>LLM лише описує результат словами</b> — він не може вигадати число.</span></li>
+        <li><span class="n">03</span><span class="t">Повна <b>ізоляція даних між вендорами</b> · найменш ризиковий агент · мінімальна зона відповідальності.</span></li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>08 / 11</span></div>
+  </section>
+
+  <!-- ─── 9 · WHY NOT B ────────────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="09 Sequencing">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb active">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Обґрунтування · Обрано для клієнта, не для нас</div>
+      <div class="meta">09 / 11 · <b>AGRO AGENT</b></div>
+    </div>
+    <div class="body">
+      <h2>Чому не <span class="ul">Trading Agent</span> першим?</h2>
+      <div class="compare">
+        <div class="minus">
+          <div class="lab">Пастка</div>
+          <div class="txt">Блок Б найцікавіший для презентації — «що сіяти, коли продавати». Але ринковий прогноз <b>неможливо спростувати, поки не мине сезон</b>.</div>
+        </div>
+        <div class="plus">
+          <div class="lab">Принцип</div>
+          <div class="txt">Головна мета — <b>побудувати довіру до AI</b>. Довіру здобувають результатами, які можна перевірити <b>сьогодні</b> — діагноз у полі, звірена КП.</div>
+        </div>
+      </div>
+      <p class="lead" style="margin-top:3.4vh;max-width:84ch">
+        Trading Agent потребує нових зовнішніх інтеграцій і його неможливо перевірити на тестовому наборі.
+        Його місце — <b>Фаза 2</b>, після того як маховик даних підтверджено. Висока цінність, але не першочерговий.
+      </p>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>09 / 11</span></div>
+  </section>
+
+  <!-- ─── 10 · FOUNDATION ──────────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="10 Foundation">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb active">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Один фундамент · Будуємо раз, розширюємо дешево</div>
+      <div class="meta">10 / 11 · <b>AGRO AGENT</b></div>
+    </div>
+    <div class="body">
+      <h2>Один фундамент, <span class="ul">три етапи</span>.</h2>
+      <div class="dgm">┌──── СПІЛЬНИЙ ФУНДАМЕНТ (будується раз у v1) ─────────────────┐
+│ FastAPI · Claude (Vertex AI) · PostgreSQL+pgvector           │
+│ Salesforce конектор · Firebase Auth · Аудит / Журнал подій   │
+└───────────────────────────────────────────────────────────────┘
+  ▲ Agro-Vision &amp; Expert    ▲ Smart Operator &amp; Sales   ▲ Vendor Analytic
+    ≈ фундамент               ≈ 30% нового               ≈ 20% нового</div>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="k">Блок А · Vision &amp; Expert</div>
+          <div class="v">Фундамент<small>флагман + довіра</small></div>
+        </div>
+        <div class="kpi">
+          <div class="k">Блок В · Operator &amp; Sales</div>
+          <div class="v">≈30%<small>нового коду</small></div>
+        </div>
+        <div class="kpi">
+          <div class="k">Блок Д · Vendor Analytic</div>
+          <div class="v">≈20%<small>нового коду</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>10 / 11</span></div>
+  </section>
+
+  <!-- ─── 11 · CLOSING ─────────────────────────────────────────── -->
+  <section class="slide cover" data-screen-label="11 Closing">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb active">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <div class="label">Підсумок</div>
+      </div>
+      <div>
+        <h1>
+          ПРОДУМАНА<br>
+          АРХІТЕКТУРА.<br>
+          <span class="lt">БЕЗПЕКА З</span> <span class="ul">ПЕРШОГО ДНЯ</span>.
+        </h1>
+        <p class="lead">
+          Керовані сервіси, одна база даних, прозорий пайплайн, вбудована безпека та аудит.
+          <b>Agro-Vision&nbsp;&amp;&nbsp;Expert</b> закладає фундамент;
+          <b>Smart Operator&nbsp;&amp;&nbsp;Sales</b> та <b>Vendor Analytic</b> — контрольовані етапи на перевіреній основі.
+        </p>
+        <div class="inq">Демонстрація</div>
+      </div>
+    </div>
+    <div class="scroll">2026-05-20 · REV C</div>
+    <div class="ft">
+      <span><b>DEVIEW</b> &nbsp;&nbsp; AI&nbsp;THAT WORKS INSIDE YOUR OPERATIONS</span>
+      <span>HONG KONG · STUTTGART · VANCOUVER · EDINBURGH</span>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button onclick="go(-1)" aria-label="Попередній">‹</button>
+  <button onclick="go(1)" aria-label="Наступний">›</button>
+</div>
+<div class="hint">← → · Space · F</div>
+<div class="pgn" id="pgn"><b>01</b> / 11</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* ── Pixel-city background generator ─────────────────────────
+   * Builds a city skyline made of small "window" pixels, with
+   * random building heights/widths and density falloff at building
+   * tops. Output is an SVG data-URI assigned to --pixelcity, which
+   * each .slide .pixelcity layer references as a background image.
+   */
+  (function buildPixelCity(){
+    const W = 2400, H = 700;
+    const PIX = 3, CELL = 7;
+    // deterministic PRNG so the skyline looks the same every reload
+    let seed = 1337;
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+
+    let out = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice">`;
+    out += `<rect width="${W}" height="${H}" fill="none"/>`;
+
+    let x = 0;
+    while (x < W) {
+      // building dimensions
+      const bw = Math.floor(28 + rnd() * 72);
+      // mix of short and tall buildings, biased toward middle heights
+      const heightRoll = rnd();
+      const bh = Math.floor(80 + (heightRoll < 0.15 ? 380 + rnd()*200 : 80 + rnd() * 320));
+      const y = H - bh;
+
+      // a few buildings get an antenna/spire
+      if (rnd() < 0.18) {
+        const spireW = 2;
+        const spireH = 20 + Math.floor(rnd()*40);
+        out += `<rect x="${x + Math.floor(bw/2)}" y="${y - spireH}" width="${spireW}" height="${spireH}" fill="#0a0a09"/>`;
+      }
+
+      // window pixels
+      const padX = 3, padY = 3;
+      for (let cx = padX; cx < bw - padX; cx += CELL) {
+        for (let cy = padY; cy < bh - padY; cy += CELL) {
+          const topRatio = cy / bh;            // 0 at top, 1 at bottom
+          const lit = rnd() < (0.32 + topRatio * 0.42);
+          if (lit) {
+            out += `<rect x="${x + cx}" y="${y + cy}" width="${PIX}" height="${PIX}" fill="#0a0a09"/>`;
+          }
+        }
+      }
+      // outline base hint — a dim row of pixels along the base
+      for (let cx = 0; cx < bw; cx += 2) {
+        if (rnd() < 0.55) {
+          out += `<rect x="${x + cx}" y="${H - 1}" width="1" height="1" fill="#0a0a09"/>`;
+        }
+      }
+
+      x += bw + Math.floor(1 + rnd() * 3); // tiny gap between buildings
+    }
+
+    out += `</svg>`;
+    const uri = `data:image/svg+xml;utf8,${encodeURIComponent(out)}`;
+    document.documentElement.style.setProperty('--pixelcity', `url("${uri}")`);
+  })();
+
+  /* ── slide navigation ───────────────────────────────────────── */
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,x)=>s.classList.toggle('active',x===i));
+    const pad = (v)=>String(v).padStart(2,'0');
+    document.getElementById('pgn').innerHTML='<b>'+pad(i+1)+'</b> / '+pad(slides.length);
+    try{window.parent.postMessage({slideIndexChanged:i},'*')}catch(e){}
+  }
+  function go(d){show(i+d)}
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1)}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1)}
+    else if(e.key==='Home'){show(0)}
+    else if(e.key==='End'){show(slides.length-1)}
+    else if(e.key.toLowerCase()==='f'){
+      if(!document.fullscreenElement)document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+  let sx=0;
+  document.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  document.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>50)go(dx<0?1:-1);
+  },{passive:true});
+  show(0);
+</script>
+</body>
+</html>

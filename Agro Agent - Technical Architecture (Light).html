@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEVIEW × AGROPLATFORMA — Agro Agent · Технічна архітектура</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3eee2;
+    --ink:#0a0a09;
+    --ink-2:#26241f;
+    --mut:#6b6657;
+    --mut-2:#a8a293;
+    --hair:#cdc6b3;
+    --hair-2:#dcd5c0;
+    --tone:#b04527;          /* основний теплий акцент — використовується помірно */
+    --tone-c:#8a5a14;        /* тег агента C */
+    --tone-e:#3b5c46;        /* тег агента E */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0a0a09;color:var(--ink);
+    font:11.5px/1.48 "Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+    -webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11"}
+  .page{width:210mm;min-height:297mm;margin:14px auto;background:var(--paper);
+    padding:16mm 16mm 14mm;position:relative;overflow:hidden;
+    box-shadow:0 8px 32px rgba(0,0,0,.45)}
+
+  /* ── pixel-city — лише на обкладинці та закритті, піднімається знизу ── */
+  .page .pixelcity{position:absolute;left:0;right:0;bottom:0;height:45%;
+    background-image:var(--pixelcity);background-position:bottom center;
+    background-size:cover;background-repeat:no-repeat;
+    opacity:.18;pointer-events:none;z-index:0;
+    mask-image:linear-gradient(to top,#000 32%,transparent 100%);
+    -webkit-mask-image:linear-gradient(to top,#000 32%,transparent 100%)}
+  .page.cover .pixelcity{opacity:.32}
+  .page > *{position:relative;z-index:2}
+  .page > .pixelcity{z-index:0}
+
+  /* ── chrome ─────────────────────────────────────────────────── */
+  header{display:flex;justify-content:space-between;align-items:flex-end;
+    padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--ink)}
+  .brand{font-family:"Inter Tight",sans-serif;font-weight:500;
+    font-size:13px;letter-spacing:.55em;color:var(--ink);text-transform:uppercase;padding-right:.4em}
+  .crumbs{font-family:"Inter Tight",sans-serif;font-size:9.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--mut);font-weight:500;display:flex;gap:14px;align-items:center}
+  .crumbs .active{color:var(--ink)}
+  .head-r{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+  .meta{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--mut);
+    letter-spacing:.06em;text-align:right;line-height:1.5}
+  .meta b{color:var(--ink);font-weight:500}
+  .conf{display:inline-block;border:1px solid var(--ink);padding:1px 7px;
+    font-family:"Inter Tight",sans-serif;font-weight:500;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink);font-size:8.5px;border-radius:99px}
+
+  /* ── titles ─────────────────────────────────────────────────── */
+  h1{font-family:"Inter Tight",sans-serif;font-weight:600;font-size:30px;
+    letter-spacing:-.025em;line-height:.98;text-transform:uppercase;color:var(--ink);margin:4px 0 8px}
+  h1 .sb{display:block;font-family:"Inter",sans-serif;font-weight:400;
+    font-size:11.5px;line-height:1.5;color:var(--mut);letter-spacing:0;
+    text-transform:none;margin-top:7px;max-width:64ch}
+  h1 .sb b{color:var(--ink);font-weight:600}
+
+  /* ── section labels (08 · Cross-Agent style) ───────────────── */
+  h2{font-family:"Inter Tight",sans-serif;font-weight:500;font-size:10.5px;
+    letter-spacing:.32em;text-transform:uppercase;color:var(--ink);
+    margin:18px 0 9px;padding-bottom:6px;border-bottom:1px solid var(--ink);
+    display:flex;justify-content:space-between;align-items:baseline}
+  h2 .num{color:var(--mut);font-weight:500;letter-spacing:.12em;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px}
+  h2 .pill{margin-left:8px}
+  h3{font-family:"Inter Tight",sans-serif;font-weight:600;font-size:12px;
+    text-transform:uppercase;letter-spacing:.04em;color:var(--ink);margin:11px 0 5px}
+
+  p{margin:0 0 8px;color:var(--ink-2)}
+  p b, p strong, strong{font-weight:600;color:var(--ink)}
+  ul{margin:0 0 9px 0;list-style:none}
+  ul li{margin:0 0 4px 0;padding-left:18px;position:relative;color:var(--ink-2)}
+  ul li::before{content:"·";color:var(--mut);font-weight:600;position:absolute;left:6px;top:-1px;font-size:14px}
+
+  /* ── scope / callout ───────────────────────────────────────── */
+  .scope{padding:11px 14px;margin:6px 0 14px;
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--hair);
+    font-size:11.5px;color:var(--ink-2)}
+  .scope b{color:var(--ink);font-weight:600}
+  .scope .lab{font-family:"Inter Tight",sans-serif;font-size:9.5px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--mut);font-weight:500;margin-bottom:5px;display:block}
+
+  /* ── tables ────────────────────────────────────────────────── */
+  table{width:100%;border-collapse:collapse;margin:4px 0 12px;border-top:1px solid var(--ink)}
+  thead th{font-family:"Inter Tight",sans-serif;font-size:9px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--mut);font-weight:500;
+    padding:7px 9px;border-bottom:1px solid var(--ink);text-align:left;background:transparent}
+  td{padding:7px 9px;border-bottom:1px solid var(--hair);vertical-align:top;
+    font-size:11px;line-height:1.45;color:var(--ink-2)}
+  td:first-child, th:first-child{padding-left:0}
+  td:last-child, th:last-child{padding-right:0}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  tr.rec td{background:rgba(255,253,247,.55)}
+  td b{color:var(--ink);font-weight:600}
+
+  /* ── diagram block ─────────────────────────────────────────── */
+  .dgm{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+    padding:11px 12px;margin:6px 0 12px;
+    font-family:"JetBrains Mono",monospace;font-size:9.8px;line-height:1.55;
+    color:var(--ink-2);white-space:pre;overflow-x:auto;
+    background:rgba(255,253,247,.55)}
+
+  /* ── kpis ──────────────────────────────────────────────────── */
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+    margin:6px 0 12px}
+  .kpi{padding:10px 12px;border-right:1px solid var(--hair)}
+  .kpi:last-child{border-right:none}
+  .kpi .k{font-family:"Inter Tight",sans-serif;font-size:9px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--mut);font-weight:500}
+  .kpi .v{font-family:"Inter Tight",sans-serif;font-size:16px;font-weight:600;
+    margin-top:4px;letter-spacing:-.022em;color:var(--ink);line-height:1;text-transform:uppercase}
+  .kpi .v small{font-family:"Inter",sans-serif;font-size:9.5px;font-weight:400;
+    color:var(--mut);letter-spacing:0;text-transform:none;display:block;margin-top:3px;line-height:1.3}
+
+  /* ── inline elements ───────────────────────────────────────── */
+  code{font-family:"JetBrains Mono",monospace;font-size:10px;
+    background:rgba(10,10,9,.07);color:var(--ink);padding:1px 5px;border-radius:3px}
+  .tag-a{color:var(--tone);font-weight:600;font-family:"Inter Tight",sans-serif;
+    text-transform:uppercase;letter-spacing:.04em}
+  .tag-c{color:var(--tone-c);font-weight:600;font-family:"Inter Tight",sans-serif;
+    text-transform:uppercase;letter-spacing:.04em}
+  .tag-e{color:var(--tone-e);font-weight:600;font-family:"Inter Tight",sans-serif;
+    text-transform:uppercase;letter-spacing:.04em}
+  .pill{display:inline-block;font-family:"Inter Tight",sans-serif;font-size:8.5px;
+    font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+    padding:2px 9px;border:1px solid var(--ink);color:var(--ink);
+    border-radius:99px;vertical-align:middle}
+  .pill.v1{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .pill.p2{border-color:var(--mut);color:var(--mut)}
+
+  /* ── anchor / call-out line ────────────────────────────────── */
+  .anchor{font-family:"Inter Tight",sans-serif;font-size:11px;color:var(--tone);
+    font-weight:600;letter-spacing:.04em;margin:-2px 0 11px;
+    padding:7px 0;border-top:1px solid var(--tone);border-bottom:1px solid var(--tone);
+    text-transform:uppercase;letter-spacing:.06em}
+
+  /* ── note (smaller, muted) ────────────────────────────────── */
+  .note{font-size:10px;color:var(--mut);line-height:1.5}
+  .note li{margin:0 0 3px 0}
+
+  /* ── footer ────────────────────────────────────────────────── */
+  footer{position:absolute;bottom:11mm;left:16mm;right:16mm;
+    border-top:1px solid var(--hair);padding-top:7px;
+    font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--mut);
+    display:flex;justify-content:space-between;letter-spacing:.08em;z-index:3}
+  footer b{color:var(--ink);font-weight:500;letter-spacing:.42em}
+
+  /* ── cover-page hero treatment ─────────────────────────────── */
+  .cover .hero{margin-top:18mm;margin-bottom:24mm}
+  .cover .hero .label{font-family:"Inter Tight",sans-serif;font-size:10.5px;
+    letter-spacing:.34em;text-transform:uppercase;color:var(--mut);font-weight:500;margin-bottom:10px}
+  .cover .hero h1{font-size:46px;line-height:.96;letter-spacing:-.028em;margin:0 0 16px}
+  .cover .hero .sub{font-size:13px;color:var(--ink-2);line-height:1.55;max-width:60ch;font-weight:400}
+  .cover .hero .sub b{font-weight:600;color:var(--ink)}
+
+  /* ── print ─────────────────────────────────────────────────── */
+  @media print{
+    html,body{background:#fff}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:14mm;
+      page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    .page .pixelcity{opacity:.14}
+    .page.cover .pixelcity{opacity:.22}
+    footer{position:static;margin-top:18px}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 1 — ОБКЛАДИНКА + ОБСЯГ + НАБІР АГЕНТІВ + ФУНДАМЕНТ ░░░░░░░░░░ -->
+<div class="page cover">
+  <div class="pixelcity"></div>
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span class="active">AGRO AGENT</span>
+        <span>ТЕХНІЧНА АРХІТЕКТУРА</span>
+      </div>
+      <div class="meta">
+        Підготовлено для · <b>Agro&#8209;Arena / AgroPlatforma</b><br>
+        2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="label">DEVIEW × AGROPLATFORMA</div>
+    <h1>Agro Agent<br>Технічна<br>Архітектура.</h1>
+    <p class="sub">
+      Спільний AI-фундамент + архітектура кожного агента — <b>Agro-Vision & Expert</b> (v1),
+      <b>Smart Operator & Sales</b>, <b>Vendor Analytic</b>. Новий AI-шар поверх наявного Flutter-застосунку
+      та Salesforce-бекенду. Не перебудова.
+    </p>
+  </div>
+
+  <div class="scope">
+    <span class="lab">Обсяг</span>
+    v1 = спільний фундамент + Agro-Vision & Expert. Smart Operator & Sales та Vendor Analytic використовують той самий фундамент.
+    Жодних нових платформних зобов'язань, окрім перелічених у §02.
+  </div>
+
+  <h2><span>01 · Набір агентів</span><span class="num">С. 01 / 07</span></h2>
+  <table>
+    <thead><tr><th>Агент</th><th>Функція</th><th>Фаза</th><th>Нового коду vs. фундамент</th></tr></thead>
+    <tbody>
+      <tr class="rec"><td><span class="tag-a">Блок А · Agro-Vision & Expert</span></td><td>Фото → діагностика культури/проблеми → рецепт з каталогу</td><td><span class="pill v1">v1</span></td><td>≈100% нового коду (це і є фундамент)</td></tr>
+      <tr class="rec"><td><span class="tag-c">Блок В · Smart Operator & Sales</span></td><td>Рецепт → КП/замовлення в Salesforce; аналоги + крос-продаж</td><td><span class="pill p2">Фаза 2</span></td><td>≈30% нового коду (використовує Expert)</td></tr>
+      <tr class="rec"><td><span class="tag-e">Блок Д · Vendor Analytic</span></td><td>Дані Expert + Operator + SF → аналітика для вендорів та текстові звіти</td><td><span class="pill p2">Фаза 2</span></td><td>≈20% нового коду (лише читання)</td></tr>
+      <tr><td>Блок Б · Trading Agent</td><td>Планування врожаю / цінові тренди</td><td>Відкладено</td><td>Нові зовнішні інтеграції; не використовує фундамент</td></tr>
+      <tr><td>Блок Г · Market & Mentor</td><td>Маркетплейс завдань / навчання консультантів</td><td>Відкладено</td><td>Робочий процес; мінімум AI</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span>02 · Спільний фундамент</span><span class="num">С. 01 / 07</span></h2>
+  <table>
+    <thead><tr><th>Шар</th><th>Рішення</th><th>Специфікація</th></tr></thead>
+    <tbody>
+      <tr><td>Бекенд</td><td>FastAPI · Python 3.12</td><td>Async; авто-OpenAPI, який використовує Flutter</td></tr>
+      <tr><td>Дані / вектори</td><td>PostgreSQL 17 + pgvector</td><td>HNSW; &lt;20 мс @ 20k; SQL-фільтр метаданих; пулінг (PgBouncer / Cloud SQL) з першого дня</td></tr>
+      <tr><td>Хмара</td><td>GCP · Cloud Run · Cloud SQL · Vertex AI</td><td>Контейнеризація; автомасштабування; 35 с таймаут шлюзу</td></tr>
+      <tr><td>LLM</td><td>Anthropic SDK (напряму) · Claude через Vertex AI</td><td>Без фреймворку оркестрації</td></tr>
+      <tr><td>Автентифікація</td><td>Firebase Auth + JWT middleware</td><td>Валідація кожного запиту; retry/backoff для оновлення токенів</td></tr>
+      <tr><td>Salesforce</td><td>Connected App з обмеженим сервіс-акаунтом</td><td>Окремий набір дозволів на агента, мінімальні привілеї</td></tr>
+      <tr><td>Сховище</td><td>Cloud Storage</td><td>Завантаження через Signed-URL, автовидалення через 24 год</td></tr>
+      <tr><td>Журнал подій</td><td>Append-only таблиця, PostgreSQL</td><td>Один спільний екземпляр; Expert/Operator пишуть, Analytic читає</td></tr>
+      <tr><td>CI/CD</td><td>GitHub Actions → Docker → Cloud Run</td><td>Dev · Staging · Prod</td></tr>
+      <tr><td>Міграції</td><td>Alembic</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b> &nbsp;&nbsp; HONG KONG · STUTTGART · VANCOUVER · EDINBURGH</span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 01 / 07</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 2 — ДІАГРАМА ФУНДАМЕНТУ + НАСКРІЗНА ТОПОЛОГІЯ ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">ПОВНА ТОПОЛОГІЯ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <div class="dgm">┌──────── СПІЛЬНИЙ ФУНДАМЕНТ (v1) ──────────────────────────────────┐
+│ FastAPI · Anthropic SDK (Claude/Vertex) · PostgreSQL+pgvector    │
+│ Salesforce-конектор (з обмеженими правами) · Firebase Auth · Cloud Storage │
+│ Cloud Run · append-only журнал аудиту/подій                      │
+└───────────────────────────────────────────────────────────────────┘
+  ┌────────────────┐  події  ┌──────────────────────┐  події  ┌─────────────────┐
+  │ Agro-Vision &  │ ──────▶ │ Smart Operator &     │ ──────▶ │ Vendor Analytic │
+  │ Expert         │         │ Sales                │         │                 │
+  └────────────────┘         └──────────────────────┘         └─────────────────┘</div>
+
+  <h2><span>03 · Наскрізна архітектура</span><span class="num">С. 02 / 07</span></h2>
+  <p>Усі рівні, усі три агенти, на одній діаграмі. Суцільні стрілки — синхронні виклики; журнал аудиту/подій — міжагентний хребет: <b>Expert та Operator пишуть; Analytic читає</b>.</p>
+
+  <div class="dgm">╔══ КЛІЄНТ · Flutter-застосунок (наявний) — iOS · Android · (Flutter web для Analytic) ═╗
+║                                                                                       ║
+║  Камера ── Карта діагнозу ── Чат-порадник ── Затвердження КП ── Панель вендора         ║
+║                                                                                       ║
+║  Firebase Auth (JWT)  ·  OpenAPI-генерований Dart-клієнт  ·  Pact-тести в CI          ║
+╚════════│══════════════════════════════════════════════════════════│════════════════════╝
+         │ signed-URL завантаження                                   │ REST + JWT
+         ▼                                                           ▼
+  ┌──────────────┐  ┌──────────────────────────────────────────────────────────────────┐
+  │ Cloud Storage│  │ AI-ОРКЕСТРАЦІЙНИЙ БЕКЕНД · FastAPI на Cloud Run                  │
+  │ фото · 24 год│  │ JWT middleware · обмежувач запитів · лог затримок за етапами      │
+  │ TTL          │  │ ┌──────────────────────────────────────────────────────────────┐ │
+  │              │◀═│ │ Agro-Vision & Expert  Smart Operator & Sales  Vendor Analytic│ │
+  │ EXIF/GPS     │  │ │ ──────────────────── ────────────────────── ────────────────│ │
+  │  видалено    │  │ │ підготовка фото      генератор КП           ELT-задача      │ │
+  │  до LLM      │  │ │  (Pillow)              Рецепт → SF КП        (Планувальник →│ │
+  │              │  │ │ LLM-адаптер            аналоги/крос-продаж    Cloud Run job) │ │
+  └──────────────┘  │ │  (Claude)              ↑ pgvector            вітрина даних  │ │
+                    │ │ порогова перевірка       повторне             запити (SQL)   │ │
+                    │ │  впевненості             використання                        │ │
+                    │ │ RAG · pgvector          правила: маржа ·     генерація       │ │
+                    │ │  запит                    фасування ·          тексту         │ │
+                    │ │ формування рецепту        регуляторні          Claude         │ │
+                    │ │  + коментар              процес затвердження   описує SQL     │ │
+                    │ │ ──────────────────── ────────────────────── API панелі       │ │
+                    │ │                                                (tenant-      │ │
+                    │ │                                                 scoped read) │ │
+                    │ │   │                    │                  │                  │ │
+                    │ │   ▼ читання SF         ▼ читання +        ▼ читання SF      │ │
+                    │ │ Salesforce               чернетка SF        продажі         │ │
+                    │ │ конектор  (3 окремі сервіс-акаунти з наборами дозволів)   │ │
+                    │ │   │                    │                  │                  │ │
+                    │ │   ▼ запис подій         ▼ запис подій      ▼ читання         │ │
+                    │ │ Журнал аудиту/подій  (одна append-only таблиця)              │ │
+                    │ └────────────────────────────────────────────────────────────┘ │
+                    └────────────┬────────────────────────────┬───────────────────────┘
+                       R / W     │                  виклик    │
+                                 ▼                            ▼
+       ┌────────────────────────────────────┐   ┌──────────────────────────┐
+       │ PostgreSQL 17 + pgvector           │   │ Vertex AI Model Garden   │
+       │ Cloud SQL · PgBouncer pool         │   │ Claude (мультимодальний) │
+       │                                    │   │   Expert : vision + RAG  │
+       │ • векторний індекс (HNSW каталогу) │   │   Operator : ранжування  │
+       │ • кеш каталогу (оновлення щогодини)│   │     аналогів             │
+       │ • кеш угідь (щоденно)              │   │   Analytic : текстові    │
+       │ • чат-сесії (з обмеженим TTL)      │   │     звіти                │
+       │ • Журнал аудиту/подій (append-only) │   └──────────────────────────┘
+       │     Expert пише · Operator пише ·  │
+       │     Analytic читає                 │
+       │ • вітрина аналітики (мат. в'юхи)   │
+       └────────────────┬───────────────────┘
+                        │  обмежений сервіс-акаунт R/W (на агента)
+                        ▼
+       ┌────────────────────────────────────────────────────────────────────┐
+       │  SALESFORCE · Джерело істини                                       │
+       │  Каталог (20k SKU) · Акаунти · Угіддя · Ґрунти · Залишки · КП    │
+       │  Connected App: Expert читає · Operator читає + чернетка · Analytic читає │
+       └────────────────────────────────────────────────────────────────────┘
+
+  Наскрізні сервіси · GCP Secret Manager · Cloud Logging · Cloud Monitoring
+              · GitHub Actions CI/CD (Dev → Staging → Prod)
+              · Обов'язкові CI-перевірки: EXIF-strip · signed-URL-expiry ·
+                cache-stale-read · p99 &lt; 25 с навантажувальний тест</div>
+
+  <table>
+    <thead><tr><th>Позначення</th><th>Значення</th></tr></thead>
+    <tbody>
+      <tr><td><code>══</code> подвійна рамка</td><td>Межа рівня / домену (Клієнт · Бекенд · Salesforce)</td></tr>
+      <tr><td><code>──</code> одинарна рамка</td><td>Компонент або сервіс</td></tr>
+      <tr><td>Суцільна стрілка</td><td>Синхронний виклик (REST · SQL · виклик LLM)</td></tr>
+      <tr><td>Журнал подій</td><td>Міжагентний хребет — Expert та Operator пишуть; Analytic читає. Одна append-only таблиця в PostgreSQL.</td></tr>
+      <tr><td>3 SF-скоупи</td><td>Дозволи Salesforce на агента; мінімальні привілеї; лише Operator пише (тільки чернетки).</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 02 / 07</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 3 — AGRO-VISION & EXPERT ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">БЛОК А · AGRO-VISION & EXPERT</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>04 · <span class="tag-a">Agro-Vision & Expert</span> — Польова аналітика <span class="pill v1">v1</span></span><span class="num">С. 03 / 07</span></h2>
+  <p>Фото культури → діагностика культури + проблеми → ранжований рецепт із затверджених в Україні препаратів, наявних на складі. Лише читання із Salesforce.</p>
+
+  <div class="dgm">Flutter-зйомка ─signed URL─▶ Cloud Storage (24 год TTL)
+        │
+        ▼
+  ┌────────────────────────────────────────────────────┐
+  │ Підготовка фото  EXIF/GPS видалення + стиснення    │
+  │                  (Pillow)                           │
+  │ LLM-адаптер      Claude мультимодальний:            │
+  │                  культура + проблема                │
+  │ Впевненість      порогова перевірка; низька →       │
+  │                  чат-порадник                       │
+  │ RAG              pgvector / 20k каталог + фільтри   │
+  │ Залишки          Salesforce REST (реальний час,      │
+  │                  без кешу)                          │
+  │ Формування       ранжований рецепт + агрономічний   │
+  │                  коментар                           │
+  └───────────────┬────────────────────────────────────┘
+                  ▼
+  Журнал аудиту/подій: діагноз · рецепт · впевненість · перевизначення</div>
+
+  <table>
+    <thead><tr><th>Аспект</th><th>Специфікація</th></tr></thead>
+    <tbody>
+      <tr><td>Затримка</td><td>≤30 с наскрізна; 35 с шлюз; частковий результат при збої запиту залишків</td></tr>
+      <tr><td>Безпека</td><td>EXIF/GPS видалено до LLM (CI-перевірка); жодних ідентифікаторів у LLM; фото — TTL 24 год</td></tr>
+      <tr><td>Порогова перевірка впевненості</td><td>Валідація перед видачею рецепту; нижче порогу → чат-порадник</td></tr>
+      <tr><td>Перевірка точності</td><td>≥85% на тестовій вибірці, незалежна сліпа панель агрономів, до запуску; відстеження результатів у полі після запуску</td></tr>
+      <tr><td>Доступ до SF</td><td>Лише читання; залишки в реальному часі на запит, каталог/угіддя — кеш</td></tr>
+      <tr><td>Генерує події</td><td><code>diagnosis</code> · <code>prescription</code> · <code>confidence</code> · <code>consultant_override</code></td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 03 / 07</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 4 — SMART OPERATOR & SALES ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">БЛОК В · SMART OPERATOR & SALES</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>05 · <span class="tag-c">Smart Operator & Sales</span> — Операційна аналітика <span class="pill p2">Фаза 2</span></span><span class="num">С. 04 / 07</span></h2>
+  <p>Рецепт або ручний запит → чернетка КП у Salesforce із заміною аналогами + крос-продажем. Затвердження людиною перед фіксацією.</p>
+
+  <div class="dgm">Рецепт від Expert / ручний запит ─подія─▶
+  ┌────────────────────────────────────────────────────┐
+  │ Генератор КП                                       │
+  │  • Рядки рецепту → SF КП / Selling Opportunity     │
+  │  • Аналоги + крос-продаж ── pgvector               │
+  │    (повторно використовує індекс Expert)            │
+  │  • Правила: мін. маржа · фасування · регуляторні · │
+  │    залишки                                         │
+  └───────────────┬────────────────────────────────────┘
+        Запис ЧЕРНЕТКИ (обмежений, тільки чернетки)
+                  ▼
+  Salesforce КП/SO ──▶ Затвердження консультантом/супервізором ──▶ фіксація
+                  ▼
+  Журнал аудиту/подій: прийнято vs. перевизначено ──▶ Analytic</div>
+
+  <table>
+    <thead><tr><th>Аспект</th><th>Специфікація</th></tr></thead>
+    <tbody>
+      <tr><td>Повторне використання</td><td>SF-конектор Expert, векторний індекс каталогу, оркестрація, автентифікація, аудит</td></tr>
+      <tr><td>Нового коду</td><td>Генератор КП · шар правил · обмежений запис · UI затвердження (≈30%)</td></tr>
+      <tr><td>Доступ до SF</td><td>Запис лише чернеток до КП/SO; окремий обмежений дозвіл від Expert; без автоматичної фіксації</td></tr>
+      <tr><td>Детермінованість</td><td>Суми / аналоги / правила розраховані в коді, звіряються з SF; LLM лише ранжує</td></tr>
+      <tr><td>Затримка</td><td>Допустима асинхронність; фонова задача прийнятна</td></tr>
+      <tr><td>Залежність</td><td>Каталог правил (мін. маржа, фасування, регуляторні) зібраний та підтверджений до початку розробки</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 04 / 07</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 5 — VENDOR ANALYTIC ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">БЛОК Д · VENDOR ANALYTIC</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>06 · <span class="tag-e">Vendor Analytic</span> — Аналітика для вендорів <span class="pill p2">Фаза 2</span></span><span class="num">С. 05 / 07</span></h2>
+  <p>Події Expert + Operator + продажі Salesforce → аналітика з розбивкою по вендорах + текстові звіти. Лише читання.</p>
+
+  <div class="dgm">Події Expert  ┐
+  Події Operator├─▶ ELT (Cloud Scheduler → Cloud Run job)
+  Продажі SF   ┘            │
+                             ▼
+        ┌──────────────────────────────────────────┐
+        │ Вітрина аналітики (PostgreSQL)            │
+        │  матеріалізовані в'юхи з розбивкою        │
+        │  по вендорах                              │
+        │  регіон · препарат · консультант · час    │
+        │  метрики розраховані в SQL                │
+        └──────────────┬───────────────────────────┘
+            ┌───────────┴────────────┐
+            ▼                         ▼
+   Генерація текстових        API панелі (лише читання,
+   звітів (Claude описує       tenant-scoped) → панель
+    SQL-агрегати)              вендора</div>
+
+  <table>
+    <thead><tr><th>Аспект</th><th>Специфікація</th></tr></thead>
+    <tbody>
+      <tr><td>Повторне використання</td><td>PostgreSQL, Claude-адаптер, автентифікація, моніторинг</td></tr>
+      <tr><td>Нового коду</td><td>Схема вітрини · ELT-задачі · tenant-scoped API читання · промпти для тексту (≈20%)</td></tr>
+      <tr><td>Зовнішні залежності</td><td>Немає</td></tr>
+      <tr><td>Цілісність метрик</td><td>Усі числа розраховані в SQL; LLM описує результат словами на основі RAG-агрегатів, ніколи не генерує цифри</td></tr>
+      <tr><td>Ізоляція тенантів</td><td>Row-level scope на рівні вітрини + API; scope з автентифікованого принципала, не з тіла запиту</td></tr>
+      <tr><td>Мінімальна зона відповідальності</td><td>Звітність лише для читання; без розпізнавання зображень, без реального часу, без впливу на культури</td></tr>
+      <tr><td>Залежність</td><td>Обсяг обміну даними з вендорами узгоджений контрактно до проєктування вітрини</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 05 / 07</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 6 — РОБОТА AI ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">РОБОТА AI</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>07 · Робота AI — як система залишається чесною</span><span class="num">С. 06 / 07</span></h2>
+  <p>Ядро: <strong>Claude (мультимодальний)</strong> через Vertex AI. Навколо нього — шари обмежень, які не дозволяють моделі формувати фінальну відповідь самостійно. RAG необхідний, але недостатній; кожен шар нижче захищає від окремого типу помилки.</p>
+
+  <div class="dgm">┌── ЯДРО ──────────────────────────────────────────────────────────────────┐
+│  Claude (Vertex AI Model Garden) · мультимодальний · промпт + зображення  │
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  │ кандидат відповіді
+                                  ▼
+┌── ЗАХИСТ ПІД ЧАС ВИКОНАННЯ · застосовується на кожному запиті ───────────┐
+│ 1 · RAG по каталогу             лише реальні SKU можуть бути процитовані   │
+│ 2 · Порогова перевірка          відмова нижче порогу (&lt; 70%)               │
+│     впевненості                                                           │
+│ 3 · Жорсткий регуляторний      approved_in_ua = TRUE  (SQL WHERE)         │
+│     фільтр                                                                │
+│ 4 · Запит залишків у реальному  реальна наявність, ніколи не кеш           │
+│     часі з Salesforce                                                     │
+│ 5 · Детермінований SQL          LLM описує результат словами; числа        │
+│     для чисел                   розраховані в SQL                          │
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  ▼
+┌── АУДИТ КОЖНОГО ЗАПИТУ ──────────────────────────────────────────────────┐
+│ 6 · Аудит ланцюга міркувань     симптом → діагноз → правило → SKU + впевн.│
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  ▼
+┌── ЛЮДИНА В КОНТУРІ ──────────────────────────────────────────────────────┐
+│ 7 · Перевизначення консультантом / супервізором                           │
+│     людина затверджує до фіксації КП Operator                             │
+└─────────────────────────────────┬─────────────────────────────────────────┘
+                                  ▼
+                          Відповідь користувачу
+                                  │
+       ┌──────────────────────────┴──────────────────────────┐
+       ▼                                                     ▼
+┌── ВАЛІДАЦІЯ ДО ЗАПУСКУ ──────────┐    ┌── ВАЛІДАЦІЯ ПІСЛЯ ЗАПУСКУ ─────────┐
+│ 8 · Сліпа панель агрономів       │    │ 9 · Відстеження результатів у полі│
+│    ≥ 85% на тестовій вибірці     │    │    реальний перебіг хвороб /      │
+│    (незалежна від консультантів)  │    │    врожайність, перший сезон      │
+└──────────────────────────────────┘    └───────────────────────────────────┘</div>
+
+  <table>
+    <thead><tr><th style="width:30%">Шар</th><th>Від чого захищає</th><th style="width:24%">Де</th></tr></thead>
+    <tbody>
+      <tr><td>1 · RAG по каталогу</td><td>Вигадані препарати / SKU, яких немає в каталозі</td><td>Expert · pgvector-вибірка</td></tr>
+      <tr><td>2 · Порогова перевірка впевненості</td><td>Впевнено-помилкові діагнози нижче порогу довіри</td><td>Expert · шлюз у пайплайні</td></tr>
+      <tr><td>3 · Жорсткий регуляторний фільтр</td><td>Рекомендація препаратів, не затверджених для використання в Україні</td><td>SQL <code>WHERE approved_in_ua = TRUE</code> на запиті каталогу</td></tr>
+      <tr><td>4 · Запит залишків Salesforce в реальному часі</td><td>Рекомендація препаратів, яких немає на складі</td><td>Expert · live SF REST на кожен запит, без кешу</td></tr>
+      <tr><td>5 · Детермінований SQL для чисел</td><td>Галюциновані метрики у звітах вендорів (маржа, конверсії, підсумки)</td><td>Analytic · мат. в'юхи вітрини; LLM лише описує словами</td></tr>
+      <tr><td>6 · Аудит ланцюга міркувань</td><td>Помилкові відповіді без можливості пояснення / аудиту</td><td>PostgreSQL append-only таблиця аудиту; кожен рецепт логує симптом → діагноз → правило → SKU + впевненість</td></tr>
+      <tr><td>7 · Перевизначення консультантом / супервізором</td><td>Модель, яка «перемагає» людину-експерта в полі</td><td>Operator · процес затвердження до фіксації КП; перевизначення логуються</td></tr>
+      <tr><td>8 · Сліпа панель агрономів (до запуску)</td><td>Систематична неточність системи</td><td>Фреймворк оцінки · поріг ≥ 85% до продакшн-запуску</td></tr>
+      <tr><td>9 · Відстеження результатів у полі (після запуску)</td><td>Довгий хвіст дрейфу; сезонні сліпі зони; входні дані для перенавчання v2</td><td>Безперервно; порівнює оцінку панелі з реальністю протягом першого сезону</td></tr>
+    </tbody>
+  </table>
+
+  <div class="anchor">Одним реченням — AI ніколи не має останнього слова. Його мають дані.</div>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 06 / 07</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 7 — МІЖАГЕНТНА ВЗАЄМОДІЯ + РИЗИКИ ░░░░░░░░░░ -->
+<div class="page cover">
+  <div class="pixelcity"></div>
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">МІЖАГЕНТНА ВЗАЄМОДІЯ ТА РИЗИКИ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>08 · Міжагентна взаємодія</span><span class="num">С. 07 / 07</span></h2>
+  <table>
+    <thead><tr><th>Питання</th><th>Рішення</th></tr></thead>
+    <tbody>
+      <tr><td>Потік подій</td><td>Expert генерує події діагнозу/рецепту → Operator споживає, генерує події транзакцій → Analytic агрегує дані Expert + Operator + SF. Одна append-only таблиця, один екземпляр PostgreSQL, без брокера повідомлень.</td></tr>
+      <tr><td>Ізоляція запису в SF</td><td>Лише Operator пише (тільки чернетки). Expert, Analytic — лише читання. Три окремі набори дозволів.</td></tr>
+      <tr><td>Ізоляція відмов</td><td>Жоден агент не в критичному шляху іншого. Operator не працює → Expert продовжує діагностику; ELT Analytic збоїть → Expert, Operator не зачеплені.</td></tr>
+      <tr><td>Межа зворотного зв'язку v1</td><td>Зворотний зв'язок Expert (перенавчання / навчання релевантності) не автоматичний у v1. Замкнений цикл закривається через дію людини (огляд агрономом → оновлення каталогу/залишків). Автоматичний зворотний зв'язок відкладено на пост-v1.</td></tr>
+      <tr><td>Фазування</td><td>Expert виходить у v1 (фундамент). Operator, Analytic підключаються після v1 як окремі етапи.</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span>09 · Ризики та відкриті питання</span><span class="num">С. 07 / 07</span></h2>
+  <table>
+    <thead><tr><th>Пункт</th><th>Тип</th><th>Статус</th></tr></thead>
+    <tbody>
+      <tr><td>Відповідальність за RAG-корпус — агрономічна база знань (Expert)</td><td>Ризик</td><td>Відкрито — рішення щодо кадрів; головний фактор успіху</td></tr>
+      <tr><td>Каталог правил — маржа/фасування/регуляторні (Operator)</td><td>Залежність</td><td>Зібрати та підтвердити до розробки Operator</td></tr>
+      <tr><td>Обсяг обміну даними з вендорами (Analytic)</td><td>Залежність</td><td>Контрактна домовленість до проєктування вітрини</td></tr>
+      <tr><td>Актуальність каталогу / вікно застарівання</td><td>Залежність</td><td>Оновлення щогодини як допущення; підтвердити з Agro-Arena</td></tr>
+      <tr><td>Обмеження наявних Flutter-модулів / навігації / стану</td><td>Відкрито</td><td>Прийнято наявні патерни; обмеження не підтверджені</td></tr>
+      <tr><td>Вартість LLM / запит при масштабі 40k</td><td>Відкрито</td><td>Цільовий бюджет не встановлений; відстежується як контр-метрика</td></tr>
+      <tr><td>Автоматичний зворотний зв'язок Expert (перенавчання)</td><td>Обсяг</td><td>Відкладено на пост-v1, продумана архітектура</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b> &nbsp;&nbsp; AI, ЩО ПРАЦЮЄ ВСЕРЕДИНІ ВАШИХ ОПЕРАЦІЙ</span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 07 / 07 · КІНЕЦЬ</span></footer>
+</div>
+
+<script>
+  /* ── Генератор піксельного міста (спільний з декою) ───────── */
+  (function buildPixelCity(){
+    const W = 2400, H = 700;
+    const PIX = 3, CELL = 7;
+    let seed = 1337;
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+
+    let out = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice">`;
+    out += `<rect width="${W}" height="${H}" fill="none"/>`;
+
+    let x = 0;
+    while (x < W) {
+      const bw = Math.floor(28 + rnd() * 72);
+      const heightRoll = rnd();
+      const bh = Math.floor(80 + (heightRoll < 0.15 ? 380 + rnd()*200 : 80 + rnd() * 320));
+      const y = H - bh;
+      if (rnd() < 0.18) {
+        const spireH = 20 + Math.floor(rnd()*40);
+        out += `<rect x="${x + Math.floor(bw/2)}" y="${y - spireH}" width="2" height="${spireH}" fill="#0a0a09"/>`;
+      }
+      const padX = 3, padY = 3;
+      for (let cx = padX; cx < bw - padX; cx += CELL) {
+        for (let cy = padY; cy < bh - padY; cy += CELL) {
+          const topRatio = cy / bh;
+          if (rnd() < (0.32 + topRatio * 0.42)) {
+            out += `<rect x="${x + cx}" y="${y + cy}" width="${PIX}" height="${PIX}" fill="#0a0a09"/>`;
+          }
+        }
+      }
+      for (let cx = 0; cx < bw; cx += 2) {
+        if (rnd() < 0.55) {
+          out += `<rect x="${x + cx}" y="${H - 1}" width="1" height="1" fill="#0a0a09"/>`;
+        }
+      }
+      x += bw + Math.floor(1 + rnd() * 3);
+    }
+    out += `</svg>`;
+    const uri = `data:image/svg+xml;utf8,${encodeURIComponent(out)}`;
+    document.documentElement.style.setProperty('--pixelcity', `url("${uri}")`);
+  })();
+</script>
+</body>
+</html>
