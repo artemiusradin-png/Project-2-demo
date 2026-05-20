@@ -220,6 +220,25 @@
     font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--mut);
     opacity:.7;z-index:30;letter-spacing:.18em;text-transform:uppercase}
 
+  /* ── table (pricing slide) ─────────────────────────────────── */
+  .tbl{width:100%;border-collapse:collapse;margin:1vh 0 2vh;border-top:1px solid var(--ink)}
+  .tbl th{font-family:"Inter Tight",sans-serif;font-size:clamp(9px,.8vw,11px);
+    letter-spacing:.22em;text-transform:uppercase;color:var(--mut);font-weight:500;
+    padding:1.2vh 1vw;border-bottom:1px solid var(--ink);text-align:left}
+  .tbl td{padding:1.2vh 1vw;border-bottom:1px solid var(--hair);vertical-align:top;
+    font-size:clamp(11px,1vw,13px);line-height:1.45;color:var(--ink-2)}
+  .tbl td:first-child,.tbl th:first-child{padding-left:0}
+  .tbl td:last-child,.tbl th:last-child{padding-right:0}
+  .tbl td.num,.tbl th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl td b{color:var(--ink);font-weight:600}
+  .tbl .rec td{background:rgba(255,253,247,.55)}
+  .body.scroll-y{overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .note-list{list-style:none;font-size:clamp(10px,.9vw,12px);color:var(--mut);line-height:1.5;margin:0}
+  .note-list li{margin:0 0 .6vh 0;padding-left:1.4vw;position:relative;color:var(--ink-2)}
+  .note-list li::before{content:"·";position:absolute;left:.5vw;color:var(--mut);font-weight:600;font-size:1.2em}
+  .note-list li b{color:var(--ink);font-weight:600}
+
   @media print{
     html,body{background:#fff}
     .deck{height:auto;overflow:visible}
@@ -288,7 +307,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Виклик · Чому зараз</div>
-      <div class="meta">02 / 11 · <b>AGRO AGENT</b></div>
+      <div class="meta">02 / 12 · <b>AGRO AGENT</b></div>
     </div>
     <div class="body">
       <h2>Експертиза не <span class="ul">масштабується</span>.<br><span class="lt">Час вбиває угоду.</span></h2>
@@ -299,7 +318,7 @@
         <li><span class="n">04</span><span class="t"><b>Аналітика вендорів — сліпа зона.</b> Постачальники не бачать вчасно, де їхні продукти працюють, а де — ні.</span></li>
       </ul>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>02 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>02 / 12</span></div>
   </section>
 
   <!-- ─── 3 · THE THREE ─────────────────────────────────────────── -->
@@ -317,7 +336,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Пропозиція · Найвища ефективність для клієнта</div>
-      <div class="meta">03 / 11 · <b>AGRO AGENT</b></div>
+      <div class="meta">03 / 12 · <b>AGRO AGENT</b></div>
     </div>
     <div class="body">
       <h2>Три агенти, обрані за <span class="ul">цінність ÷ зусилля</span></h2>
@@ -344,7 +363,7 @@
         Не три окремі функції — <b>єдиний замкнений цикл</b> на спільному фундаменті.
       </p>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>03 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>03 / 12</span></div>
   </section>
 
   <!-- ─── 4 · LIVE DEMO ─────────────────────────────────────────── -->
@@ -369,7 +388,7 @@
         <iframe src="agro-demo/Demo-Portal_v1.html" allowfullscreen></iframe>
       </div>
     </div>
-    <div class="ft" style="bottom:1vh;left:3vw;right:3vw"><span><b>DEVIEW</b></span><span>04 / 11</span></div>
+    <div class="ft" style="bottom:1vh;left:3vw;right:3vw"><span><b>DEVIEW</b></span><span>04 / 12</span></div>
   </section>
 
   <!-- ─── 5 · FLYWHEEL ──────────────────────────────────────────── -->
@@ -387,7 +406,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Чому саме ці три · Маховик даних</div>
-      <div class="meta">05 / 11 · <b>AGRO AGENT</b></div>
+      <div class="meta">05 / 12 · <b>AGRO AGENT</b></div>
     </div>
     <div class="body">
       <h2>Expert → Operator → Analytic.<br><span class="lt">Це</span> <span class="ul">маховик даних</span>.</h2>
@@ -404,7 +423,7 @@
         — поза цим циклом, відкладені на наступні фази; не скасовані.
       </p>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>05 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>05 / 12</span></div>
   </section>
 
   <!-- ─── 6 · AGRO-VISION ──────────────────────────────────────── -->
@@ -422,7 +441,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Блок А · Польовий інтелект</div>
-      <div class="meta">06 / 11 · <b>v1</b></div>
+      <div class="meta">06 / 12 · <b>v1</b></div>
     </div>
     <div class="body">
       <h2>Agro-Vision &amp; Expert <span class="pill solid">v1</span></h2>
@@ -436,7 +455,7 @@
         <li><span class="n">03</span><span class="t"><b>EXIF/GPS видаляються до LLM</b> · жодних ідентифікаторів · фото автовидаляються через 24 год.</span></li>
       </ul>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>06 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>06 / 12</span></div>
   </section>
 
   <!-- ─── 7 · SMART OPERATOR ───────────────────────────────────── -->
@@ -454,7 +473,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Блок В · Операційна досконалість</div>
-      <div class="meta">07 / 11 · <b>Фаза 2</b></div>
+      <div class="meta">07 / 12 · <b>Фаза 2</b></div>
     </div>
     <div class="body">
       <h2>Smart Operator &amp; Sales <span class="pill mut">Фаза 2</span></h2>
@@ -468,7 +487,7 @@
         <li><span class="n">03</span><span class="t">Звіряється з обліковою системою — <b>LLM ранжує, але ніколи не рахує цифри сам</b>.</span></li>
       </ul>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>07 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>07 / 12</span></div>
   </section>
 
   <!-- ─── 8 · VENDOR ANALYTIC ──────────────────────────────────── -->
@@ -486,7 +505,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Блок Д · Аналітика для вендорів</div>
-      <div class="meta">08 / 11 · <b>Фаза 2</b></div>
+      <div class="meta">08 / 12 · <b>Фаза 2</b></div>
     </div>
     <div class="body">
       <h2>Vendor Analytic <span class="pill mut">Фаза 2</span></h2>
@@ -500,7 +519,7 @@
         <li><span class="n">03</span><span class="t">Повна <b>ізоляція даних між вендорами</b> · найменш ризиковий агент · мінімальна зона відповідальності.</span></li>
       </ul>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>08 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>08 / 12</span></div>
   </section>
 
   <!-- ─── 9 · WHY NOT B ────────────────────────────────────────── -->
@@ -518,7 +537,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Обґрунтування · Обрано для клієнта, не для нас</div>
-      <div class="meta">09 / 11 · <b>AGRO AGENT</b></div>
+      <div class="meta">09 / 12 · <b>AGRO AGENT</b></div>
     </div>
     <div class="body">
       <h2>Чому не <span class="ul">Trading Agent</span> першим?</h2>
@@ -537,7 +556,7 @@
         Його місце — <b>Фаза 2</b>, після того як маховик даних підтверджено. Висока цінність, але не першочерговий.
       </p>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>09 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>09 / 12</span></div>
   </section>
 
   <!-- ─── 10 · FOUNDATION ──────────────────────────────────────── -->
@@ -555,7 +574,7 @@
     </div>
     <div class="seclabel">
       <div class="lab">Один фундамент · Будуємо раз, розширюємо дешево</div>
-      <div class="meta">10 / 11 · <b>AGRO AGENT</b></div>
+      <div class="meta">10 / 12 · <b>AGRO AGENT</b></div>
     </div>
     <div class="body">
       <h2>Один фундамент, <span class="ul">три етапи</span>.</h2>
@@ -580,11 +599,111 @@
         </div>
       </div>
     </div>
-    <div class="ft"><span><b>DEVIEW</b></span><span>10 / 11</span></div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>10 / 12</span></div>
   </section>
 
-  <!-- ─── 11 · CLOSING ─────────────────────────────────────────── -->
-  <section class="slide cover" data-screen-label="11 Closing">
+  <!-- ─── 11 · PRICING ──────────────────────────────────────────── -->
+  <section class="slide faint" data-screen-label="11 Pricing">
+    <div class="pixelcity"></div>
+    <div class="topnav">
+      <div class="brand">DEVIEW</div>
+      <div class="nav-r">
+        <span class="crumb">AGRO AGENT</span>
+        <span class="crumb active">АРХІТЕКТУРА</span>
+        <span class="crumb">ДЕМО</span>
+        <span class="crumb">ПІДСУМОК</span>
+        <span class="lang"><span class="on">UK</span><span>EN</span></span>
+      </div>
+    </div>
+    <div class="seclabel">
+      <div class="lab">Пофазна програма · Фіксована ціна за фазу</div>
+      <div class="meta">11 / 12 · <b>AGRO AGENT</b></div>
+    </div>
+    <div class="body scroll-y">
+      <table class="tbl">
+        <thead>
+          <tr><th>Фаза</th><th>Що включено</th><th class="num">Інвестиція</th><th class="num">Терміни</th></tr>
+        </thead>
+        <tbody>
+          <tr class="rec">
+            <td><b>★ Фаза 1 · Agro-Vision &amp; Expert</b><br><span style="font-size:.85em;color:var(--mut)">Основа + флагман · v1</span></td>
+            <td>Спільна AI-основа (оркестрація · pgvector · Claude · SF connector · авторизація · журнал подій) + фото → діагноз → рецепт із каталогу + розмовний радник + продакшн-зміцнення + набір оцінки точності</td>
+            <td class="num"><b>$51k</b></td>
+            <td class="num">~12 тиж</td>
+          </tr>
+          <tr>
+            <td><b>Фаза 2 · Smart Operator &amp; Sales</b><br><span style="font-size:.85em;color:var(--mut)">Операційний · підключається до Фази 1</span></td>
+            <td>Побудова котирувань (Rx → SF Quote/SO) · ранжування аналогів та крос-продажів · движок правил (маржа · пакування · регуляторні) · scoped draft-only запис SF · потік погодження</td>
+            <td class="num">$29k</td>
+            <td class="num">~5–7 тиж</td>
+          </tr>
+          <tr>
+            <td><b>Фаза 3 · Vendor Analytic</b><br><span style="font-size:.85em;color:var(--mut)">Аналітика · підключається до Фази 1+2</span></td>
+            <td>ELT job · аналітичний data mart · генератор наративних звітів · read-only dashboard API · ізоляція тенантів</td>
+            <td class="num">$20k</td>
+            <td class="num">~4–6 тиж</td>
+          </tr>
+          <tr class="rec">
+            <td><b>Повна програма · А+В+Д</b><br><span style="font-size:.85em;color:var(--mut)">Усі три, послідовно зобов'язані</span></td>
+            <td>Повний маховик даних — Фази 1 → 2 → 3, кожна з гейтом на основі метрики прийняття попередньої фази</td>
+            <td class="num"><b>$99k</b></td>
+            <td class="num">~21–25 тиж</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="stripe">
+        <div class="big">$51k <span class="ar">→</span> $29k <span class="ar">→</span> $20k</div>
+        <div class="qt">
+          <b>Фіксована ціна за фазу, з гейтами.</b>
+          Оплата: <b>30%</b> при підписанні · <b>40%</b> на середньому майлстоуні · <b>30%</b> при здачі.
+          <b>Знижка за повну програму:</b> $95k при підписанні всіх трьох фаз разом.
+        </div>
+      </div>
+
+      <div class="triplet">
+        <div class="col">
+          <div class="lab">Лише Фаза 1</div>
+          <div class="cv"><b>Agro-Vision &amp; Expert</b> економить ~40 хв на діагноз. Консультанти швидші, точніші. Основа побудована для всього, що слідує далі.</div>
+        </div>
+        <div class="col">
+          <div class="lab">Фаза 1 + 2</div>
+          <div class="cv">Діагноз <b>плюс</b> миттєве котирування. Продаж закривається в момент довіри — без затримки бек-офісу.</div>
+        </div>
+        <div class="col">
+          <div class="lab">Фаза 1 + 2 + 3</div>
+          <div class="cv"><b>Повний маховик</b>. Інтелект для вендорів → кращі запаси, кращі умови, гостріші поради наступного сезону.</div>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi">
+          <div class="k">Фаза 1 vs. $250k інвестованих</div>
+          <div class="v">≈17%<small>від існуючих інвестицій</small></div>
+        </div>
+        <div class="kpi">
+          <div class="k">Повний маховик А→В→Д</div>
+          <div class="v">≈32%<small>за повний AI-цикл</small></div>
+        </div>
+        <div class="kpi">
+          <div class="k">Кожна фаза використовує</div>
+          <div class="v">70–80%<small>фундаменту Фази 1</small></div>
+        </div>
+      </div>
+
+      <div class="kick" style="margin-top:3vh">Припущення та виключення</div>
+      <ul class="note-list">
+        <li>Salesforce надає каталог / залишки / угіддя / ґрунти через придатні REST API. Якщо ні — <b>+$15k – $30k</b> (окремий рядок, Фаза 1).</li>
+        <li>Продакшн-використання LLM / vision API <b>оплачується клієнтом</b> (за використанням).</li>
+        <li>Кожна фаза має гейт на метриці прийняття. Фаза 1: ≥85% точність. Фаза 2: час циклу котирування. Фаза 3: свіжість data-mart + аудит ізоляції тенантів.</li>
+        <li>Пост-програмне обслуговування: <b>15–25% від вартості побудови / рік</b> — опціонально, окремий SOW.</li>
+      </ul>
+    </div>
+    <div class="ft"><span><b>DEVIEW</b></span><span>11 / 12</span></div>
+  </section>
+
+  <!-- ─── 12 · CLOSING ─────────────────────────────────────────── -->
+  <section class="slide cover" data-screen-label="12 Closing">
     <div class="pixelcity"></div>
     <div class="topnav">
       <div class="brand">DEVIEW</div>
@@ -628,7 +747,7 @@
   <button onclick="go(1)" aria-label="Наступний">›</button>
 </div>
 <div class="hint">← → · Space · F</div>
-<div class="pgn" id="pgn"><b>01</b> / 11</div>
+<div class="pgn" id="pgn"><b>01</b> / 12</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   /* ── Pixel-city background generator ─────────────────────────
