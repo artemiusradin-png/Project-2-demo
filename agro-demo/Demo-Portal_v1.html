@@ -274,6 +274,46 @@ body {
 .badge-a { background: #E3F2FD; color: #1565C0; }
 .badge-e { background: #F3E5F5; color: #7B1FA2; }
 
+/* ── CATEGORY SHEET ── */
+.cat-filter-chip {
+  display: inline-flex; align-items: center; padding: 6px 14px;
+  border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap;
+  background: #f2f2f7; color: #1a1a1a; cursor: pointer; border: 1.5px solid transparent;
+  transition: all 0.15s; flex-shrink: 0;
+}
+.cat-filter-chip.active { background: #E8F5E9; color: #1B5E20; border-color: #1B5E20; }
+.cat-product-card {
+  background: white; border-radius: 14px; padding: 13px 14px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06); position: relative; overflow: hidden;
+}
+.cat-product-icon { font-size: 28px; flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; background: #f2f2f7; display: flex; align-items: center; justify-content: center; }
+.cat-product-info { flex: 1; min-width: 0; }
+.cat-product-name { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.cat-product-brand { font-size: 11px; color: #8e8e93; margin-top: 1px; }
+.cat-product-price { font-size: 13px; font-weight: 800; color: #1B5E20; margin-top: 4px; }
+.cat-product-old-price { font-size: 11px; color: #aaa; text-decoration: line-through; margin-left: 5px; font-weight: 400; }
+.cat-product-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.cat-add-btn { background: #1B5E20; color: white; border: none; border-radius: 10px; padding: 7px 13px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.cat-add-btn:active { transform: scale(0.96); }
+.cat-promo-tag { position: absolute; top: 10px; right: 10px; background: #FF5722; color: white; font-size: 9px; font-weight: 900; padding: 2px 7px; border-radius: 20px; letter-spacing: 0.3px; }
+.cat-stock-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.cat-stock-green { background: #4CAF50; }
+.cat-stock-red   { background: #F44336; }
+
+/* ── PROMO SHEET ── */
+.promo-card {
+  background: white; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 10px;
+}
+.promo-card-header { padding: 14px 16px 10px; }
+.promo-badge { display: inline-flex; align-items: center; gap: 5px; background: #FF5722; color: white; font-size: 10px; font-weight: 900; padding: 3px 9px; border-radius: 20px; margin-bottom: 8px; letter-spacing: 0.3px; }
+.promo-title { font-size: 15px; font-weight: 800; color: #1a1a1a; margin-bottom: 3px; }
+.promo-desc { font-size: 12px; color: #666; line-height: 1.4; }
+.promo-card-footer { background: #f9f9f9; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid #f0f0f0; }
+.promo-expire { font-size: 11px; color: #8e8e93; }
+.promo-apply-btn { background: #1B5E20; color: white; border: none; border-radius: 10px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
+
 /* ── CATALOG ── */
 .catalog-list { padding: 14px 16px 20px; display: flex; flex-direction: column; gap: 2px; }
 .catalog-item { background: white; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s; border-bottom: 0.5px solid #f0f0f0; }
@@ -905,7 +945,7 @@ body {
                 <div class="big-card-left"><h3>Каталог</h3><p>Насіння, агрохімія та паливо</p></div>
                 <div class="big-card-emoji">🌽</div>
               </div>
-              <div class="big-card card-promo" onclick="showToast('🎁','Акції','3 активні пропозиції від вендорів','success')" style="position:relative">
+              <div class="big-card card-promo" onclick="openPromo()" style="position:relative">
                 <div class="big-card-left"><h3>Акції</h3><p>Знижки до 25%</p></div>
                 <div style="display:flex;align-items:center;gap:8px">
                   <span style="background:#FF5722;color:white;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;letter-spacing:0.3px;">3 НОВИХ</span>
@@ -1019,10 +1059,10 @@ body {
             </div>
 
             <div class="catalog-list">
-              <div class="catalog-item" onclick="showToast('🌱','Насіння','862 товари · BASF, DEKALB, KWS...')"><div class="catalog-item-left"><span class="catalog-icon">🌱</span><div><div class="catalog-name">Насіння</div><div class="catalog-count">862 товари</div></div></div><span class="chevron">›</span></div>
-              <div class="catalog-item" onclick="showToast('🐛','Засоби захисту','1,240 товарів · BASF, Bayer, Syngenta...')"><div class="catalog-item-left"><span class="catalog-icon">🐛</span><div><div class="catalog-name">Засоби захисту рослин</div><div class="catalog-count">1,240 товарів</div></div></div><span class="chevron">›</span></div>
-              <div class="catalog-item" onclick="showToast('⚗️','Добрива','540 товарів · Yara, ICL, EuroChem...')"><div class="catalog-item-left"><span class="catalog-icon">⚗️</span><div><div class="catalog-name">Добрива та МКД</div><div class="catalog-count">540 товарів</div></div></div><span class="chevron">›</span></div>
-              <div class="catalog-item" onclick="showToast('⛽','Паливо','12 позицій · Дизель, Бензин')"><div class="catalog-item-left"><span class="catalog-icon">⛽</span><div><div class="catalog-name">Паливо</div><div class="catalog-count">12 позицій</div></div></div><span class="chevron">›</span></div>
+              <div class="catalog-item" onclick="openCategory('seeds')"><div class="catalog-item-left"><span class="catalog-icon">🌱</span><div><div class="catalog-name">Насіння</div><div class="catalog-count">862 товари</div></div></div><span class="chevron">›</span></div>
+              <div class="catalog-item" onclick="openCategory('protection')"><div class="catalog-item-left"><span class="catalog-icon">🐛</span><div><div class="catalog-name">Засоби захисту рослин</div><div class="catalog-count">1,240 товарів</div></div></div><span class="chevron">›</span></div>
+              <div class="catalog-item" onclick="openCategory('fertilizers')"><div class="catalog-item-left"><span class="catalog-icon">⚗️</span><div><div class="catalog-name">Добрива та МКД</div><div class="catalog-count">540 товарів</div></div></div><span class="chevron">›</span></div>
+              <div class="catalog-item" onclick="openCategory('fuel')"><div class="catalog-item-left"><span class="catalog-icon">⛽</span><div><div class="catalog-name">Паливо</div><div class="catalog-count">12 позицій</div></div></div><span class="chevron">›</span></div>
             </div>
           </div>
           <div class="bottom-nav">
@@ -1638,6 +1678,94 @@ body {
         </div>
       </div>
 
+      <!-- ══ Category Product Sheet ══ -->
+      <div class="scan-sheet-overlay" id="category-overlay" onclick="if(event.target===this)closeCategory()">
+        <div class="scan-sheet" style="max-height:88%;display:flex;flex-direction:column;">
+          <div class="scan-sheet-handle"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 16px 14px;flex-shrink:0;">
+            <div>
+              <div style="font-size:18px;font-weight:800;color:#1a1a1a;" id="cat-sheet-title">Насіння</div>
+              <div style="font-size:12px;color:#8e8e93;margin-top:2px;" id="cat-sheet-count">862 товари</div>
+            </div>
+            <button onclick="closeCategory()" style="background:#f2f2f7;border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+          </div>
+          <!-- Sort/filter row -->
+          <div style="display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;">
+            <span class="cat-filter-chip active" id="cf-all" onclick="filterCategory('all',this)">Всі</span>
+            <span class="cat-filter-chip" id="cf-popular" onclick="filterCategory('popular',this)">🔥 Топ продажів</span>
+            <span class="cat-filter-chip" id="cf-promo" onclick="filterCategory('promo',this)">🏷️ Акція</span>
+            <span class="cat-filter-chip" id="cf-instock" onclick="filterCategory('instock',this)">✅ В наявності</span>
+          </div>
+          <!-- Product list -->
+          <div id="cat-product-list" style="flex:1;overflow-y:auto;padding:0 16px 24px;display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+      </div>
+
+      <!-- ══ Акції / Promo Sheet ══ -->
+      <div class="scan-sheet-overlay" id="promo-overlay" onclick="if(event.target===this)closePromo()">
+        <div class="scan-sheet" style="max-height:85%;display:flex;flex-direction:column;">
+          <div class="scan-sheet-handle"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 16px 14px;flex-shrink:0;">
+            <div>
+              <div style="font-size:18px;font-weight:800;color:#1a1a1a;">🏷️ Акції та знижки</div>
+              <div style="font-size:12px;color:#8e8e93;margin-top:2px;">3 активні пропозиції від вендорів</div>
+            </div>
+            <button onclick="closePromo()" style="background:#f2f2f7;border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+          </div>
+          <div style="flex:1;overflow-y:auto;padding:0 16px 24px;">
+
+            <!-- Promo 1 -->
+            <div class="promo-card">
+              <div class="promo-card-header" style="background:linear-gradient(135deg,#E8F5E9,#F1F8E9);">
+                <div class="promo-badge">🌽 -25%</div>
+                <div class="promo-title">Насіння кукурудзи DEKALB</div>
+                <div class="promo-desc">DKC 3511 та DKC 4795 — знижка 25% при замовленні від 50 посівних одиниць. Дійсно до кінця травня.</div>
+              </div>
+              <div class="promo-card-footer">
+                <div>
+                  <div style="font-size:13px;font-weight:800;color:#1B5E20;">₴3,750 <span style="font-size:11px;color:#aaa;text-decoration:line-through;font-weight:400;">₴5,000</span></div>
+                  <div class="promo-expire">⏱ Діє до 31 травня 2026</div>
+                </div>
+                <button class="promo-apply-btn" onclick="applyPromo('Насіння DEKALB DKC 3511','Знижка 25% · акційна пропозиція','3750','🌽'); closePromo()">+ До кошика</button>
+              </div>
+            </div>
+
+            <!-- Promo 2 -->
+            <div class="promo-card">
+              <div class="promo-card-header" style="background:linear-gradient(135deg,#E3F2FD,#E8EAF6);">
+                <div class="promo-badge" style="background:#1565C0;">🧪 -20%</div>
+                <div class="promo-title">Фунгіциди BASF — пакет захисту</div>
+                <div class="promo-desc">Луміген 400 SC + Пікус КЕ + Кабріо Топ у комплекті на весь сезон. Економія ₴8,400 на 150 га.</div>
+              </div>
+              <div class="promo-card-footer">
+                <div>
+                  <div style="font-size:13px;font-weight:800;color:#1565C0;">₴33,600 <span style="font-size:11px;color:#aaa;text-decoration:line-through;font-weight:400;">₴42,000</span></div>
+                  <div class="promo-expire">⏱ Діє до 15 червня 2026</div>
+                </div>
+                <button class="promo-apply-btn" style="background:#1565C0;" onclick="applyPromo('Пакет захисту BASF','Луміген + Пікус + Кабріо Топ · -20%','33600','🧪'); closePromo()">+ До кошика</button>
+              </div>
+            </div>
+
+            <!-- Promo 3 -->
+            <div class="promo-card">
+              <div class="promo-card-header" style="background:linear-gradient(135deg,#FFF8E1,#FFF3E0);">
+                <div class="promo-badge" style="background:#E65100;">⛽ -15%</div>
+                <div class="promo-title">Дизельне паливо А-500 · Літо 2026</div>
+                <div class="promo-desc">Сезонна знижка при замовленні від 2,000 л. Доставка на поле включена. Партнер: WOG Agroservice.</div>
+              </div>
+              <div class="promo-card-footer">
+                <div>
+                  <div style="font-size:13px;font-weight:800;color:#E65100;">₴37.4/л <span style="font-size:11px;color:#aaa;text-decoration:line-through;font-weight:400;">₴44/л</span></div>
+                  <div class="promo-expire">⏱ Діє до 30 червня 2026</div>
+                </div>
+                <button class="promo-apply-btn" style="background:#E65100;" onclick="applyPromo('Дизель А-500 · 2000 л','Сезонна знижка -15% · WOG Agroservice','74800','⛽'); closePromo()">+ До кошика</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <!-- ══ Global Search Overlay ══ -->
       <div class="scan-sheet-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
         <div class="scan-sheet" style="max-height:80%">
@@ -1943,6 +2071,119 @@ const searchDB = [
   { icon:'⛽', name:'Дизельне паливо', desc:'Паливо · Euro 5', price:'₴44/л', cat:'Паливо' },
   { icon:'⛽', name:'Бензин А-95', desc:'Паливо · Premium', price:'₴48/л', cat:'Паливо' },
 ];
+
+/* ── CATEGORY SHEET ── */
+const categoryData = {
+  seeds: {
+    title: 'Насіння', count: '862 товари',
+    products: [
+      { icon:'🌽', name:'DKC 3511 ФАО 310', brand:'DEKALB · Monsanto', price:'₴4,800/п.о.', priceNum:4800, promo:'−25%', promoPrice:'₴3,750/п.о.', inStock:true, popular:true },
+      { icon:'🌽', name:'DKC 4795 ФАО 470', brand:'DEKALB · Monsanto', price:'₴5,200/п.о.', priceNum:5200, promo:'−25%', promoPrice:'₴3,900/п.о.', inStock:true, popular:true },
+      { icon:'🌻', name:'НС Фантазія', brand:'Нові Сади · соняшник', price:'₴2,400/п.о.', priceNum:2400, promo:null, promoPrice:null, inStock:true, popular:true },
+      { icon:'🌻', name:'Аракар КЛП', brand:'Syngenta · соняшник CL', price:'₴3,100/п.о.', priceNum:3100, promo:null, promoPrice:null, inStock:true, popular:false },
+      { icon:'🌾', name:'Астарте', brand:'Limagrain · пшениця озима', price:'₴1,850/п.о.', priceNum:1850, promo:null, promoPrice:null, inStock:true, popular:false },
+      { icon:'🌾', name:'Бонус', brand:'BASF · ріпак озимий', price:'₴6,400/п.о.', priceNum:6400, promo:null, promoPrice:null, inStock:false, popular:false },
+    ]
+  },
+  protection: {
+    title: 'Засоби захисту рослин', count: '1,240 товарів',
+    products: [
+      { icon:'🧪', name:'Луміген 400 SC', brand:'BASF · фунгіцид', price:'₴1,240/л', priceNum:1240, promo:'−20%', promoPrice:'₴992/л', inStock:true, popular:true },
+      { icon:'🧪', name:'Вінцит Форте 080 FS', brand:'Syngenta · протруйник', price:'₴890/л', priceNum:890, promo:null, promoPrice:null, inStock:true, popular:true },
+      { icon:'🧪', name:'Євро-Лайтнінг', brand:'BASF · гербіцид Clearfield', price:'₴1,680/л', priceNum:1680, promo:null, promoPrice:null, inStock:true, popular:true },
+      { icon:'🧪', name:'Пікус КЕ', brand:'BASF · фунгіцид', price:'₴2,100/л', priceNum:2100, promo:'−20%', promoPrice:'₴1,680/л', inStock:true, popular:false },
+      { icon:'🧪', name:'Кабріо Топ', brand:'BASF · фунгіцид', price:'₴1,950/кг', priceNum:1950, promo:null, promoPrice:null, inStock:false, popular:false },
+      { icon:'🐛', name:'Актара 25 WG', brand:'Syngenta · інсектицид', price:'₴3,200/кг', priceNum:3200, promo:null, promoPrice:null, inStock:true, popular:false },
+    ]
+  },
+  fertilizers: {
+    title: 'Добрива та МКД', count: '540 товарів',
+    products: [
+      { icon:'⚗️', name:'Карбамід (46%)', brand:'EuroChem · азотне добриво', price:'₴14,800/т', priceNum:14800, promo:null, promoPrice:null, inStock:true, popular:true },
+      { icon:'⚗️', name:'Аміачна селітра (34%)', brand:'Ostchem · азотне', price:'₴11,200/т', priceNum:11200, promo:null, promoPrice:null, inStock:true, popular:true },
+      { icon:'⚗️', name:'NPK 16-16-16', brand:'Yara · комплексне', price:'₴19,400/т', priceNum:19400, promo:null, promoPrice:null, inStock:true, popular:false },
+      { icon:'⚗️', name:'Сульфат амонію (21%)', brand:'ICL · сірковмісне', price:'₴8,600/т', priceNum:8600, promo:null, promoPrice:null, inStock:true, popular:false },
+      { icon:'💧', name:'Плантафол 5-15-45', brand:'Valagro · листове', price:'₴680/кг', priceNum:680, promo:null, promoPrice:null, inStock:true, popular:false },
+    ]
+  },
+  fuel: {
+    title: 'Паливо', count: '12 позицій',
+    products: [
+      { icon:'⛽', name:'Дизель А-500 (Євро-5)', brand:'WOG Agroservice', price:'₴44/л', priceNum:44, promo:'−15%', promoPrice:'₴37.4/л', inStock:true, popular:true },
+      { icon:'⛽', name:'Бензин А-95', brand:'WOG Agroservice', price:'₴51/л', priceNum:51, promo:null, promoPrice:null, inStock:true, popular:false },
+      { icon:'🛢️', name:'Олива моторна 10W-40', brand:'Shell Helix · 20 л', price:'₴2,800/каністра', priceNum:2800, promo:null, promoPrice:null, inStock:true, popular:false },
+    ]
+  }
+};
+let currentCategory = null;
+let currentCategoryProducts = [];
+
+function openCategory(id) {
+  const data = categoryData[id];
+  if (!data) return;
+  currentCategory = id;
+  currentCategoryProducts = data.products;
+  document.getElementById('cat-sheet-title').textContent = data.title;
+  document.getElementById('cat-sheet-count').textContent = data.count;
+  // Reset filter chips
+  document.querySelectorAll('.cat-filter-chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('cf-all').classList.add('active');
+  renderCategoryProducts(data.products);
+  document.getElementById('category-overlay').classList.add('open');
+}
+
+function closeCategory() {
+  document.getElementById('category-overlay').classList.remove('open');
+}
+
+function filterCategory(filter, el) {
+  document.querySelectorAll('.cat-filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  let filtered = currentCategoryProducts;
+  if (filter === 'popular') filtered = currentCategoryProducts.filter(p => p.popular);
+  if (filter === 'promo')   filtered = currentCategoryProducts.filter(p => p.promo);
+  if (filter === 'instock') filtered = currentCategoryProducts.filter(p => p.inStock);
+  renderCategoryProducts(filtered);
+}
+
+function renderCategoryProducts(products) {
+  const list = document.getElementById('cat-product-list');
+  if (!products.length) {
+    list.innerHTML = '<div style="text-align:center;color:#8e8e93;padding:30px 0;font-size:14px;">Нічого не знайдено</div>';
+    return;
+  }
+  list.innerHTML = products.map(p => `
+    <div class="cat-product-card">
+      ${p.promo ? `<div class="cat-promo-tag">${p.promo}</div>` : ''}
+      <div class="cat-product-icon">${p.icon}</div>
+      <div class="cat-product-info">
+        <div class="cat-product-name">${p.name}</div>
+        <div class="cat-product-brand">${p.brand}</div>
+        <div class="cat-product-price">
+          ${p.promo ? p.promoPrice : p.price}
+          ${p.promo ? `<span class="cat-product-old-price">${p.price}</span>` : ''}
+        </div>
+      </div>
+      <div class="cat-product-right">
+        <div class="cat-stock-dot ${p.inStock ? 'cat-stock-green' : 'cat-stock-red'}" title="${p.inStock ? 'В наявності' : 'Немає'}"></div>
+        ${p.inStock
+          ? `<button class="cat-add-btn" onclick="addToCart('${p.name}','${p.brand}','${p.promo ? p.promoPrice : p.price}','${p.icon}')">+ Кошик</button>`
+          : `<span style="font-size:10px;color:#aaa;text-align:right;">Немає<br>в наявн.</span>`}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── PROMO SHEET ── */
+function openPromo() {
+  document.getElementById('promo-overlay').classList.add('open');
+}
+function closePromo() {
+  document.getElementById('promo-overlay').classList.remove('open');
+}
+function applyPromo(name, desc, priceStr, icon) {
+  addToCart(name, desc, priceStr, icon);
+}
 
 function openSearch() {
   document.getElementById('search-overlay').classList.add('open');
