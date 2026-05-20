@@ -163,6 +163,62 @@
   .cover .hero .sub{font-size:13px;color:var(--ink-2);line-height:1.55;max-width:60ch;font-weight:400}
   .cover .hero .sub b{font-weight:600;color:var(--ink)}
 
+  /* ── narrative beats (flywheel) ──────────────────────────── */
+  .beat{padding:10px 14px 10px 16px;margin:5px 0;
+    border-left:3px solid var(--tone);background:rgba(255,253,247,.55)}
+  .beat .bt{font-family:"Inter Tight",sans-serif;font-size:9.5px;
+    letter-spacing:.22em;text-transform:uppercase;font-weight:600;
+    color:var(--tone);margin-bottom:4px}
+  .beat .bx{font-size:11.5px;color:var(--ink-2);line-height:1.48}
+  .beat .bx i{color:var(--mut);font-style:italic}
+  .beat .bx b{color:var(--ink)}
+
+  /* ── 3-col grid + cards ────────────────────────────────── */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin:6px 0 12px}
+  .fcard{padding:11px 12px;border-right:1px solid var(--hair)}
+  .fcard:last-child{border-right:none}
+  .fcard .fh{font-family:"Inter Tight",sans-serif;font-size:9.5px;
+    letter-spacing:.22em;text-transform:uppercase;font-weight:600;
+    color:var(--tone);margin-bottom:5px}
+  .fcard .fb{font-size:11px;color:var(--ink-2);line-height:1.45}
+  .fcard .fb b{color:var(--ink)}
+
+  /* ── big statement callout ─────────────────────────────── */
+  .statement{padding:14px 0;margin:6px 0 12px;
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--hair)}
+  .statement .big{font-family:"Inter Tight",sans-serif;font-size:17px;
+    font-weight:600;letter-spacing:-.02em;color:var(--ink);margin-bottom:6px}
+  .statement .stxt{font-size:11.5px;color:var(--ink-2);line-height:1.5}
+  .statement .stxt b{color:var(--ink)}
+
+  /* ── question IDs + draft insets ───────────────────────── */
+  td.qid{font-family:"JetBrains Mono",monospace;font-size:10px;
+    font-weight:600;color:var(--tone);white-space:nowrap;width:38px}
+  td .draft{margin-top:6px;padding:6px 10px;font-size:10px;
+    border-left:2px solid var(--hair);color:var(--mut);line-height:1.45}
+  td .draft b{color:var(--ink);font-weight:600}
+  .blocker{display:inline-block;font-family:"Inter Tight",sans-serif;
+    font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+    padding:2px 7px;border:1px solid var(--tone);color:var(--tone);
+    border-radius:99px;margin-top:4px}
+  .blocker.mid{border-color:var(--tone-c);color:var(--tone-c)}
+  .blocker.ok{border-color:var(--tone-e);color:var(--tone-e)}
+
+  /* ── filled alert box ──────────────────────────────────── */
+  .fillbox{padding:11px 14px;margin:6px 0 12px;
+    background:rgba(176,69,39,.05);border:1px solid rgba(176,69,39,.15);
+    font-size:11px;line-height:1.45;color:var(--ink-2)}
+  .fillbox .fhd{font-family:"Inter Tight",sans-serif;font-size:9.5px;
+    letter-spacing:.22em;text-transform:uppercase;font-weight:500;
+    color:var(--tone);margin-bottom:5px;display:block}
+
+  /* ── summary callout (warm) ────────────────────────────── */
+  .summary-warm{padding:11px 14px;margin:6px 0 14px;
+    border-top:1px solid var(--tone);border-bottom:1px solid var(--tone);
+    background:rgba(176,69,39,.04);font-size:11.5px;color:var(--ink-2)}
+  .summary-warm b{color:var(--tone);font-weight:600}
+
   /* ── print ─────────────────────────────────────────────────── */
   @media print{
     html,body{background:#fff}
@@ -211,7 +267,7 @@
     Жодних нових платформних зобов'язань, окрім перелічених у §02.
   </div>
 
-  <h2><span>01 · Набір агентів</span><span class="num">С. 01 / 07</span></h2>
+  <h2><span>01 · Набір агентів</span><span class="num">С. 01 / 14</span></h2>
   <table>
     <thead><tr><th>Агент</th><th>Функція</th><th>Фаза</th><th>Нового коду vs. фундамент</th></tr></thead>
     <tbody>
@@ -223,7 +279,7 @@
     </tbody>
   </table>
 
-  <h2><span>02 · Спільний фундамент</span><span class="num">С. 01 / 07</span></h2>
+  <h2><span>02 · Спільний фундамент</span><span class="num">С. 01 / 14</span></h2>
   <table>
     <thead><tr><th>Шар</th><th>Рішення</th><th>Специфікація</th></tr></thead>
     <tbody>
@@ -240,7 +296,7 @@
     </tbody>
   </table>
 
-  <footer><span><b>DEVIEW</b> &nbsp;&nbsp; HONG KONG · STUTTGART · VANCOUVER · EDINBURGH</span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 01 / 07</span></footer>
+  <footer><span><b>DEVIEW</b> &nbsp;&nbsp; HONG KONG · STUTTGART · VANCOUVER · EDINBURGH</span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 01 / 14</span></footer>
 </div>
 
 <!-- ░░░░░░░░░░ СТОРІНКА 2 — ДІАГРАМА ФУНДАМЕНТУ + НАСКРІЗНА ТОПОЛОГІЯ ░░░░░░░░░░ -->
@@ -266,7 +322,7 @@
   │ Expert         │         │ Sales                │         │                 │
   └────────────────┘         └──────────────────────┘         └─────────────────┘</div>
 
-  <h2><span>03 · Наскрізна архітектура</span><span class="num">С. 02 / 07</span></h2>
+  <h2><span>03 · Наскрізна архітектура</span><span class="num">С. 02 / 14</span></h2>
   <p>Усі рівні, усі три агенти, на одній діаграмі. Суцільні стрілки — синхронні виклики; журнал аудиту/подій — міжагентний хребет: <b>Expert та Operator пишуть; Analytic читає</b>.</p>
 
   <div class="dgm">╔══ КЛІЄНТ · Flutter-застосунок (наявний) — iOS · Android · (Flutter web для Analytic) ═╗
@@ -344,7 +400,7 @@
     </tbody>
   </table>
 
-  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 02 / 07</span></footer>
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 02 / 14</span></footer>
 </div>
 
 <!-- ░░░░░░░░░░ СТОРІНКА 3 — AGRO-VISION & EXPERT ░░░░░░░░░░ -->
@@ -360,7 +416,7 @@
     </div>
   </header>
 
-  <h2><span>04 · <span class="tag-a">Agro-Vision & Expert</span> — Польова аналітика <span class="pill v1">v1</span></span><span class="num">С. 03 / 07</span></h2>
+  <h2><span>04 · <span class="tag-a">Agro-Vision & Expert</span> — Польова аналітика <span class="pill v1">v1</span></span><span class="num">С. 03 / 14</span></h2>
   <p>Фото культури → діагностика культури + проблеми → ранжований рецепт із затверджених в Україні препаратів, наявних на складі. Лише читання із Salesforce.</p>
 
   <div class="dgm">Flutter-зйомка ─signed URL─▶ Cloud Storage (24 год TTL)
@@ -394,7 +450,7 @@
     </tbody>
   </table>
 
-  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 03 / 07</span></footer>
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 03 / 14</span></footer>
 </div>
 
 <!-- ░░░░░░░░░░ СТОРІНКА 4 — SMART OPERATOR & SALES ░░░░░░░░░░ -->
@@ -410,7 +466,7 @@
     </div>
   </header>
 
-  <h2><span>05 · <span class="tag-c">Smart Operator & Sales</span> — Операційна аналітика <span class="pill p2">Фаза 2</span></span><span class="num">С. 04 / 07</span></h2>
+  <h2><span>05 · <span class="tag-c">Smart Operator & Sales</span> — Операційна аналітика <span class="pill p2">Фаза 2</span></span><span class="num">С. 04 / 14</span></h2>
   <p>Рецепт або ручний запит → чернетка КП у Salesforce із заміною аналогами + крос-продажем. Затвердження людиною перед фіксацією.</p>
 
   <div class="dgm">Рецепт від Expert / ручний запит ─подія─▶
@@ -440,7 +496,7 @@
     </tbody>
   </table>
 
-  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 04 / 07</span></footer>
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 04 / 14</span></footer>
 </div>
 
 <!-- ░░░░░░░░░░ СТОРІНКА 5 — VENDOR ANALYTIC ░░░░░░░░░░ -->
@@ -456,7 +512,7 @@
     </div>
   </header>
 
-  <h2><span>06 · <span class="tag-e">Vendor Analytic</span> — Аналітика для вендорів <span class="pill p2">Фаза 2</span></span><span class="num">С. 05 / 07</span></h2>
+  <h2><span>06 · <span class="tag-e">Vendor Analytic</span> — Аналітика для вендорів <span class="pill p2">Фаза 2</span></span><span class="num">С. 05 / 14</span></h2>
   <p>Події Expert + Operator + продажі Salesforce → аналітика з розбивкою по вендорах + текстові звіти. Лише читання.</p>
 
   <div class="dgm">Події Expert  ┐
@@ -489,7 +545,7 @@
     </tbody>
   </table>
 
-  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 05 / 07</span></footer>
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 05 / 14</span></footer>
 </div>
 
 <!-- ░░░░░░░░░░ СТОРІНКА 6 — РОБОТА AI ░░░░░░░░░░ -->
@@ -505,7 +561,7 @@
     </div>
   </header>
 
-  <h2><span>07 · Робота AI — як система залишається чесною</span><span class="num">С. 06 / 07</span></h2>
+  <h2><span>07 · Робота AI — як система залишається чесною</span><span class="num">С. 06 / 14</span></h2>
   <p>Ядро: <strong>Claude (мультимодальний)</strong> через Vertex AI. Навколо нього — шари обмежень, які не дозволяють моделі формувати фінальну відповідь самостійно. RAG необхідний, але недостатній; кожен шар нижче захищає від окремого типу помилки.</p>
 
   <div class="dgm">┌── ЯДРО ──────────────────────────────────────────────────────────────────┐
@@ -561,12 +617,11 @@
 
   <div class="anchor">Одним реченням — AI ніколи не має останнього слова. Його мають дані.</div>
 
-  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 06 / 07</span></footer>
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 06 / 14</span></footer>
 </div>
 
 <!-- ░░░░░░░░░░ СТОРІНКА 7 — МІЖАГЕНТНА ВЗАЄМОДІЯ + РИЗИКИ ░░░░░░░░░░ -->
-<div class="page cover">
-  <div class="pixelcity"></div>
+<div class="page">
   <header>
     <div class="brand">DEVIEW</div>
     <div class="head-r">
@@ -578,7 +633,7 @@
     </div>
   </header>
 
-  <h2><span>08 · Міжагентна взаємодія</span><span class="num">С. 07 / 07</span></h2>
+  <h2><span>08 · Міжагентна взаємодія</span><span class="num">С. 07 / 14</span></h2>
   <table>
     <thead><tr><th>Питання</th><th>Рішення</th></tr></thead>
     <tbody>
@@ -590,7 +645,7 @@
     </tbody>
   </table>
 
-  <h2><span>09 · Ризики та відкриті питання</span><span class="num">С. 07 / 07</span></h2>
+  <h2><span>09 · Ризики та відкриті питання</span><span class="num">С. 07 / 14</span></h2>
   <table>
     <thead><tr><th>Пункт</th><th>Тип</th><th>Статус</th></tr></thead>
     <tbody>
@@ -604,7 +659,489 @@
     </tbody>
   </table>
 
-  <footer><span><b>DEVIEW</b> &nbsp;&nbsp; AI, ЩО ПРАЦЮЄ ВСЕРЕДИНІ ВАШИХ ОПЕРАЦІЙ</span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 07 / 07 · КІНЕЦЬ</span></footer>
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 07 / 14</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 8 — МАХОВИК ДАНИХ ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">МАХОВИК ДАНИХ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>10 · Маховик даних</span><span class="num">С. 08 / 14</span></h2>
+  <p><span class="tag-a">Agro-Vision &amp; Expert</span> → <span class="tag-c">Smart Operator &amp; Sales</span> → <span class="tag-e">Vendor Analytic</span>: кожен агент робить наступного ціннішим.</p>
+
+  <div class="scope">
+    <span class="lab">Ключова ідея</span>
+    Agro-Vision &amp; Expert діагностує. Smart Operator &amp; Sales перетворює це на дохід. Vendor Analytic перетворює обидва потоки на інтелект, що загострює наступний діагноз. Дані проходять через одну систему, накопичуються в одному місці й не можуть бути відтворені конкурентом, який не має дистриб'юторської мережі, польового моменту та транзакції одночасно.
+  </div>
+
+  <div class="statement">
+    <div class="big">Фото → Rx → Котирування → Інтелект</div>
+    <div class="stxt"><b>Те, що раніше займало 40 хвилин, відбувається до того, як фермер повернеться до свого авто.</b> Консультант фотографує, система знаходить правильний продукт у каталозі з 20 000 позицій і формує котирування.</div>
+  </div>
+
+  <h3>Дуга — три такти</h3>
+
+  <div class="beat">
+    <div class="bt">Такт 1 · Момент істини</div>
+    <div class="bx">Консультант під Полтавою. Фермер показує йому жовтіюче листя. Зараз він вгадує — або телефонує комусь, хто теж вгадує. Він фотографує; <b>Agro-Vision &amp; Expert</b> зчитує: проблему, лікування, продукт. <i>Фермер бачить експертизу, а не продавця. Довіра заробляється за тридцять секунд.</i></div>
+  </div>
+
+  <div class="beat" style="border-left-color:var(--tone-c)">
+    <div class="bt" style="color:var(--tone-c)">Такт 2 · Довіра стає доходом</div>
+    <div class="bx">Ця рекомендація не потрапляє в блокнот. <b>Smart Operator &amp; Sales</b> записує котирування в Salesforce, поки консультант ще в полі. Без бек-офісу, без затримок. <i>Продаж відбувається в момент, коли фермер повірив.</i></div>
+  </div>
+
+  <div class="beat" style="border-left-color:var(--tone-e)">
+    <div class="bt" style="color:var(--tone-e)">Такт 3 · Цикл стискається</div>
+    <div class="bx">Кожен діагноз і кожен продаж живить <b>Vendor Analytic</b>. Постачальники бачать, що насправді відбувається в полях цього сезону — вони краще формують запаси, краще встановлюють ціни, глибше партнеряться. Що робить поради наступного місяця гострішими.
+    <br><br><b>Чесно:</b> у v1 цей цикл замикається через дії вашої команди на основі даних — ваших агрономів та відділ закупівель. Модель не перенавчає сама себе. Дані накопичуються в одному місці; ваші люди діють на їх основі.</div>
+  </div>
+
+  <div class="dgm">  Agro-Vision &amp; Expert діагностує ──▶ емітує події рецепту + результату
+       ▲                                        │
+       │                                        ▼
+  кращий Rx          Smart Operator &amp; Sales перетворює Rx на КП / замовлення
+  (правильні продукти,                          │  емітує транзакційні події
+   правильні залишки)                           ▼
+       │              Vendor Analytic агрегує все + Salesforce → інтелект для вендорів
+       └──────── кращі умови вендорів / залишки ◀────────┘</div>
+
+  <div class="anchor">▸ Кожне поле, яке ваші консультанти обходять цього сезону, або тренує вашу систему — або не тренує нікого.</div>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 08 / 14</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 9 — МАХОВИК ДАНИХ · ЗАПИТАННЯ + ПОСЛІДОВНІСТЬ ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">МАХОВИК ДАНИХ · ЗАПИТАННЯ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>11 · Очікувані запитання</span><span class="num">С. 09 / 14</span></h2>
+  <table>
+    <thead><tr><th style="width:34%">Запитання</th><th>Наша позиція</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Як це покращує економіку з часом?</b></td>
+        <td>Захищена частина — це сам датасет — він вимагає дистриб'юторську мережу, польовий момент і транзакцію в одному місці. Окремий застосунок або ERP має щонайбільше одне з трьох.</td>
+      </tr>
+      <tr>
+        <td><b>AI навчається та вдосконалюється самостійно?</b></td>
+        <td>Ні. У v1 дані накопичуються в одному місці, а ваша команда діє на їх основі. Без самонавчання. Архітектура спроєктована так, щоб автоматичний зворотний зв'язок можна було додати після v1 без перебудови.</td>
+      </tr>
+      <tr>
+        <td><b>Чи не будуть фермери не довіряти діагнозу з телефону?</b></td>
+        <td>Якір довіри — консультант, а не застосунок. Це робить консультанта, якому вже довіряють, швидшим і більш обґрунтованим — система підкріплює рекомендацію доказами.</td>
+      </tr>
+      <tr>
+        <td><b>Як я дізнаюся, що три агенти — це дійсно одна система?</b></td>
+        <td>Expert, Operator та Analytic пишуть та читають з одного журналу подій, в одній базі даних. Це спільний стан, а не інтеграція.</td>
+      </tr>
+      <tr>
+        <td><b>Автоматизація котирувань замінює операційну команду?</b></td>
+        <td>Система прискорює котирування — вона прибирає 40 хвилин пошуку, а не судження. Людина затверджує кожне котирування перед фіксацією.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span>Чому саме ця послідовність — Expert → Operator → Analytic</span></h2>
+  <div class="grid3">
+    <div class="fcard">
+      <div class="fh" style="color:var(--tone)">Блок А · Expert першим</div>
+      <div class="fb"><b>Довіра — це вхідні ворота.</b> Діагноз листка можна перевірити на місці — найшвидший спосіб побудувати впевненість у системі. Все інше успадковує цю довіру.</div>
+    </div>
+    <div class="fcard">
+      <div class="fh" style="color:var(--tone-c)">Блок В · Operator другим</div>
+      <div class="fb"><b>Довіра стає доходом.</b> Коли консультант довіряє діагнозу, котирування — природний наступний крок. ≈30% нового коду — використовує всю основу А.</div>
+    </div>
+    <div class="fcard">
+      <div class="fh" style="color:var(--tone-e)">Блок Д · Analytic третім</div>
+      <div class="fb"><b>Дохід стає інтелектом.</b> Аналітика для вендорів із даних А+В. ≈20% нового, лише читання, нуль зовнішніх залежностей. Найменший ризик, найбільший важіль.</div>
+    </div>
+  </div>
+
+  <div class="scope">
+    <span class="lab">Чому не Trading Agent (Блок Б) першим?</span>
+    Блок Б — найцікавіший для презентації — планування культур та ринкові прогнози. Але ринковий прогноз неможливо перевірити, поки не мине сезон. Ціль №1 — <b>побудувати довіру до AI</b>. Ви заробляєте це відповідями, які доводять себе <b>сьогодні</b> — діагноз листка, звірюване котирування. Блок Б належить до Фази 2+, після того як маховик доведено.
+  </div>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 09 / 14</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 10 — ПОФАЗНЕ ЦІНОУТВОРЕННЯ ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">ПОФАЗНЕ ЦІНОУТВОРЕННЯ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <div class="scope">
+    <span class="lab">Обсяг</span>
+    AI-функціональний рівень для <b>існуючого</b> Flutter-застосунку та Salesforce-бекенду — не перебудова. Поставляється як <b>трифазна програма: Expert → Operator → Analytic</b>. Кожна фаза випускається незалежно з фіксованим обсягом, фіксованою ціною та вимірюваним гейтом.
+  </div>
+
+  <h2><span>12 · Пофазна програма</span><span class="num">С. 10 / 14</span></h2>
+  <table>
+    <thead>
+      <tr><th>Фаза</th><th>Що включено</th><th class="num">Інвестиція</th><th class="num">Терміни</th></tr>
+    </thead>
+    <tbody>
+      <tr class="rec">
+        <td><b><span class="tag-a">★ Фаза 1 · Agro-Vision &amp; Expert</span></b><br><span style="font-size:10px;color:var(--mut)">Основа + флагман · v1</span></td>
+        <td>Спільна AI-основа (оркестрація · pgvector · Claude · SF connector · авторизація · журнал подій) + фото → діагноз → рецепт із каталогу + розмовний радник + продакшн-зміцнення + набір оцінки точності</td>
+        <td class="num"><b>$38k – $46k</b></td><td class="num">~12 тиж</td>
+      </tr>
+      <tr>
+        <td><b><span class="tag-c">Фаза 2 · Smart Operator &amp; Sales</span></b><br><span style="font-size:10px;color:var(--mut)">Операційний · підключається до Фази 1</span></td>
+        <td>Побудова котирувань (Rx → SF Quote/SO) · ранжування аналогів та крос-продажів · движок правил (маржа · пакування · регуляторні) · scoped draft-only запис SF · потік погодження</td>
+        <td class="num">$20k – $26k</td><td class="num">~5–7 тиж</td>
+      </tr>
+      <tr>
+        <td><b><span class="tag-e">Фаза 3 · Vendor Analytic</span></b><br><span style="font-size:10px;color:var(--mut)">Аналітика · підключається до Фази 1+2</span></td>
+        <td>ELT job · аналітичний data mart у розрізі вендорів · генератор наративних звітів (Claude описує SQL-агрегати) · read-only dashboard API · ізоляція тенантів</td>
+        <td class="num">$14k – $18k</td><td class="num">~4–6 тиж</td>
+      </tr>
+      <tr class="rec">
+        <td><b>Повна програма · А+В+Д</b><br><span style="font-size:10px;color:var(--mut)">Усі три, послідовно зобов'язані</span></td>
+        <td>Повний маховик даних — Фази 1 → 2 → 3, кожна з гейтом на основі метрики прийняття попередньої фази</td>
+        <td class="num"><b>$76k – $86k</b></td><td class="num">~21–25 тиж</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="statement">
+    <div class="big">$42k → $22k → $16k</div>
+    <div class="stxt">
+      <b>Рекомендовані котирування — фіксована ціна за фазу, з гейтами.</b><br>
+      Оплата по фазах: <b>30%</b> при підписанні · <b>40%</b> на середньому майлстоуні · <b>30%</b> при здачі фази.
+      <b>Знижка за повну програму:</b> $76k (≈5% знижки) при підписанні всіх трьох фаз разом.
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="fcard">
+      <div class="fh">Лише Фаза 1</div>
+      <div class="fb"><b>Agro-Vision &amp; Expert</b> економить ~40 хв на діагноз. Консультанти швидші, точніші. Основа побудована для всього, що слідує далі.</div>
+    </div>
+    <div class="fcard">
+      <div class="fh" style="color:var(--tone-c)">Фаза 1 + 2</div>
+      <div class="fb">Діагноз <b>плюс</b> миттєве котирування. Продаж закривається в момент довіри — без затримки бек-офісу.</div>
+    </div>
+    <div class="fcard">
+      <div class="fh" style="color:var(--tone-e)">Фаза 1 + 2 + 3</div>
+      <div class="fb"><b>Повний маховик</b>. Інтелект для вендорів → кращі запаси, кращі умови, гостріші поради наступного сезону.</div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">Фаза 1 vs. $250k інвестованих</div><div class="v">≈17% <small>від існуючих інвестицій</small></div></div>
+    <div class="kpi"><div class="k">Повний маховик А→В→Д</div><div class="v">≈32% <small>за повний AI-цикл</small></div></div>
+    <div class="kpi"><div class="k">Кожна фаза використовує</div><div class="v">70–80% <small>фундаменту Фази 1</small></div></div>
+  </div>
+
+  <h2><span>Припущення та виключення</span></h2>
+  <ul class="note">
+    <li>Salesforce надає каталог / залишки / угіддя / ґрунти через придатні REST API. Якщо ні, робота з доступом до даних — <b>+$15k – $30k</b> (окремий рядок, Фаза 1).</li>
+    <li>Продакшн-використання LLM / vision API <b>оплачується клієнтом</b> (за використанням).</li>
+    <li>Кожна фаза має гейт на метриці прийняття. Фаза 1: ≥85% точність. Фаза 2: час циклу котирування. Фаза 3: свіжість data-mart + аудит ізоляції тенантів.</li>
+    <li>Пост-програмне обслуговування та ретейнер model-ops: <b>15–25% від вартості побудови / рік</b> — опціонально, окремий SOW.</li>
+  </ul>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 10 / 14</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 11 — ДОСВІД КОМАНДИ ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">ДОСВІД КОМАНДИ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>13 · Досвід команди та підхід до інтеграції</span><span class="num">С. 11 / 14</span></h2>
+  <p>Відповідь на бриф — інтеграція AI у Flutter-застосунки, з чесним визначенням обсягу офлайн-логіки.</p>
+
+  <div class="scope">
+    <span class="lab">Наш патерн</span>
+    Для <b>п'яти клієнтів споживчого кредитування в Гонконзі</b> deviewai побудував та експлуатує <b>операційний портал</b> ТА <b>AI-інтеграційний рівень</b> поверх нього — точно той дворівневий патерн, який ми пропонуємо для AgroPlatforma.
+  </div>
+
+  <h3>Підтверджений досвід — обрані проєкти</h3>
+  <p style="font-size:10.5px;color:var(--mut);margin-bottom:6px"><b>Сектор:</b> споживче кредитування / фінансові послуги (Гонконг). <b>Міст до AgroPlatforma:</b> регульований каталог, високонавантажений операційний воркфлоу, живі інтеграції даних, аудиторський слід.</p>
+
+  <table>
+    <thead><tr><th style="width:25%">Клієнт</th><th>Що побудували</th><th style="width:32%">Рік · Результат · Референс</th></tr></thead>
+    <tbody>
+      <tr><td><b>Grand Finance</b></td><td>Операційний портал + AI-інтеграція (live)</td><td style="color:var(--mut);font-style:italic">▸ рік · результат · референс</td></tr>
+      <tr><td><b>KK Credit Limited</b></td><td>Операційний портал + AI-інтеграція (live)</td><td style="color:var(--mut);font-style:italic">▸ рік · результат · референс</td></tr>
+      <tr><td><b>Wah Wei Credit Limited</b></td><td>Операційний портал + AI-інтеграція (live)</td><td style="color:var(--mut);font-style:italic">▸ рік · результат · референс</td></tr>
+      <tr><td><b>Every Success Credit</b></td><td>Операційний портал + AI-інтеграція (live)</td><td style="color:var(--mut);font-style:italic">▸ рік · результат · референс</td></tr>
+      <tr><td><b>Rich Eagle Capital</b></td><td>Операційний портал + AI-інтеграція (live)</td><td style="color:var(--mut);font-style:italic">▸ рік · результат · референс</td></tr>
+    </tbody>
+  </table>
+
+  <div class="fillbox">
+    <span class="fhd">Ще потрібно</span>
+    <ul>
+      <li><b>Одиниця масштабу</b> — підписати числа (активні акаунти? щомісячні заявки?).</li>
+      <li><b>Рік для кожного клієнта</b> — коли запущено / скільки в продакшні.</li>
+      <li><b>Один верифікований результат на клієнта</b></li>
+      <li><b>Контакт для референсу</b> — ім'я + посада, з дозволом.</li>
+    </ul>
+  </div>
+
+  <h3>Склад команди</h3>
+  <table>
+    <thead><tr><th>Роль</th><th>Алокація на проєкт</th><th>Джерело</th></tr></thead>
+    <tbody>
+      <tr><td>Flutter-розробник</td><td>Повна зайнятість, побудова v1</td><td>deviewai</td></tr>
+      <tr><td>Salesforce-розробник</td><td>~2,5 місяці, контракт</td><td>UA-senior</td></tr>
+      <tr><td>ML / LLM-vision радник</td><td>Часткова зайнятість, консультування</td><td>UA-senior</td></tr>
+      <tr><td>Delivery / керівник проєкту</td><td>На весь час проєкту</td><td>deviewai</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 11 / 14</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 12 — ПІДХІД ДО ІНТЕГРАЦІЇ ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">ПІДХІД ДО ІНТЕГРАЦІЇ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>14 · Підхід до AI-інтеграції — Flutter ↔ AI-бекенд</span><span class="num">С. 12 / 14</span></h2>
+  <table>
+    <thead><tr><th style="width:26%">Рівень</th><th>Підхід</th></tr></thead>
+    <tbody>
+      <tr><td>Контракт Flutter ↔ бекенд</td><td>OpenAPI spec автогенерується FastAPI; типізований Dart-клієнт через <code>openapi-generator</code>. <b>Pact контрактні тести</b> ловлять дрейф схеми в CI.</td></tr>
+      <tr><td>Фото-пайплайн</td><td>Стиснення на клієнті → signed-URL завантаження → бекенд видаляє EXIF/GPS → Claude multimodal виклик. Фото автовидаляються через 24 год.</td></tr>
+      <tr><td>Управління станом</td><td>Стан AI-відповіді ізольований від стану агрономічного домену. UI ніколи не блокується на інференсі — каркас завантаження + кешований останній результат.</td></tr>
+      <tr><td>Контроль вартості / затримки</td><td>Серверний LLM-виклик кешується за детерміністичним хешем. Затримка по стадіях логується; p99 &lt; 25 с, гейтовано на staging.</td></tr>
+      <tr><td>Авторизація</td><td>Firebase Auth на пристрої; бекенд валідує JWT на кожен запит. Salesforce через scoped service account — без SF-токенів рівня користувача.</td></tr>
+      <tr><td>UX при збоях</td><td>Структуровані помилки з конкретними українськомовними повідомленнями. Частковий результат при збої downstream. Без тихих хибних відповідей.</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span>Офлайн-логіка — рішення щодо обсягу v1</span></h2>
+  <ul>
+    <li>v1 використовує <b>серверний мультимодальний LLM</b>. За природою цей виклик вимагає з'єднання в момент діагнозу.</li>
+    <li><b>Проєктне рішення v1:</b> потрібне з'єднання. Консультанти з сигналом отримують повний діагноз; без сигналу → чіткий стан «потрібне з'єднання, фото в черзі».</li>
+    <li><b>Шлях v2 закладений:</b> черга завантаження фото, локальний кеш результатів та шлях рендерингу результатів приймають джерело інференсу на пристрої без переархітектурування.</li>
+  </ul>
+
+  <h2><span>Мітигація ризиків поставки</span></h2>
+  <table>
+    <thead><tr><th style="width:30%">Ризик</th><th>Мітигація</th></tr></thead>
+    <tbody>
+      <tr><td>Точність AI нижче порогу</td><td>Незалежна сліпа панель агрономів ≥85% як гейт запуску; відстеження польових результатів після запуску.</td></tr>
+      <tr><td>Дрейф схеми</td><td>OpenAPI + Pact контрактні тести як обов'язкові CI-гейти.</td></tr>
+      <tr><td>Безпека даних / PII</td><td>Видалення EXIF/GPS гейтовано в CI; жодних ідентифікаторів до LLM; scoped SF service accounts на агента.</td></tr>
+      <tr><td>Неконтрольоване зростання вартості LLM</td><td>Затримка по стадіях + контр-метрика вартості; кешування результатів; ліміти запитів на користувача.</td></tr>
+      <tr><td>Ризик малої команди</td><td>Managed services скрізь — оперуємо код, а не інфраструктуру. Задокументовані runbooks.</td></tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 12 / 14</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 13 — ВІДКРИТІ ПИТАННЯ ░░░░░░░░░░ -->
+<div class="page">
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">ВІДКРИТІ ПИТАННЯ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>15 · Відкриті питання до AgroPlatforma</span><span class="num">С. 13 / 14</span></h2>
+  <p>Консолідовані відкриті пункти, впорядковані за календарною вартістю для побудови.</p>
+
+  <div class="scope">
+    <span class="lab">Як користуватися</span>
+    Пункти поділені на <b>Рішення за вами</b> (ваше затвердження формує побудову) та <b>Чернетки для підтвердження</b> (ми пропонуємо варіант за замовчуванням; ви затверджуєте або вносите зміни). Два пункти <span class="pill">СТАРТ</span> мають найвищу календарну вартість, якщо очікуватимуть.
+  </div>
+
+  <h3>Старт побудови · Блокер</h3>
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:22%">Пункт</th><th>Питання / чернетка</th><th style="width:18%">Відповідальний</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">D1</td>
+        <td><b>Власність RAG-корпусу</b></td>
+        <td>Хто володіє та підтримує український агрономічний корпус знань? Джерельні матеріали — внутрішні SOP, посібники вендорів, публічна служба поширення знань, третя сторона?
+          <div class="draft"><b>Чому це перше — </b>Без цього неможливо спроєктувати ingestion, chunking та SLA точності. Вартість очікування ≈ 3–4 тижні.</div>
+        </td>
+        <td><b>Юридичний / IP + агрономія</b><br><span class="blocker">СТАРТ</span></td>
+      </tr>
+      <tr>
+        <td class="qid">D2</td>
+        <td><b>Обмеження Flutter-застосунку</b></td>
+        <td>Поточний Flutter-застосунок: патерн управління станом, навігаційний фреймворк, як додаються нові модулі функцій, мінімальні підтримувані версії.
+          <div class="draft"><b>Що потрібно — </b>Доступ до репо (читання) або 30-хв вокстру з Flutter-лідом.</div>
+        </td>
+        <td><b>Product Owner / Flutter-лід</b><br><span class="blocker">СТАРТ</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Майлстоун 2 · Фаза 2 (В, Д)</h3>
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:22%">Пункт</th><th>Питання / чернетка</th><th style="width:18%">Відповідальний</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">D3</td>
+        <td><b>Каталог правил</b></td>
+        <td>Хто формує та затверджує детерміністичний каталог правил для Smart Operator &amp; Sales? Як публікуються оновлення?</td>
+        <td><b>Комерційний + Compliance</b><br><span class="blocker mid">В · побудова</span></td>
+      </tr>
+      <tr>
+        <td class="qid">D4</td>
+        <td><b>Обсяг обміну даними з вендорами</b></td>
+        <td>Які вендори погоджуються отримувати аналітичні звіти? Агреговані регіональні/консультантські метрики в обсязі, чи лише SKU вендора-постачальника?</td>
+        <td><b>Комерційний / Юридичний</b><br><span class="blocker mid">Д · проєктування</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Перед пілотом · До запуску</h3>
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:22%">Пункт</th><th>Питання / чернетка</th><th style="width:18%">Відповідальний</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">D5</td>
+        <td><b>Структура пілотного розгортання</b></td>
+        <td>Усі активні консультанти одразу, чи поетапно за регіоном / кластером вендорів / рівнем консультанта?</td>
+        <td><b>Спонсор / Ops</b><br><span class="blocker ok">Запуск</span></td>
+      </tr>
+      <tr>
+        <td class="qid">D6</td>
+        <td><b>Комплектування панелі точності</b></td>
+        <td>Незалежна панель агрономів для гейту запуску ≥85%: хто комплектує, розмір панелі, кількість зразків на культуру.
+          <div class="draft"><b>За замовчуванням — </b>3–5 старших агрономів, сліпе оцінювання ≥50 зразків по топ-8 культурах.</div>
+        </td>
+        <td><b>Керівник агрономії</b><br><span class="blocker ok">Гейт запуску</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b></span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 13 / 14</span></footer>
+</div>
+
+<!-- ░░░░░░░░░░ СТОРІНКА 14 — ЧЕРНЕТКИ ДЛЯ ПІДТВЕРДЖЕННЯ + ЗАКРИТТЯ ░░░░░░░░░░ -->
+<div class="page cover">
+  <div class="pixelcity"></div>
+  <header>
+    <div class="brand">DEVIEW</div>
+    <div class="head-r">
+      <div class="crumbs">
+        <span>AGRO AGENT</span>
+        <span class="active">ЧЕРНЕТКИ ДЛЯ ПІДТВЕРДЖЕННЯ</span>
+      </div>
+      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
+    </div>
+  </header>
+
+  <h2><span>16 · Чернетки для підтвердження</span><span class="num">С. 14 / 14</span></h2>
+  <p>Ми запропонували варіант за замовчуванням; нам потрібне ваше затвердження або зміни.</p>
+
+  <table>
+    <thead><tr><th style="width:38px">#</th><th style="width:22%">Пункт</th><th>Наша пропозиція</th><th style="width:18%">Відповідальний</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="qid">C1</td>
+        <td><b>Бюджет витрат на LLM</b></td>
+        <td>Ми змоделюємо очікувану вартість LLM на запит та подамо рекомендований місячний ліміт із проєктом v1. <b>Визначте бюджетну стелю та поріг сповіщення.</b>
+          <div class="draft"><b>За замовчуванням — </b>Сповіщення при 80% від щомісячної USD-стелі, змодельованої з архітектури.</div>
+        </td>
+        <td><b>CTO / CFO</b><br><span class="blocker mid">Sprint 1</span></td>
+      </tr>
+      <tr>
+        <td class="qid">C2</td>
+        <td><b>Вікно синхронізації каталогу</b></td>
+        <td>Ми пропонуємо щогодинне оновлення каталогу + переіндексація за запитом, із живими залишками на кожен запит. Прийнятно?</td>
+        <td><b>SF-адміністратор</b><br><span class="blocker mid">Sprint 2</span></td>
+      </tr>
+      <tr>
+        <td class="qid">C3</td>
+        <td><b>Реєстр дозволених хімікатів</b></td>
+        <td>За замовчуванням: Salesforce несе прапорець «затверджено в Україні» як джерело істини. Чи є окремий авторитетний реєстр для перехресної перевірки?</td>
+        <td><b>Регуляторний / Compliance</b><br><span class="blocker mid">Data pipeline</span></td>
+      </tr>
+      <tr>
+        <td class="qid">C4</td>
+        <td><b>PII та резидентність даних</b></td>
+        <td>Усі ідентифікаційні дані 40k клієнтів поза обсягом для LLM; фото з видаленим EXIF, автовидалення через 24 год; Salesforce через scoped service accounts. Підтвердіть, що це задовольняє ваші вимоги; позначте обмеження резидентності.</td>
+        <td><b>Юридичний / DPO</b><br><span class="blocker mid">Затвердження</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="summary-warm">
+    <b>Підсумок календарної вартості.</b> З усіх пунктів вище лише <b>D1 (RAG-корпус)</b> та <b>D2 (обмеження Flutter)</b> суттєво блокують старт побудови. Кожен інший пункт може їхати на майлстоуні, якщо D1 та D2 будуть розблоковані протягом наступних 1–2 тижнів.
+  </div>
+
+  <h2><span>Відповіді на питання з брифу — чому не є відкритими</span></h2>
+  <table>
+    <thead><tr><th style="width:28%">Пункт з брифу</th><th>Наша відповідь</th><th style="width:24%">Чому закрито</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Вибір технологічного стеку</b></td>
+        <td>FastAPI + Python 3.12, PostgreSQL 17 + pgvector, GCP Cloud Run, Claude через Vertex AI, Firebase Auth. Повна деталізація — §02, С. 01.</td>
+        <td>Повністю розкрито. Не потребує вибору клієнта.</td>
+      </tr>
+      <tr>
+        <td><b>Agentforce vs. власний LLM</b></td>
+        <td>Власне рішення на базі Claude. Agentforce відхилено: (1) не підтримує мультимодальний вхід, (2) обмежений контроль prompt pipeline, (3) vendor lock-in, (4) відсутність pgvector-інтеграції.</td>
+        <td>Архітектурне рішення прийнято і обґрунтовано.</td>
+      </tr>
+      <tr>
+        <td><b>Модель безпеки даних</b></td>
+        <td>Жодні PII до LLM, scoped service-accounts на агента, ізоляція тенантів, фото TTL 24 год, append-only audit log. Деталі — §07, §03.</td>
+        <td>Повністю спроєктована. C4 запитує лише формальне затвердження.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer><span><b>DEVIEW</b> &nbsp;&nbsp; AI, ЩО ПРАЦЮЄ ВСЕРЕДИНІ ВАШИХ ОПЕРАЦІЙ</span><span>ТЕХНІЧНА АРХІТЕКТУРА · REV E · 14 / 14 · КІНЕЦЬ</span></footer>
 </div>
 
 <script>
