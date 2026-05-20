@@ -430,7 +430,7 @@ body {
 
 /* ── Camera scan full-screen ── */
 #scan-sheet-overlay { align-items: stretch; background: black; }
-.cam-modal { display: flex; flex-direction: column; width: 100%; height: 100%; background: #0a0a0a; }
+.cam-modal { display: flex; flex-direction: column; width: 100%; height: 100%; background: #0a0a0a; position: relative; }
 .cam-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px; background: black; flex-shrink: 0; }
 .cam-topbar-title { color: white; font-size: 16px; font-weight: 700; }
 .cam-close { background: rgba(255,255,255,0.15); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -1362,6 +1362,7 @@ body {
                   <div class="cam-sku-info"><div class="cam-sku-name" id="cs-sku2-name">—</div><div class="cam-sku-desc" id="cs-sku2-desc">—</div></div>
                   <div class="cam-sku-right"><div class="cam-sku-price" id="cs-sku2-price">—</div><button class="cam-btn-add" onclick="event.stopPropagation();addCsSku(2)">+ Кошик</button></div>
                 </div>
+                <button onclick="openAIChat()" style="width:100%;margin-top:10px;padding:13px;background:#E8F5E9;border:1.5px solid #1B5E20;border-radius:14px;color:#1B5E20;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;">💬 Запитати AI агронома-порадника</button>
               </div>
             </div>
           </div>
