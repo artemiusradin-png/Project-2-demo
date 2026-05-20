@@ -123,11 +123,125 @@ body {
 .nav-icon { font-size: 22px; line-height: 1; }
 .home-indicator { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 130px; height: 5px; background: #1a1a1a; border-radius: 3px; opacity: 0.2; }
 
-/* Toast */
+/* ── TOAST NOTIFICATIONS ── */
+.toast-container {
+  position: absolute; top: 60px; left: 12px; right: 12px; z-index: 9999;
+  display: flex; flex-direction: column; gap: 8px; pointer-events: none;
+}
+.toast {
+  background: rgba(30,30,30,0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 16px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 0 0.5px rgba(255,255,255,0.08);
+  transform: translateY(-20px) scale(0.95); opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+  pointer-events: all; cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.toast.show { transform: translateY(0) scale(1); opacity: 1; }
+.toast.toast-success { border-left-color: #4CAF50; }
+.toast.toast-warning { border-left-color: #FF9800; }
+.toast.toast-info    { border-left-color: #2196F3; }
+.toast-icon { font-size: 22px; flex-shrink: 0; }
+.toast-body { flex: 1; min-width: 0; }
+.toast-title { font-size: 13px; font-weight: 700; color: white; line-height: 1.2; }
+.toast-msg { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.toast-time { font-size: 10px; color: rgba(255,255,255,0.35); flex-shrink: 0; }
+
+/* ── NOTIFICATION BELL & PANEL ── */
+.notif-bell-wrap {
+  margin-left: auto; position: relative; cursor: pointer;
+  padding: 4px; border-radius: 50%; transition: background 0.2s;
+}
+.notif-bell-wrap:active { background: rgba(255,255,255,0.15); }
+.notif-bell-icon { font-size: 18px; line-height: 1; display: block; animation: bellShake 8s ease-in-out infinite; }
+@keyframes bellShake {
+  0%,85%,100%{transform:rotate(0)} 87%{transform:rotate(-12deg)} 89%{transform:rotate(12deg)}
+  91%{transform:rotate(-8deg)} 93%{transform:rotate(8deg)} 95%{transform:rotate(-4deg)} 97%{transform:rotate(4deg)}
+}
+.notif-badge {
+  position: absolute; top: 1px; right: 1px;
+  background: #F44336; color: white; font-size: 8px; font-weight: 900;
+  min-width: 16px; height: 16px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 3px; border: 1.5px solid #2B5CE6;
+  animation: badgePop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes badgePop { 0%{transform:scale(0)} 100%{transform:scale(1)} }
+
+/* Notification panel */
+.notif-panel {
+  position: absolute; top: 54px; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); z-index: 800;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.notif-panel.open { opacity: 1; pointer-events: all; }
+.notif-sheet {
+  position: absolute; top: 0; left: 8px; right: 8px;
+  background: white; border-radius: 0 0 20px 20px;
+  transform: translateY(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25); overflow: hidden;
+}
+.notif-panel.open .notif-sheet { transform: translateY(0); }
+.notif-sheet-header {
+  background: #2B5CE6; padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.notif-sheet-title { color: white; font-size: 15px; font-weight: 700; }
+.notif-sheet-clear { color: rgba(255,255,255,0.75); font-size: 12px; cursor: pointer; padding: 4px 8px; background: rgba(255,255,255,0.15); border-radius: 10px; border: none; font-family: inherit; font-weight: 600; }
+.notif-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; border-bottom: 0.5px solid #f0f0f0;
+  cursor: pointer; transition: background 0.15s;
+  position: relative;
+}
+.notif-item:active { background: #f5f5f5; }
+.notif-item.unread::after {
+  content: ''; position: absolute; top: 50%; right: 16px;
+  transform: translateY(-50%); width: 8px; height: 8px;
+  background: #2B5CE6; border-radius: 50%;
+}
+.notif-item-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.ni-green { background: #E8F5E9; }
+.ni-blue  { background: #E3F2FD; }
+.ni-amber { background: #FFF8E1; }
+.ni-red   { background: #FFEBEE; }
+.notif-item-body { flex: 1; min-width: 0; padding-right: 18px; }
+.notif-item-title { font-size: 13px; font-weight: 700; color: #1a1a1a; line-height: 1.2; }
+.notif-item-text { font-size: 12px; color: #666; margin-top: 2px; line-height: 1.4; }
+.notif-item-time { font-size: 10px; color: #aaa; margin-top: 3px; }
 
 /* ── HOME SCREEN ── */
-.currency-bar { background: #2B5CE6; padding: 8px 16px 14px; color: white; font-size: 12px; display: flex; align-items: center; gap: 8px; }
-.currency-dot { width: 5px; height: 5px; background: rgba(255,255,255,0.4); border-radius: 50%; }
+.currency-bar {
+  background: #2B5CE6; padding: 8px 16px 12px;
+  color: white; font-size: 12px;
+  display: flex; align-items: center; gap: 8px;
+  overflow: hidden;
+}
+.currency-ticker {
+  flex: 1; overflow: hidden; white-space: nowrap;
+  position: relative; min-width: 0;
+}
+.currency-ticker-inner {
+  display: inline-flex; gap: 0; align-items: center;
+  animation: tickerScroll 18s linear infinite;
+  will-change: transform;
+}
+.currency-ticker-inner:hover { animation-play-state: paused; }
+@keyframes tickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.currency-item { display: inline-flex; align-items: center; gap: 6px; padding-right: 28px; }
+.currency-dot { width: 4px; height: 4px; background: rgba(255,255,255,0.35); border-radius: 50%; }
+.currency-change-up   { color: #69F0AE; font-size: 10px; font-weight: 700; }
+.currency-change-down { color: #FF7043; font-size: 10px; font-weight: 700; }
 .home-cards { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
 .big-card { border-radius: 16px; padding: 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: transform 0.15s; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 .big-card:active { transform: scale(0.98); }
@@ -312,12 +426,15 @@ body {
 .cart-icon-wrap { position: relative; display: inline-block; }
 .cart-badge {
   position: absolute; top: -5px; right: -7px;
-  background: #E53935; color: white; font-size: 9px; font-weight: 800;
+  background: linear-gradient(135deg,#F44336,#E53935); color: white; font-size: 9px; font-weight: 900;
   min-width: 17px; height: 17px; border-radius: 9px;
   display: none; align-items: center; justify-content: center;
-  padding: 0 3px; line-height: 1; border: 2px solid white;
+  padding: 0 3px; line-height: 1; border: 2px solid rgba(249,249,249,0.97);
+  box-shadow: 0 2px 6px rgba(229,57,53,0.5);
 }
-.cart-badge.visible { display: flex; }
+.cart-badge.visible { display: flex; animation: badgePop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.cart-badge.bump { animation: cartBump 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes cartBump { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
 .cart-empty { padding: 60px 24px; text-align: center; color: #8e8e93; }
 .cart-empty-icon { font-size: 64px; margin-bottom: 14px; }
 .cart-empty-title { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
@@ -556,14 +673,21 @@ body {
 .market-header-sub { color: rgba(255,255,255,0.55); font-size: 10px; margin-top: 2px; }
 .market-live-pill {
   display: flex; align-items: center; gap: 5px;
-  background: rgba(255,255,255,0.1); border-radius: 20px;
-  padding: 3px 10px; font-size: 11px; color: #69F0AE; font-weight: 700;
+  background: rgba(105,240,174,0.15); border-radius: 20px;
+  padding: 4px 10px; font-size: 11px; color: #69F0AE; font-weight: 800;
+  border: 1px solid rgba(105,240,174,0.25);
+  box-shadow: 0 0 8px rgba(105,240,174,0.15);
+  letter-spacing: 0.3px;
 }
 .market-live-dot {
   width: 7px; height: 7px; border-radius: 50%; background: #69F0AE;
-  animation: livePulse 2s ease-in-out infinite;
+  animation: livePulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 6px #69F0AE;
 }
-@keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+@keyframes livePulse {
+  0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 6px #69F0AE}
+  50%{opacity:0.5;transform:scale(0.6);box-shadow:0 0 2px #69F0AE}
+}
 
 /* skeleton / loading */
 .market-skeleton { background: #0f2318; padding: 16px 14px; }
@@ -738,14 +862,36 @@ body {
 
         <!-- ══════════ HOME ══════════ -->
         <div class="screen active" id="screen-home">
+          <!-- Toast container — lives at top of screen, above everything -->
+          <div class="toast-container" id="toast-container"></div>
           <div class="status-bar" style="background:#2B5CE6">
             <span class="status-left">17:23</span>
             <div class="status-right"><span>5G</span><div class="battery"><div class="battery-fill"></div></div></div>
           </div>
           <div class="screen-scroll">
             <div class="currency-bar">
-              <span>1 USD = 44.07 UAH</span><div class="currency-dot"></div>
-              <span>1 EUR = 51.49 UAH</span><div style="margin-left:auto">🔔</div>
+              <div class="currency-ticker">
+                <div class="currency-ticker-inner" id="currency-ticker">
+                  <!-- first copy -->
+                  <span class="currency-item">🌾 Пшениця <b>6,450 ₴/т</b><span class="currency-change-up">▲1.2%</span></span>
+                  <span class="currency-item">🌽 Кукурудза <b>5,980 ₴/т</b><span class="currency-change-up">▲0.8%</span></span>
+                  <span class="currency-item">🌻 Соняшник <b>14,200 ₴/т</b><span class="currency-change-down">▼0.5%</span></span>
+                  <span class="currency-item">💵 USD <b>44.07 ₴</b></span>
+                  <span class="currency-item">💶 EUR <b>51.49 ₴</b></span>
+                  <span class="currency-item">📈 CBOT пшениця <b>$572.4/bu</b><span class="currency-change-up">▲0.3%</span></span>
+                  <!-- duplicate for seamless loop -->
+                  <span class="currency-item">🌾 Пшениця <b>6,450 ₴/т</b><span class="currency-change-up">▲1.2%</span></span>
+                  <span class="currency-item">🌽 Кукурудза <b>5,980 ₴/т</b><span class="currency-change-up">▲0.8%</span></span>
+                  <span class="currency-item">🌻 Соняшник <b>14,200 ₴/т</b><span class="currency-change-down">▼0.5%</span></span>
+                  <span class="currency-item">💵 USD <b>44.07 ₴</b></span>
+                  <span class="currency-item">💶 EUR <b>51.49 ₴</b></span>
+                  <span class="currency-item">📈 CBOT пшениця <b>$572.4/bu</b><span class="currency-change-up">▲0.3%</span></span>
+                </div>
+              </div>
+              <div class="notif-bell-wrap" onclick="toggleNotifPanel()" id="notif-bell-wrap">
+                <span class="notif-bell-icon">🔔</span>
+                <span class="notif-badge" id="notif-badge">3</span>
+              </div>
             </div>
             <div class="cat-search-row">
               <div class="cat-search-box">
@@ -759,9 +905,12 @@ body {
                 <div class="big-card-left"><h3>Каталог</h3><p>Насіння, агрохімія та паливо</p></div>
                 <div class="big-card-emoji">🌽</div>
               </div>
-              <div class="big-card card-promo" onclick="showToast('🎁','Акції','3 активні пропозиції від вендорів')">
+              <div class="big-card card-promo" onclick="showToast('🎁','Акції','3 активні пропозиції від вендорів','success')" style="position:relative">
                 <div class="big-card-left"><h3>Акції</h3><p>Знижки до 25%</p></div>
-                <div class="big-card-emoji">🏷️</div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="background:#FF5722;color:white;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;letter-spacing:0.3px;">3 НОВИХ</span>
+                  <div class="big-card-emoji">🏷️</div>
+                </div>
               </div>
             </div>
             <div style="padding:0 16px 12px;">
@@ -795,11 +944,54 @@ body {
               </div>
             </div>
           </div><!-- end screen-scroll -->
+
+          <!-- Notification panel — sibling of screen-scroll so it overlays content properly -->
+          <div class="notif-panel" id="notif-panel" onclick="closeNotifPanel(event)">
+            <div class="notif-sheet">
+              <div class="notif-sheet-header">
+                <span class="notif-sheet-title">🔔 Сповіщення</span>
+                <button class="notif-sheet-clear" onclick="clearNotifs()">Очистити</button>
+              </div>
+              <div class="notif-item unread" onclick="handleNotif(0)">
+                <div class="notif-item-icon ni-green">🤖</div>
+                <div class="notif-item-body">
+                  <div class="notif-item-title">КП збережено в Salesforce</div>
+                  <div class="notif-item-text">ТОВ Агросвіт · ₴186,000 · Відкрито Selling Opportunity</div>
+                  <div class="notif-item-time">2 хв тому</div>
+                </div>
+              </div>
+              <div class="notif-item unread" onclick="handleNotif(1)">
+                <div class="notif-item-icon ni-amber">⚠️</div>
+                <div class="notif-item-body">
+                  <div class="notif-item-title">Ціновий сигнал: пшениця</div>
+                  <div class="notif-item-text">CBOT ▲1.8% за 24г — розгляньте поточну позицію клієнтів</div>
+                  <div class="notif-item-time">18 хв тому</div>
+                </div>
+              </div>
+              <div class="notif-item unread" onclick="handleNotif(2)">
+                <div class="notif-item-icon ni-blue">🌿</div>
+                <div class="notif-item-body">
+                  <div class="notif-item-title">Agro-Vision: нова діагностика</div>
+                  <div class="notif-item-text">Фузаріоз стебла · 94% впевненість · 45 га · Харківська обл.</div>
+                  <div class="notif-item-time">35 хв тому</div>
+                </div>
+              </div>
+              <div class="notif-item" onclick="handleNotif(3)">
+                <div class="notif-item-icon ni-red">📦</div>
+                <div class="notif-item-body">
+                  <div class="notif-item-title">Залишки: Вінцит Форте 080 FS</div>
+                  <div class="notif-item-text">Склад Харків · залишилося 120 л · рекомендовано дозамовити</div>
+                  <div class="notif-item-time">2 год тому</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="bottom-nav">
             <button class="nav-item active" onclick="navTo('screen-home')"><span class="nav-icon">🏠</span><span>Головна</span></button>
             <button class="nav-item" onclick="navTo('screen-catalog')"><span class="nav-icon">📖</span><span>Каталог</span></button>
             <button class="nav-item" onclick="navTo('screen-cart')"><span class="nav-icon cart-icon-wrap">🛒<span class="cart-badge" id="cart-badge"></span></span><span>Кошик</span></button>
-            <button class="nav-item" onclick="showToast('👤','Профіль','Консультант · Степан')"><span class="nav-icon">👤</span><span>Профіль</span></button>
+            <button class="nav-item" onclick="showToast('👤','Консультант Степан','Харківська обл · 4.9★ · 127 угод','info')"><span class="nav-icon">👤</span><span>Профіль</span></button>
             <div class="home-indicator"></div>
           </div>
         </div>
@@ -887,7 +1079,7 @@ body {
                 <div class="kp-upsell"><div class="kp-upsell-title">🤖 AI рекомендує додати (+18% GMV)</div><p id="kp-upsell-text">Гербіцид Євро-Лайтнінг — сумісний з Clearfield, ₴28,000 за 150 га.</p></div>
               </div>
               <div class="kp-actions">
-                <button class="btn-sf btn-sf-primary" onclick="showToast('✅','КП збережено в Salesforce','Відкрито як Selling Opportunity')">💾 Зберегти в SF</button>
+                <button class="btn-sf btn-sf-primary" onclick="showToast('✅','КП збережено в Salesforce','Відкрито як Selling Opportunity','success')">💾 Зберегти в SF</button>
                 <button class="btn-sf btn-sf-secondary" onclick="openSendSheet()">📤 Надіслати</button>
               </div>
               <!-- AI Market Analysis trigger -->
@@ -1152,7 +1344,7 @@ body {
             <div class="ai-report-card">
               <div class="ai-report-header">
                 <div><div style="font-size:14px;font-weight:700;" id="v-report-title">BASF Ukraine · Травень 2026</div><div style="font-size:11px;opacity:0.8;margin-top:2px;">Згенеровано AI · Оновлено сьогодні</div></div>
-                <div style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;">LIVE</div>
+                <div style="background:rgba(105,240,174,0.18);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;color:#69F0AE;border:1px solid rgba(105,240,174,0.3);display:flex;align-items:center;gap:5px;letter-spacing:0.3px;"><span style="width:6px;height:6px;border-radius:50%;background:#69F0AE;display:inline-block;animation:livePulse 1.5s ease-in-out infinite;box-shadow:0 0 6px #69F0AE;"></span>LIVE</div>
               </div>
               <div class="ai-report-body">
                 <div class="report-insight" id="v-insight">Луміген показує рекордні продажі +18% — драйвер зростання Харківська та Полтавська обл. Белайт Актив стагнує в Одеській обл: 3 консультанти не провели жодного демо за 30 днів.</div>
@@ -1476,6 +1668,15 @@ body {
 const screens = ['screen-home','screen-catalog','screen-c','screen-a','screen-e','screen-cart'];
 let history = ['screen-home'];
 
+// Show welcome toast on page load
+setTimeout(() => {
+  showToast('👋','Вітаємо, Степане!','3 нових сповіщення · ринок пшениці ▲1.8%','info');
+}, 1200);
+// Show a price alert toast 5s later
+setTimeout(() => {
+  showToast('📈','Ціновий сигнал','Пшениця CBOT +1.8% за 24г — слушний момент для КП','warning');
+}, 5000);
+
 function navTo(id) {
   const current = history[history.length-1];
   if (current === id) return;
@@ -1497,7 +1698,80 @@ function navBack() {
   document.getElementById(prev).classList.add('active');
 }
 
-function showToast() {} // removed
+/* ── TOAST SYSTEM ── */
+let toastQueue = [];
+let toastActive = false;
+function showToast(icon, title, msg, type) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  const typeClass = type === 'success' ? 'toast-success' : type === 'warning' ? 'toast-warning' : 'toast-info';
+  toast.className = 'toast ' + typeClass;
+  toast.innerHTML = `<span class="toast-icon">${icon}</span><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div><span class="toast-time">зараз</span>`;
+  toast.onclick = () => dismissToast(toast);
+  container.appendChild(toast);
+  // Trigger animation
+  requestAnimationFrame(() => { requestAnimationFrame(() => { toast.classList.add('show'); }); });
+  // Auto dismiss after 3.5s
+  setTimeout(() => dismissToast(toast), 3500);
+}
+function dismissToast(toast) {
+  if (!toast.parentNode) return;
+  toast.classList.remove('show');
+  toast.style.transition = 'transform 0.3s ease, opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease';
+  toast.style.maxHeight = toast.offsetHeight + 'px';
+  toast.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(-10px) scale(0.95)';
+    toast.style.maxHeight = '0';
+    toast.style.marginBottom = '0';
+    setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
+  });
+}
+
+/* ── NOTIFICATION PANEL ── */
+let notifCount = 3;
+function toggleNotifPanel() {
+  const panel = document.getElementById('notif-panel');
+  if (!panel) return;
+  if (panel.classList.contains('open')) {
+    closeNotifPanel();
+  } else {
+    panel.classList.add('open');
+  }
+}
+function closeNotifPanel(e) {
+  const panel = document.getElementById('notif-panel');
+  if (!panel) return;
+  // Close when clicking the dim backdrop (the panel itself), not the sheet
+  if (e && e.target.closest('.notif-sheet')) return;
+  panel.classList.remove('open');
+}
+function clearNotifs() {
+  notifCount = 0;
+  const badge = document.getElementById('notif-badge');
+  if (badge) { badge.style.animation = 'badgePop 0.3s reverse'; setTimeout(() => { badge.style.display = 'none'; }, 300); }
+  document.querySelectorAll('.notif-item.unread').forEach(el => el.classList.remove('unread'));
+  setTimeout(closeNotifPanel, 800);
+  showToast('✅','Сповіщення очищено','Усі прочитані','success');
+}
+function handleNotif(idx) {
+  const items = document.querySelectorAll('.notif-item');
+  if (items[idx]) {
+    const wasUnread = items[idx].classList.contains('unread');
+    items[idx].classList.remove('unread');
+    if (wasUnread) {
+      notifCount = Math.max(0, notifCount - 1);
+      const badge = document.getElementById('notif-badge');
+      if (badge) {
+        if (notifCount === 0) { badge.style.display = 'none'; }
+        else { badge.textContent = notifCount; badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump'); }
+      }
+    }
+  }
+  closeNotifPanel();
+}
 
 function selectRole(el) {
   document.querySelectorAll('.role-card').forEach(r => r.classList.remove('selected'));
@@ -1517,7 +1791,7 @@ function setKP(text) { document.getElementById('kp-input').value = text; }
 
 function generateKP() {
   const text = document.getElementById('kp-input').value.trim();
-  if (!text) { showToast('⚠️','Введіть запит','Опишіть що потрібно клієнту'); return; }
+  if (!text) { showToast('⚠️','Введіть запит','Опишіть що потрібно клієнту','warning'); return; }
   document.getElementById('kp-result').classList.remove('visible');
   const thinking = document.getElementById('kp-thinking');
   thinking.classList.add('visible');
@@ -1719,33 +1993,151 @@ let csScanData = null;
 let camStream = null;
 
 // ── AI Chat ───────────────────────────────────────────
+// ── AI Chat Context ─────────────────────────────────
+let aiChatContext = { crop:'кукурудза', disease:'фузаріоз стебла', conf:94, soil:'чорнозем типовий', ph:'6.8', rotation:'Кукурудза → Соняшник → Пшениця', area:'45 га', region:'Харківська' };
+
 function openAIChat() {
   document.getElementById('ai-chat-overlay').classList.add('open');
+  const msgs = document.getElementById('ai-chat-messages');
+  msgs.scrollTop = msgs.scrollHeight;
 }
-function closeAIChat() {
-  document.getElementById('ai-chat-overlay').classList.remove('open');
+
+function updateAIChatContext(sampleId) {
+  const ctx = {
+    s1: { crop:'кукурудза', disease:'фузаріоз стебла', conf:94, soil:'чорнозем типовий', ph:'6.8', rotation:'Кукурудза → Соняшник → Пшениця', area:'45 га', region:'Харківська' },
+    s2: { crop:'соняшник', disease:'несправжня борошниста роса', conf:91, soil:'чорнозем звичайний', ph:'7.1', rotation:'Соняшник → Кукурудза → Пшениця', area:'120 га', region:'Дніпропетровська' },
+    s3: { crop:'пшениця озима', disease:'іржа бура (Puccinia triticina)', conf:97, soil:'сірозем опідзолений', ph:'5.9', rotation:'Пшениця → Ріпак → Кукурудза', area:'200 га', region:'Вінницька' },
+    s4: { crop:'ріпак озимий', disease:'склеротинія стеблова гниль', conf:88, soil:'чорнозем типовий', ph:'6.5', rotation:'Ріпак → Пшениця → Соняшник', area:'80 га', region:'Київська' },
+    s5: { crop:'кукурудза', disease:'фузаріоз стебла (імовірно)', conf:78, soil:'чорнозем малогумусний', ph:'7.0', rotation:'Кукурудза → Соняшник', area:'35 га', region:'Полтавська' },
+  };
+  if (ctx[sampleId]) aiChatContext = ctx[sampleId];
 }
+
+function buildAIReply(q) {
+  const c = aiChatContext;
+  const ql = q.toLowerCase();
+
+  // ── Confidence / certainty ──
+  if (/впевнен|точн|sure|певн|100|сумнів|сумніваєш|точніш|підтвер/.test(ql)) {
+    const alts = { 'фузаріоз стебла': 'почорніння міжвузля, рожевий наліт на основі стебла', 'несправжня борошниста роса': 'жовті кутасті плями зверху, сірий наліт знизу листа', 'іржа бура': 'іржаво-коричневі пустули на листі в хаотичному порядку', 'склеротинія стеблова гниль': 'водянисті плями на стеблі, білий міцелій всередині' };
+    const signs = alts[c.disease] || 'характерні морфологічні ознаки';
+    return `На фото чітко видно <strong>${signs}</strong> — це класичний патерн для <strong>${c.disease}</strong> на ${c.crop}. Впевненість ${c.conf}%${c.conf < 85 ? ' — рекомендую додаткове фото з 15–20 см для підтвердження' : ' — діагноз надійний'}. Для 100% — лабораторний аналіз або PCR (результат за 48 год).`;
+  }
+
+  // ── Alternative products ──
+  if (/альтернатив|замін|немає|нема|не на склад|інший препарат|інші препарат/.test(ql)) {
+    const alts = {
+      'фузаріоз стебла': [['Прозаро 250 EC (Bayer)', '0.8 л/га', '₴3,100/л', 'Харків ✅'], ['Тілт 250 EC (Syngenta)', '1.0 л/га', '₴2,850/л', 'Дніпро ✅'], ['Фалькон 460 EC (Bayer)', '0.6 л/га', '₴4,200/л', 'Київ ✅']],
+      'несправжня борошниста роса': [['Акробат МЦ (BASF)', '2.0 кг/га', '₴1,950/кг', 'Харків ✅'], ['Ридоміл Голд (Syngenta)', '2.5 кг/га', '₴2,400/кг', 'Одеса ✅'], ['Превікур Енерджі (Bayer)', '3.0 л/га', '₴1,800/л', 'Дніпро ✅']],
+      'іржа бура': [['Рекс Дуо (BASF)', '0.5 л/га', '₴5,800/л', 'Вінниця ✅'], ['Прозаро 250 EC (Bayer)', '0.8 л/га', '₴3,100/л', 'Харків ✅'], ['Імпакт (FMC)', '0.5 л/га', '₴3,600/л', 'Київ ✅']],
+      'склеротинія стеблова гниль': [['Контанс WG (BASF)', '1.0 кг/га', '₴8,200/кг', 'Київ ✅'], ['Світч (Syngenta)', '0.8 кг/га', '₴6,400/кг', 'Харків ✅'], ['Роніла (Syngenta)', '0.5 л/га', '₴4,900/л', 'Одеса ✅']],
+    };
+    const list = alts[c.disease] || alts['фузаріоз стебла'];
+    return `Альтернативи для ${c.disease} на ${c.crop} (${c.region}):<br><br>` + list.map((p,i) => `<strong>${i+1}. ${p[0]}</strong> · ${p[1]} · ${p[2]} · ${p[3]}`).join('<br>') + `<br><br>Всі препарати зареєстровані в Україні. Рекомендую ${list[0][0]} як пріоритет — найширший спектр для вашого pH ${c.ph}.`;
+  }
+
+  // ── Timing / when to treat ──
+  if (/коли|термін|строк|фаза|час обробк|bbch|вегетац/.test(ql)) {
+    const timing = {
+      'фузаріоз стебла': 'BBCH 32–39 (вихід в трубку). Критично: обробка ДО масового прояву. Профілактичне внесення при температурі +15–25°C та вологості >75% дає кращий результат, ніж лікувальне.',
+      'несправжня борошниста роса': 'BBCH 14–16 (4–6 листків) та при перших симптомах. Оптимальна температура для збудника +10–15°C. При перевищенні +25°C — хвороба сповільнюється.',
+      'іржа бура': 'BBCH 37–51 (прапорцевий лист — колосіння). Захист прапорцевого листа критичний — він дає 50–70% урожаю. Повторна обробка через 14 днів при сприятливих умовах.',
+      'склеротинія стеблова гниль': 'BBCH 57–65 (бутонізація–початок цвітіння). Обробка по відкритих квітках — оптимально 10–30% цвітіння ріпаку. Не пізніше 50% цвітіння.',
+    };
+    return `<strong>Оптимальний строк обробки від ${c.disease} на ${c.crop}:</strong><br><br>${timing[c.disease] || 'Обробка при перших симптомах або профілактично.'}<br><br>З огляду на ваш ґрунт (${c.soil}, pH ${c.ph}) — стрес від хвороби підвищений. Рекомендую не затягувати.`;
+  }
+
+  // ── Dosage ──
+  if (/доз|норма|скільки|кількість|витрат/.test(ql)) {
+    const doses = {
+      'фузаріоз стебла': 'Амістар Екстра 280 SC — <strong>0.75–1.0 л/га</strong>, робочий розчин 200–300 л/га. Для вашого поля ' + c.area + ': ' + Math.round(parseFloat(c.area)*0.875) + '–' + Math.round(parseFloat(c.area)*1.0) + ' л препарату.',
+      'несправжня борошниста роса': 'Акробат МЦ — <strong>2.0 кг/га</strong>, Ридоміл Голд — <strong>2.5 кг/га</strong>. Для ' + c.area + ': ' + Math.round(parseFloat(c.area)*2.0) + '–' + Math.round(parseFloat(c.area)*2.5) + ' кг.',
+      'іржа бура': 'Рекс Дуо — <strong>0.4–0.5 л/га</strong>. Для ' + c.area + ': ' + Math.round(parseFloat(c.area)*0.45) + ' л. Норма водного розчину: 200–250 л/га.',
+      'склеротинія стеблова гниль': 'Контанс WG — <strong>1.0 кг/га</strong> (ґрунтове внесення) або Світч — <strong>0.8 кг/га</strong> (обприскування). Для ' + c.area + ': ' + Math.round(parseFloat(c.area)*1.0) + ' кг.',
+    };
+    return doses[c.disease] || `Стандартна норма — відповідно до реєстраційного посвідчення. Точне дозування залежить від ступеня розвитку хвороби та стадії культури.`;
+  }
+
+  // ── Soil / field specifics ──
+  if (/ґрунт|грунт|ph|кислот|лужн|чорнозем|сірозем|мінерал|добрив/.test(ql)) {
+    return `На вашому полі (${c.soil}, pH ${c.ph}, ${c.region}) важливо врахувати: pH ${c.ph} ${parseFloat(c.ph) < 6.5 ? '— кисла реакція, може знижувати ефективність деяких фунгіцидів. Рекомендую вапнування перед наступним сезоном.' : parseFloat(c.ph) > 7.2 ? '— лужна реакція, контролюйте доступність мікроелементів (цинк, марганець).' : '— оптимальний діапазон для ${c.crop}.'} Сівозміна ${c.rotation} — ${c.rotation.includes('Соняшник') ? '⚠️ соняшник у сівозміні підвищує ризик склеротинії та бромистого фузаріозу' : '✅ сівозміна знижує інокулюм збудника'}.`;
+  }
+
+  // ── Cost / price ──
+  if (/ціна|коштує|вартість|бюджет|скільки коштує|грн|гривн/.test(ql)) {
+    const costs = {
+      'фузаріоз стебла': { prod:'Амістар Екстра 280 SC', price:'₴4,850/л', dose:'0.875 л/га' },
+      'несправжня борошниста роса': { prod:'Ридоміл Голд MЦ', price:'₴2,400/кг', dose:'2.5 кг/га' },
+      'іржа бура': { prod:'Рекс Дуо', price:'₴5,800/л', dose:'0.45 л/га' },
+      'склеротинія стеблова гниль': { prod:'Світч WG', price:'₴6,400/кг', dose:'0.8 кг/га' },
+    };
+    const d = costs[c.disease] || costs['фузаріоз стебла'];
+    const area = parseFloat(c.area) || 45;
+    const dose = parseFloat(d.dose);
+    const pricePerL = parseFloat(d.price.replace(/[₴\/лкг]/g,''));
+    const total = Math.round(area * dose * pricePerL);
+    return `<strong>${d.prod}</strong> — ${d.price}, норма ${d.dose}.<br><br>Для вашого поля <strong>${c.area}:</strong><br>Обсяг: ${(area*dose).toFixed(1)} л/кг<br>Орієнтовна вартість обробки: <strong>₴${total.toLocaleString('uk')}</strong><br><br>💡 При замовленні від 50 л/кг — знижка 5%. Уточніть у менеджера.`;
+  }
+
+  // ── What is / explain disease ──
+  if (/що таке|що це|розкажи|поясни|хвороб|збудник|причин/.test(ql)) {
+    const info = {
+      'фузаріоз стебла': 'Фузаріоз стебла — грибкова хвороба, збудник <em>Fusarium graminearum</em>. Розвивається при температурі +15–30°C і вологості >70%. Уражає стебло у зоні 1–2 міжвузля, спричиняє почорніння та загнивання, що призводить до вилягання та втрати врожаю до 30–50%.',
+      'несправжня борошниста роса': 'Несправжня борошниста роса — оомiцет <em>Plasmopara halstedii</em>. Системна інфекція через ґрунт або насіння. При 100% ураженості — втрата врожаю до 80%. Особливо небезпечна в прохолодну вологу погоду (+10–15°C).',
+      'іржа бура': 'Іржа бура пшениці — базидіомiцет <em>Puccinia triticina</em>. Дуже агресивний патоген, здатний за 7–10 днів уразити весь посів при сприятливих умовах (+15–22°C, роса). Втрати зерна до 40%.',
+      'склеротинія стеблова гниль': 'Склеротинія стеблова гниль — <em>Sclerotinia sclerotiorum</em>. Зимує в ґрунті у вигляді склероцій до 8 років. Заражає через квітки ріпаку під час цвітіння. Критична хвороба — може знищити до 50% урожаю.',
+    };
+    return info[c.disease] || `${c.disease} — небезпечна грибкова/бактеріальна хвороба ${c.crop}, що потребує своєчасного захисту.`;
+  }
+
+  // ── Rotation / prevention ──
+  if (/сівозмін|профілактик|попередж|наступний сезон|запобіг/.test(ql)) {
+    return `Для профілактики ${c.disease} на ${c.crop} у вашій сівозміні (${c.rotation}):<br><br>✅ Повернення ${c.crop} не раніше ніж через 3–4 роки<br>✅ Обробка насіння фунгіцидним протруйником<br>✅ Збалансоване живлення (уникати надлишку азоту)<br>✅ Моніторинг посівів з фази ${c.crop.includes('пшениця') ? 'кущіння' : c.crop.includes('ріпак') ? '4–6 листків' : 'виходу в трубку'}<br><br>На ґрунті з pH ${c.ph} також рекомендую ${parseFloat(c.ph) < 6.5 ? 'вапнування — кислий ґрунт підвищує вірулентність збудника' : 'підтримувати оптимальний рН через збалансоване добриво'}.`;
+  }
+
+  // ── Yield loss / damage ──
+  if (/втрат|урожай|збиток|скільки загублю|шкод/.test(ql)) {
+    const losses = { 'фузаріоз стебла':'20–50%', 'несправжня борошниста роса':'до 80% при системній інфекції', 'іржа бура':'до 40%', 'склеротинія стеблова гниль':'30–50%' };
+    const loss = losses[c.disease] || '15–40%';
+    return `При ${c.disease} на ${c.crop} без обробки — потенційні втрати <strong>${loss}</strong> врожаю. На вашому полі ${c.area} це критично. Ранній захист (до масового прояву) знижує втрати до <strong>3–8%</strong>. Вартість обробки зазвичай у 5–10 разів менша за вартість втраченого врожаю.`;
+  }
+
+  // ── Fallback — context-aware generic ──
+  const fallbacks = [
+    `На основі діагнозу <strong>${c.disease}</strong> (${c.conf}%) на ${c.crop} (${c.area}, ${c.region}): ${c.disease.includes('фузаріоз') ? 'ключовий фактор — вологість і температура. Перевірте прогноз погоди на 7 днів — якщо очікується дощ, обробку краще провести превентивно.' : c.disease.includes('іржа') ? 'хвороба поширюється дуже швидко при вітрі. Сусідні поля з пшеницею можуть бути джерелом спор.' : 'важливо діяти швидко — кожен день затримки підвищує ризик.'}`,
+    `Уточніть питання — я аналізую ${c.disease} на ${c.crop} з урахуванням ${c.soil} (pH ${c.ph}). Можу відповісти про: терміни обробки, дози, альтернативні препарати, вартість, профілактику або наслідки для врожаю.`,
+    `На полі ${c.area} в ${c.region} з ${c.disease} — пріоритет зараз: обробка у найближчі 3–5 днів при температурі +12–22°C і швидкості вітру до 4 м/с. Уточніть що саме вас цікавить.`,
+  ];
+  return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+}
+
 function sendAIChat() {
   const input = document.getElementById('ai-chat-input');
   const msg = input.value.trim();
   if (!msg) return;
   const msgs = document.getElementById('ai-chat-messages');
-  // Add user bubble
+
+  // User bubble
   const userBubble = document.createElement('div');
   userBubble.className = 'chat-bubble user';
   userBubble.innerHTML = `<div class="chat-text">${msg}</div><div class="chat-avatar">👨‍🌾</div>`;
   msgs.appendChild(userBubble);
   input.value = '';
-  // Add typing indicator then AI reply
+
+  // Typing indicator
   const typing = document.createElement('div');
   typing.className = 'chat-bubble ai';
-  typing.innerHTML = '<div class="chat-avatar">🤖</div><div class="chat-text" style="color:#aaa">Аналізую...</div>';
+  typing.innerHTML = '<div class="chat-avatar">🤖</div><div class="chat-text" style="color:#aaa;font-style:italic">Аналізую запит...</div>';
   msgs.appendChild(typing);
   msgs.scrollTop = msgs.scrollHeight;
+
+  // Realistic delay (varies by response length)
+  const delay = 800 + Math.random() * 600;
   setTimeout(() => {
-    typing.innerHTML = '<div class="chat-avatar">🤖</div><div class="chat-text">Дякую за питання. На основі агровластивостей вашого поля (чорнозем типовий, pH 6.8, сівозміна кукурудза) та поточних складських залишків рекомендую <strong>Прозаро 250 EC (Bayer) 0.8 л/га</strong>. Обробка в фазі BBCH 32–39, до 3 обробок за сезон.</div>';
+    const reply = buildAIReply(msg);
+    typing.innerHTML = `<div class="chat-avatar">🤖</div><div class="chat-text">${reply}</div>`;
     msgs.scrollTop = msgs.scrollHeight;
-  }, 1200);
+  }, delay);
 }
 
 function startCamera() {
@@ -1946,7 +2338,7 @@ function generateVendorReport() {
       document.getElementById('vendor-thinking-step').textContent = vendorSteps[step];
     } else {
       clearInterval(iv); t.classList.remove('visible');
-      showToast('📊','PDF звіт готовий','Надіслано вендору та менеджеру');
+      showToast('📊','PDF звіт готовий','Надіслано вендору та менеджеру','success');
     }
   }, 700);
 }
@@ -1971,7 +2363,7 @@ function addToCart(name, desc, priceStr, icon) {
     cart.push({ id: Date.now(), name, desc, price, qty: 1, icon: icon || '🧪' });
   }
   renderCart();
-  showToast('🛒', 'Додано до кошика', name);
+  showToast('🛒', 'Додано до кошика', name, 'success');
 }
 
 function removeFromCart(id) {
@@ -2011,7 +2403,13 @@ function renderCart() {
 
   // Update ALL cart badges across every screen
   document.querySelectorAll('.cart-badge').forEach(b => {
-    if (count > 0) { b.textContent = count > 9 ? '9+' : count; b.classList.add('visible'); }
+    if (count > 0) {
+      b.textContent = count > 9 ? '9+' : count;
+      b.classList.add('visible');
+      b.classList.remove('bump');
+      void b.offsetWidth; // reflow
+      b.classList.add('bump');
+    }
     else { b.classList.remove('visible'); }
   });
 
