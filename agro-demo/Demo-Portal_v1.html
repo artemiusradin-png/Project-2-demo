@@ -1999,7 +1999,10 @@ let aiChatContext = { crop:'кукурудза', disease:'фузаріоз ст�
 function openAIChat() {
   document.getElementById('ai-chat-overlay').classList.add('open');
   const msgs = document.getElementById('ai-chat-messages');
-  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(() => { msgs.scrollTop = msgs.scrollHeight; }, 50);
+}
+function closeAIChat() {
+  document.getElementById('ai-chat-overlay').classList.remove('open');
 }
 
 function updateAIChatContext(sampleId) {
@@ -2194,6 +2197,9 @@ function openCatalogScan() {
 
 function closeCatalogScan() {
   document.getElementById('scan-sheet-overlay').classList.remove('open');
+  // Always close AI chat when exiting scan modal
+  const aiChat = document.getElementById('ai-chat-overlay');
+  if (aiChat) aiChat.classList.remove('open');
   // stop camera stream
   if (camStream) {
     camStream.getTracks().forEach(t => t.stop());
