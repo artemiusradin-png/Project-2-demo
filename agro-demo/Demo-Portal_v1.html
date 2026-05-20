@@ -413,6 +413,10 @@ body {
 .cam-close { background: rgba(255,255,255,0.15); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .cam-viewfinder { position: relative; flex: 1; overflow: hidden; background: #111; min-height: 0; }
 .cam-viewfinder video, .cam-viewfinder .cam-captured { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cam-permission-overlay { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgba(0,0,0,0.85); z-index: 20; }
+.cam-permission-overlay.visible { display: flex; }
+.cam-permission-overlay p { color: rgba(255,255,255,0.75); font-size: 13px; text-align: center; padding: 0 28px; line-height: 1.5; }
+.cam-allow-btn { background: #00E676; color: #000; border: none; border-radius: 24px; padding: 12px 28px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
 .cam-captured { display: none; }
 .cam-captured.visible { display: block; }
 .cam-flash { position: absolute; inset: 0; background: white; opacity: 0; pointer-events: none; transition: opacity 0.05s; z-index: 10; }
@@ -733,7 +737,7 @@ body {
                   <div class="ai-block-text"><h4>Smart Operator</h4><p>Авто-генерація КП за 2 хвилини</p></div>
                   <div class="ai-block-badge badge-c">Block C</div>
                 </div>
-                <div class="ai-block-card" onclick="navTo('screen-a')">
+                <div class="ai-block-card" onclick="openCatalogScan()">
                   <div class="ai-block-icon icon-a">📷</div>
                   <div class="ai-block-text"><h4>Agro-Vision</h4><p>Діагностика культур за фото</p></div>
                   <div class="ai-block-badge badge-a">Block A</div>
@@ -994,7 +998,7 @@ body {
               </div>
               <div class="header-sub">AI-діагностика · 20k SKU · Рецепт за 5 сек</div>
             </div>
-            <div class="camera-area" id="camera-box" onclick="startScan()">
+            <div class="camera-area" id="camera-box" onclick="openCatalogScan()">
               <img class="crop-photo" id="crop-photo" src="" alt=""/>
               <div class="camera-overlay" id="camera-overlay">
                 <div class="camera-corners"></div>
@@ -1232,7 +1236,13 @@ body {
 
           <!-- viewfinder -->
           <div class="cam-viewfinder" id="cam-viewfinder">
-            <video id="cam-video" autoplay playsinline muted></video>
+            <video id="cam-video" autoplay playsinline muted style="display:none"></video>
+            <div class="cam-permission-overlay" id="cam-permission-overlay">
+              <span style="font-size:40px">📷</span>
+              <p>Щоб використовувати камеру, дозвольте доступ у браузері</p>
+              <button class="cam-allow-btn" onclick="requestCameraAccess()">📷 Увімкнути камеру</button>
+              <p style="font-size:11px;opacity:0.5">або оберіть приклад нижче</p>
+            </div>
             <img class="cam-captured" id="cam-captured" src="" alt=""/>
             <div class="cam-flash" id="cam-flash"></div>
             <div class="cam-corners"><span></span></div>
@@ -1607,6 +1617,43 @@ let csScanData = null;
 
 let camStream = null;
 
+function startCamera() {
+  const video = document.getElementById('cam-video');
+  const permOverlay = document.getElementById('cam-permission-overlay');
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    permOverlay.classList.add('visible'); return;
+  }
+  // Try rear cam (mobile), fall back to any cam (laptop)
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false })
+    .then(stream => {
+      camStream = stream;
+      video.srcObject = stream;
+      video.style.display = 'block';
+      permOverlay.classList.remove('visible');
+      video.play().catch(() => {});
+    })
+    .catch(() => {
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(stream => {
+          camStream = stream;
+          video.srcObject = stream;
+          video.style.display = 'block';
+          permOverlay.classList.remove('visible');
+          video.play().catch(() => {});
+        })
+        .catch(() => {
+          // camera denied or not available — show permission UI
+          video.style.display = 'none';
+          permOverlay.classList.add('visible');
+        });
+    });
+}
+
+function requestCameraAccess() {
+  // Called from the "Enable Camera" button — try again
+  startCamera();
+}
+
 function openCatalogScan() {
   // reset state
   document.querySelectorAll('.cam-sample').forEach(s => s.classList.remove('selected'));
@@ -1618,23 +1665,8 @@ function openCatalogScan() {
   document.getElementById('cam-hint').style.display = 'block';
   document.getElementById('cam-scan-line').style.display = 'block';
   document.getElementById('scan-sheet-overlay').classList.add('open');
-
-  // start live camera
-  const video = document.getElementById('cam-video');
-  video.style.display = 'block';
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false })
-      .then(stream => {
-        camStream = stream;
-        video.srcObject = stream;
-      })
-      .catch(() => {
-        // camera denied — just show dark viewfinder, samples still work
-        video.style.display = 'none';
-      });
-  } else {
-    video.style.display = 'none';
-  }
+  // start camera
+  startCamera();
 }
 
 function closeCatalogScan() {
