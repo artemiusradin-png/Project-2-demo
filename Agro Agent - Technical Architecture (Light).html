@@ -267,7 +267,7 @@
     Жодних нових платформних зобов'язань, окрім перелічених у §02.
   </div>
 
-  <h2><span>01 · Набір агентів</span><span class="num">С. 01 / 14</span></h2>
+  <h2><span>01 · Набір агентів</span><span class="num">С. 01 / 13</span></h2>
   <table>
     <thead><tr><th>Агент</th><th>Функція</th><th>Фаза</th><th>Нового коду vs. фундамент</th></tr></thead>
     <tbody>
@@ -279,7 +279,7 @@
     </tbody>
   </table>
 
-  <h2><span>02 · Спільний фундамент</span><span class="num">С. 01 / 14</span></h2>
+  <h2><span>02 · Спільний фундамент</span><span class="num">С. 01 / 13</span></h2>
   <table>
     <thead><tr><th>Шар</th><th>Рішення</th><th>Специфікація</th></tr></thead>
     <tbody>
@@ -321,7 +321,7 @@
   │ Expert         │         │ Sales                │         │                 │
   └────────────────┘         └──────────────────────┘         └─────────────────┘</div>
 
-  <h2><span>03 · Наскрізна архітектура</span><span class="num">С. 02 / 14</span></h2>
+  <h2><span>03 · Наскрізна архітектура</span><span class="num">С. 02 / 13</span></h2>
   <p>Усі рівні, усі три агенти, на одній діаграмі. Суцільні стрілки — синхронні виклики; журнал аудиту/подій — міжагентний хребет: <b>Expert та Operator пишуть; Analytic читає</b>.</p>
 
   <div class="dgm">╔══ КЛІЄНТ · Flutter-застосунок (наявний) — iOS · Android · (Flutter web для Analytic) ═╗
@@ -414,7 +414,7 @@
     </div>
   </header>
 
-  <h2><span>04 · <span class="tag-a">Agro-Vision & Expert</span> — Польова аналітика <span class="pill v1">v1</span></span><span class="num">С. 03 / 14</span></h2>
+  <h2><span>04 · <span class="tag-a">Agro-Vision & Expert</span> — Польова аналітика <span class="pill v1">v1</span></span><span class="num">С. 03 / 13</span></h2>
   <p>Фото культури → діагностика культури + проблеми → ранжований рецепт із затверджених в Україні препаратів, наявних на складі. Лише читання із Salesforce.</p>
 
   <div class="dgm">Flutter-зйомка ─signed URL─▶ Cloud Storage (24 год TTL)
@@ -463,7 +463,7 @@
     </div>
   </header>
 
-  <h2><span>05 · <span class="tag-c">Smart Operator & Sales</span> — Операційна аналітика <span class="pill p2">Фаза 2</span></span><span class="num">С. 04 / 14</span></h2>
+  <h2><span>05 · <span class="tag-c">Smart Operator & Sales</span> — Операційна аналітика <span class="pill p2">Фаза 2</span></span><span class="num">С. 04 / 13</span></h2>
   <p>Рецепт або ручний запит → чернетка КП у Salesforce із заміною аналогами + крос-продажем. Затвердження людиною перед фіксацією.</p>
 
   <div class="dgm">Рецепт від Expert / ручний запит ─подія─▶
@@ -508,7 +508,7 @@
     </div>
   </header>
 
-  <h2><span>06 · <span class="tag-e">Vendor Analytic</span> — Аналітика для вендорів <span class="pill p2">Фаза 2</span></span><span class="num">С. 05 / 14</span></h2>
+  <h2><span>06 · <span class="tag-e">Vendor Analytic</span> — Аналітика для вендорів <span class="pill p2">Фаза 2</span></span><span class="num">С. 05 / 13</span></h2>
   <p>Події Expert + Operator + продажі Salesforce → аналітика з розбивкою по вендорах + текстові звіти. Лише читання.</p>
 
   <div class="dgm">Події Expert  ┐
@@ -556,7 +556,7 @@
     </div>
   </header>
 
-  <h2><span>07 · Робота AI — як система залишається чесною</span><span class="num">С. 06 / 14</span></h2>
+  <h2><span>07 · Робота AI — як система залишається чесною</span><span class="num">С. 06 / 13</span></h2>
   <p>Ядро: <strong>Claude (мультимодальний)</strong> через Vertex AI. Навколо нього — шари обмежень, які не дозволяють моделі формувати фінальну відповідь самостійно. RAG необхідний, але недостатній; кожен шар нижче захищає від окремого типу помилки.</p>
 
   <div class="dgm">┌── ЯДРО ──────────────────────────────────────────────────────────────────┐
@@ -627,7 +627,7 @@
     </div>
   </header>
 
-  <h2><span>08 · Міжагентна взаємодія</span><span class="num">С. 07 / 14</span></h2>
+  <h2><span>08 · Міжагентна взаємодія</span><span class="num">С. 07 / 13</span></h2>
   <table>
     <thead><tr><th>Питання</th><th>Рішення</th></tr></thead>
     <tbody>
@@ -639,7 +639,7 @@
     </tbody>
   </table>
 
-  <h2><span>09 · Ризики та відкриті питання</span><span class="num">С. 07 / 14</span></h2>
+  <h2><span>09 · Ризики та відкриті питання</span><span class="num">С. 07 / 13</span></h2>
   <table>
     <thead><tr><th>Пункт</th><th>Тип</th><th>Статус</th></tr></thead>
     <tbody>
@@ -668,7 +668,7 @@
     </div>
   </header>
 
-  <h2><span>10 · Маховик даних</span><span class="num">С. 08 / 14</span></h2>
+  <h2><span>10 · Маховик даних</span><span class="num">С. 08 / 13</span></h2>
   <p><span class="tag-a">Agro-Vision &amp; Expert</span> → <span class="tag-c">Smart Operator &amp; Sales</span> → <span class="tag-e">Vendor Analytic</span>: кожен агент робить наступного ціннішим.</p>
 
   <div class="scope">
@@ -725,7 +725,7 @@
     </div>
   </header>
 
-  <h2><span>11 · Очікувані запитання</span><span class="num">С. 09 / 14</span></h2>
+  <h2><span>11 · Очікувані запитання</span><span class="num">С. 09 / 13</span></h2>
   <table>
     <thead><tr><th style="width:34%">Запитання</th><th>Наша позиція</th></tr></thead>
     <tbody>
@@ -775,94 +775,7 @@
 
 </div>
 
-<!-- ░░░░░░░░░░ СТОРІНКА 10 — ПОФАЗНЕ ЦІНОУТВОРЕННЯ ░░░░░░░░░░ -->
-<div class="page">
-  <header>
-    <div class="brand">DEVIEW</div>
-    <div class="head-r">
-      <div class="crumbs">
-        <span>AGRO AGENT</span>
-        <span class="active">ПОФАЗНЕ ЦІНОУТВОРЕННЯ</span>
-      </div>
-      <div class="meta">2026&#8209;05&#8209;20 &nbsp;·&nbsp; Rev E &nbsp;·&nbsp; <span class="conf">КОНФІДЕНЦІЙНО</span></div>
-    </div>
-  </header>
-
-  <div class="scope">
-    <span class="lab">Обсяг</span>
-    AI-функціональний рівень для <b>існуючого</b> Flutter-застосунку та Salesforce-бекенду — не перебудова. Поставляється як <b>трифазна програма: Expert → Operator → Analytic</b>. Кожна фаза випускається незалежно з фіксованим обсягом, фіксованою ціною та вимірюваним гейтом.
-  </div>
-
-  <h2><span>12 · Пофазна програма</span><span class="num">С. 10 / 14</span></h2>
-  <table>
-    <thead>
-      <tr><th>Фаза</th><th>Що включено</th><th class="num">Інвестиція</th><th class="num">Терміни</th></tr>
-    </thead>
-    <tbody>
-      <tr class="rec">
-        <td><b><span class="tag-a">★ Фаза 1 · Agro-Vision &amp; Expert</span></b><br><span style="font-size:10px;color:var(--mut)">Основа + флагман · v1</span></td>
-        <td>Спільна AI-основа (оркестрація · pgvector · Claude · SF connector · авторизація · журнал подій) + фото → діагноз → рецепт із каталогу + розмовний радник + продакшн-зміцнення + набір оцінки точності</td>
-        <td class="num"><b>$51k</b></td><td class="num">~12 тиж</td>
-      </tr>
-      <tr>
-        <td><b><span class="tag-c">Фаза 2 · Smart Operator &amp; Sales</span></b><br><span style="font-size:10px;color:var(--mut)">Операційний · підключається до Фази 1</span></td>
-        <td>Побудова котирувань (Rx → SF Quote/SO) · ранжування аналогів та крос-продажів · движок правил (маржа · пакування · регуляторні) · scoped draft-only запис SF · потік погодження</td>
-        <td class="num">$29k</td><td class="num">~5–7 тиж</td>
-      </tr>
-      <tr>
-        <td><b><span class="tag-e">Фаза 3 · Vendor Analytic</span></b><br><span style="font-size:10px;color:var(--mut)">Аналітика · підключається до Фази 1+2</span></td>
-        <td>ELT job · аналітичний data mart у розрізі вендорів · генератор наративних звітів (Claude описує SQL-агрегати) · read-only dashboard API · ізоляція тенантів</td>
-        <td class="num">$20k</td><td class="num">~4–6 тиж</td>
-      </tr>
-      <tr class="rec">
-        <td><b>Повна програма · А+В+Д</b><br><span style="font-size:10px;color:var(--mut)">Усі три, послідовно зобов'язані</span></td>
-        <td>Повний маховик даних — Фази 1 → 2 → 3, кожна з гейтом на основі метрики прийняття попередньої фази</td>
-        <td class="num"><b>$99k</b></td><td class="num">~21–25 тиж</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="statement">
-    <div class="big">$51k → $29k → $20k</div>
-    <div class="stxt">
-      <b>Рекомендовані котирування — фіксована ціна за фазу, з гейтами.</b><br>
-      Оплата по фазах: <b>30%</b> при підписанні · <b>40%</b> на середньому майлстоуні · <b>30%</b> при здачі фази.
-      <b>Знижка за повну програму:</b> $95k при підписанні всіх трьох фаз разом.
-    </div>
-  </div>
-
-  <div class="grid3">
-    <div class="fcard">
-      <div class="fh">Лише Фаза 1</div>
-      <div class="fb"><b>Agro-Vision &amp; Expert</b> економить ~40 хв на діагноз. Консультанти швидші, точніші. Основа побудована для всього, що слідує далі.</div>
-    </div>
-    <div class="fcard">
-      <div class="fh" style="color:var(--tone-c)">Фаза 1 + 2</div>
-      <div class="fb">Діагноз <b>плюс</b> миттєве котирування. Продаж закривається в момент довіри — без затримки бек-офісу.</div>
-    </div>
-    <div class="fcard">
-      <div class="fh" style="color:var(--tone-e)">Фаза 1 + 2 + 3</div>
-      <div class="fb"><b>Повний маховик</b>. Інтелект для вендорів → кращі запаси, кращі умови, гостріші поради наступного сезону.</div>
-    </div>
-  </div>
-
-  <div class="kpis">
-    <div class="kpi"><div class="k">Фаза 1 vs. $250k інвестованих</div><div class="v">≈17% <small>від існуючих інвестицій</small></div></div>
-    <div class="kpi"><div class="k">Повний маховик А→В→Д</div><div class="v">≈32% <small>за повний AI-цикл</small></div></div>
-    <div class="kpi"><div class="k">Кожна фаза використовує</div><div class="v">70–80% <small>фундаменту Фази 1</small></div></div>
-  </div>
-
-  <h2><span>Припущення та виключення</span></h2>
-  <ul class="note">
-    <li>Salesforce надає каталог / залишки / угіддя / ґрунти через придатні REST API. Якщо ні, робота з доступом до даних — <b>+$15k – $30k</b> (окремий рядок, Фаза 1).</li>
-    <li>Продакшн-використання LLM / vision API <b>оплачується клієнтом</b> (за використанням).</li>
-    <li>Кожна фаза має гейт на метриці прийняття. Фаза 1: ≥85% точність. Фаза 2: час циклу котирування. Фаза 3: свіжість data-mart + аудит ізоляції тенантів.</li>
-    <li>Пост-програмне обслуговування та ретейнер model-ops: <b>15–25% від вартості побудови / рік</b> — опціонально, окремий SOW.</li>
-  </ul>
-
-</div>
-
-<!-- ░░░░░░░░░░ СТОРІНКА 11 — ДОСВІД КОМАНДИ ░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░ СТОРІНКА 10 — ДОСВІД КОМАНДИ ░░░░░░░░░░ -->
 <div class="page">
   <header>
     <div class="brand">DEVIEW</div>
@@ -875,7 +788,7 @@
     </div>
   </header>
 
-  <h2><span>13 · Досвід команди та підхід до інтеграції</span><span class="num">С. 11 / 14</span></h2>
+  <h2><span>12 · Досвід команди та підхід до інтеграції</span><span class="num">С. 10 / 13</span></h2>
   <p>Відповідь на бриф — інтеграція AI у Flutter-застосунки, з чесним визначенням обсягу офлайн-логіки.</p>
 
   <div class="scope">
@@ -920,7 +833,7 @@
 
 </div>
 
-<!-- ░░░░░░░░░░ СТОРІНКА 12 — ПІДХІД ДО ІНТЕГРАЦІЇ ░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░ СТОРІНКА 11 — ПІДХІД ДО ІНТЕГРАЦІЇ ░░░░░░░░░░ -->
 <div class="page">
   <header>
     <div class="brand">DEVIEW</div>
@@ -933,7 +846,7 @@
     </div>
   </header>
 
-  <h2><span>14 · Підхід до AI-інтеграції — Flutter ↔ AI-бекенд</span><span class="num">С. 12 / 14</span></h2>
+  <h2><span>13 · Підхід до AI-інтеграції — Flutter ↔ AI-бекенд</span><span class="num">С. 11 / 13</span></h2>
   <table>
     <thead><tr><th style="width:26%">Рівень</th><th>Підхід</th></tr></thead>
     <tbody>
@@ -967,7 +880,7 @@
 
 </div>
 
-<!-- ░░░░░░░░░░ СТОРІНКА 13 — ВІДКРИТІ ПИТАННЯ ░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░ СТОРІНКА 12 — ВІДКРИТІ ПИТАННЯ ░░░░░░░░░░ -->
 <div class="page">
   <header>
     <div class="brand">DEVIEW</div>
@@ -980,7 +893,7 @@
     </div>
   </header>
 
-  <h2><span>15 · Відкриті питання до AgroPlatforma</span><span class="num">С. 13 / 14</span></h2>
+  <h2><span>14 · Відкриті питання до AgroPlatforma</span><span class="num">С. 12 / 13</span></h2>
   <p>Консолідовані відкриті пункти, впорядковані за календарною вартістю для побудови.</p>
 
   <div class="scope">
@@ -1053,7 +966,7 @@
 
 </div>
 
-<!-- ░░░░░░░░░░ СТОРІНКА 14 — ЧЕРНЕТКИ ДЛЯ ПІДТВЕРДЖЕННЯ + ЗАКРИТТЯ ░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░ СТОРІНКА 13 — ЧЕРНЕТКИ ДЛЯ ПІДТВЕРДЖЕННЯ + ЗАКРИТТЯ ░░░░░░░░░░ -->
 <div class="page cover">
   <div class="pixelcity"></div>
   <header>
@@ -1067,7 +980,7 @@
     </div>
   </header>
 
-  <h2><span>16 · Чернетки для підтвердження</span><span class="num">С. 14 / 14</span></h2>
+  <h2><span>15 · Чернетки для підтвердження</span><span class="num">С. 13 / 13</span></h2>
   <p>Ми запропонували варіант за замовчуванням; нам потрібне ваше затвердження або зміни.</p>
 
   <table>
